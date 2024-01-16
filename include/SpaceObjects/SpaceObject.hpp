@@ -33,6 +33,8 @@ class SpaceObject {
                     mass_(mass),
                     damageSource_(NULL),
                     type_(type) {}
+        
+        virtual ~SpaceObject() {};
 
         virtual void update() = 0;
         virtual void draw() const = 0;

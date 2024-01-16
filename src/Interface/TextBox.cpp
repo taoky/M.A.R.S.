@@ -78,7 +78,7 @@ TextBox::TextBox(sf::String* text, Vector2f const& topLeft, int width, int heigh
 
         // create single labels
         line = "";
-        int top(0);
+        // int top(0);
         for (unsigned int i=0; i<wholeText.getSize(); ++i) {
             if (wholeText[i] == '\n') {
                 texts_.push_back(new sf::String(line));

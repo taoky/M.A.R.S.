@@ -79,7 +79,7 @@ void BurningFragment::draw() const {
 void BurningFragment::onCollision(SpaceObject* with, Vector2f const& location,
                                   Vector2f const& direction, Vector2f const& velocity) {
 
-    if ((with->type() == spaceObjects::oHome | with->type() == spaceObjects::oSun) | (with->type() == spaceObjects::oPlanet)) {
+    if ((with->type() == spaceObjects::oHome || with->type() == spaceObjects::oSun) || (with->type() == spaceObjects::oPlanet)) {
         particles::spawn(particles::pMiniFlame, location_);
         particles::spawn(particles::pMiniFlame, location_);
         particles::spawn(particles::pMiniFlame, location_);

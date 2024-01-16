@@ -149,7 +149,7 @@ namespace locales {
             if (!first)
                 locales_.push_back(newLocale);
 
-            bool loadSuccess(false);
+            // bool loadSuccess(false);
 
             load (settings::C_dataPath + "locales/English.txt");
             if (settings::C_languageID < locales_.size()) {

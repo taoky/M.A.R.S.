@@ -28,6 +28,8 @@ class Player {
     public:
         Player(controllers::ControlType controlType);
 
+        virtual ~Player() {};
+
         void                      resetPoints();
 
         Team*                     team()    const {return team_;}

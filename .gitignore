@@ -372,3 +372,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# GDB debugging files
+.gdb_history
+
+# Binary
+marsshooter

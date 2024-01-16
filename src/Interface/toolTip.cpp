@@ -96,7 +96,7 @@ namespace toolTip {
 
                 // create single labels
                 line = "";
-                int top(0);
+                // int top(0);
                 for (unsigned int i=0; i<wholeText.getSize(); ++i) {
                     if (wholeText[i] == '\n') {
                         lines_.push_back(line);

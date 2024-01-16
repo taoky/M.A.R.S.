@@ -32,7 +32,7 @@ namespace stars {
     namespace {
         int tex_;
         float top_, left_;
-        float spawnTimer_(0.f);
+        // float spawnTimer_(0.f);
     }
 
     void init() {

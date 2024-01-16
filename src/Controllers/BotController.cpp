@@ -34,9 +34,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 BotController::BotController(Player* slave, float strength):
     Controller(slave),
     target_(NULL),
+    currentJob_(Job::jCharge, 1),
     weaponChangeTimer_(randomizer::random(0.f, 0.5f)),
     specialChangeTimer_(randomizer::random(0.f, 0.5f)),
-    currentJob_(Job::jCharge, 1),
     nextRoutePoint_(FLT_MAX, FLT_MAX),
     toCover_(NULL),
     strength_(strength) {}
@@ -208,7 +208,7 @@ void BotController::applyForJob(std::multimap<Job, std::multimap<short, BotContr
                     dist = 50 - dist;
                     if (dist < 0) dist = 0;
                     Vector2f ballLocation (calcPath(static_cast<Ball*>(it->first.object_)->location(), false));
-                    Vector2f targetPlanetLocation = calcPath(teams::getEnemy(slave_->team())->home()->location(), false);
+                    // Vector2f targetPlanetLocation = calcPath(teams::getEnemy(slave_->team())->home()->location(), false);
                     float dir = spaceObjects::isOnLine(ballLocation, ship()->location() - ballLocation, slave_->team()->home()->location(), 45.f) ? 50 : 0;
                     need = dist + dir + didThisJobLAstTimeToo;
                     break;

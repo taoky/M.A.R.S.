@@ -68,7 +68,13 @@ cd ~/Desktop/mars-game/build/
 In order to compile M.A.R.S., you have to create a make file using cmake:
 
 ```
-cmake ..
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+```
+
+You can also enable ASAN to detect memory errors:
+
+```
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_ASAN=ON ..
 ```
 
 Now compile M.A.R.S.:

@@ -2,6 +2,9 @@
 # Project M.A.R.S.
 ################################################################
 
+# We require at least version 3.7.2
+cmake_minimum_required(VERSION 3.7.2)
+
 PROJECT(MARS)
 
 # version number
@@ -13,9 +16,16 @@ set(mars_DESCRIPTION "M.A.R.S. - a ridiculous Shooter")
 set(mars_HOMEPAGE "http://www.marsshooter.org")
 set(mars_EXENAME "marsshooter")
 set(mars_PACKAGENAME "mars")
- 
-# We require at least version 3.7.2
-cmake_minimum_required(VERSION 3.7.2)
+
+cmake_policy(SET CMP0072 NEW)
+
+if(ENABLE_ASAN)
+	add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
+	add_link_options(-fsanitize=address)
+endif()
+
+# Add all warnings
+add_compile_options(-Wall)
 
 #####################################################################
 # Installation directories
@@ -109,4 +119,5 @@ message( "  OPENGL_LIBRARIES = ${OPENGL_LIBRARIES}" )
 message( "  XRANDR_LIBRARY = ${XRANDR_LIBRARY}" )
 message( "  FRIBIDI_LIBRARY = ${FRIBIDI_LIBRARY}" )
 message( "  TAG_LIBRARY = ${TAG_LIBRARY}" )
+message( "  ENABLE_ASAN = ${ENABLE_ASAN}" )
 message( "" )

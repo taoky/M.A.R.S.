@@ -25,6 +25,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 class Message: public HudElement {
     public:
         Message(sf::String const& message, Color3f const& color);
+        virtual ~Message() {};
 
         void draw() const;
         void update();

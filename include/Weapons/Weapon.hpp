@@ -31,6 +31,8 @@ class Weapon {
         /// Ctor which constructs the base Weapon.
         Weapon(weapons::WeaponType type, Ship* parent, sf::String name);
 
+        virtual ~Weapon() {};
+
         /// This function is called whenever the weapon is fired.
         virtual void fire() const = 0;
 

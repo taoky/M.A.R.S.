@@ -26,6 +26,7 @@ class DecoObject {
     public:
         /// Draws the DecoObject.
         virtual void draw() const = 0;
+        virtual ~DecoObject() {};
 };
 
 # endif // DECOOBJECT_HPP_INCLUDED
