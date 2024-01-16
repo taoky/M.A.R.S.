@@ -44,9 +44,8 @@ void PowerUp::update()
 
     if (!collected_)
     {
-        std::vector<Ship *> const & shipList = ships::getShips();
-        for (std::vector<Ship *>::const_iterator it = shipList.begin();
-             it != shipList.end(); ++it)
+        auto const & shipList = ships::getShips();
+        for (auto it = shipList.begin(); it != shipList.end(); ++it)
             if ((*it)->getLife() > 0.f &&
                 ((*it)->location() - location_).lengthSquare() <
                     std::pow(radius_ * 2.f + (*it)->radius(), 2))
@@ -54,15 +53,14 @@ void PowerUp::update()
                 collected_ = true;
                 if (type_ == items::puReverse || type_ == items::puSleep)
                 {
-                    for (std::vector<Ship *>::const_iterator ite =
-                             shipList.begin();
-                         ite != shipList.end(); ++ite)
+                    for (auto ite = shipList.begin(); ite != shipList.end();
+                         ++ite)
                         if ((*it)->getOwner()->team() !=
                             (*ite)->getOwner()->team())
-                            ships_.push_back(*ite);
+                            ships_.push_back(ite->get());
                 }
                 else
-                    ships_.push_back(*it);
+                    ships_.push_back(it->get());
             }
         std::list<Ship *>::iterator it = ships_.begin();
         while (it != ships_.end())

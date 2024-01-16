@@ -77,21 +77,20 @@ void Shocker::activate() const
         targets_.clear();
         ballTarget_ = NULL;
 
-        std::vector<Ship *> ships = ships::getShips();
+        auto const & ships = ships::getShips();
 
         if (ships.size() >= 2)
         {
 
-            for (std::vector<Ship *>::iterator it = ships.begin();
-                 it != ships.end(); ++it)
+            for (auto it = ships.begin(); it != ships.end(); ++it)
             {
-                if (*it != parent_)
+                if (it->get() != parent_)
                 {
                     Vector2f direction((*it)->location() - parent_->location());
                     float distance(direction.lengthSquare());
                     if (distance <= radius() * radius() && (*it)->attackable())
                     {
-                        targets_.push_back(*it);
+                        targets_.push_back(it->get());
                     }
                 }
             }

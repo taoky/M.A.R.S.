@@ -25,6 +25,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "defines.hpp"
 
 #include <sstream>
+#include <atomic>
+
+// A hack for this project's destructor on static objects
+std::atomic_bool exiting(false);
 
 int main(int argc, char * argv[])
 {
@@ -113,5 +117,8 @@ int main(int argc, char * argv[])
 
         window::mainLoop();
     }
+
+    std::cout << "Goodbye..." << std::endl;
+    exiting = true;
     return 0;
 }

@@ -34,11 +34,10 @@ void GITeam::createJobs()
 
 void GITeam::checkEnemies()
 {
-    std::vector<Ship *> ships = ships::getShips();
+    auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (std::vector<Ship *>::const_iterator it = ships.begin();
-         it != ships.end(); ++it)
+    for (auto it = ships.begin(); it != ships.end(); ++it)
         if ((*it)->getOwner()->team() != this && (*it)->attackable())
         {
             existAny = true;

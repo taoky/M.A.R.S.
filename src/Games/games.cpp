@@ -35,12 +35,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <SFML/OpenGL.hpp>
 
+#include <memory>
+
 namespace games
 {
 
 namespace
 {
-Game * currentGame_(NULL);
+std::unique_ptr<Game> currentGame_(nullptr);
 bool restart_(false);
 bool newGame_(true);
 GameType newGameType_(gNoGame);
@@ -122,37 +124,37 @@ void start(GameType const & type)
     {
         if (currentGame_)
         {
-            delete currentGame_;
-            currentGame_ = 0;
+            currentGame_.reset();
         }
 
         switch (type)
         {
         case gMenu:
-            currentGame_ = new MenuGame();
+            currentGame_ = std::make_unique<MenuGame>();
             break;
         case gSpaceBall:
-            currentGame_ = new SpaceBall();
+            currentGame_ = std::make_unique<SpaceBall>();
             break;
         case gDeathMatch:
-            currentGame_ = new DeathMatch();
+            currentGame_ = std::make_unique<DeathMatch>();
             break;
         case gTeamDeathMatch:
-            currentGame_ = new TeamDeathMatch();
+            currentGame_ = std::make_unique<TeamDeathMatch>();
             break;
         case gCannonKeep:
-            currentGame_ = new CannonKeep();
+            currentGame_ = std::make_unique<CannonKeep>();
             break;
         case gGraveItation:
-            currentGame_ = new GraveItation();
+            currentGame_ = std::make_unique<GraveItation>();
             break;
         case gTutorial:
-            currentGame_ = new Tutorial();
+            currentGame_ = std::make_unique<Tutorial>();
             break;
         case gRally:
-            currentGame_ = new Rally();
+            currentGame_ = std::make_unique<Rally>();
             break;
         default:
+            std::cerr << "games::start(): Unknown game type!" << std::endl;
             break;
         }
 

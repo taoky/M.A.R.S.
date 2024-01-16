@@ -19,24 +19,27 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/Ship.hpp"
 
+#include <memory>
 #include <vector>
+#include <atomic>
+
+extern std::atomic_bool exiting;
 
 namespace ships
 {
 namespace
 {
-std::vector<Ship *> shipList_;
+std::vector<std::unique_ptr<Ship>> shipList_;
 }
 
 void addShip(Vector2f const & location, float rotation, Player * owner)
 {
-    shipList_.push_back(new Ship(location, rotation, owner));
+    shipList_.push_back(std::make_unique<Ship>(location, rotation, owner));
 }
 
 void update()
 {
-    for (std::vector<Ship *>::iterator it = shipList_.begin();
-         it != shipList_.end(); ++it)
+    for (auto it = shipList_.begin(); it != shipList_.end(); ++it)
         (*it)->update();
 }
 
@@ -45,27 +48,23 @@ void draw()
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture::getTexture(texture::Weapons));
 
-    for (std::vector<Ship *>::iterator it = shipList_.begin();
-         it != shipList_.end(); ++it)
+    for (auto it = shipList_.begin(); it != shipList_.end(); ++it)
         (*it)->drawWeapon();
 
     glBindTexture(GL_TEXTURE_2D, texture::getTexture(texture::Ships));
 
-    for (std::vector<Ship *>::iterator it = shipList_.begin();
-         it != shipList_.end(); ++it)
+    for (auto it = shipList_.begin(); it != shipList_.end(); ++it)
         (*it)->draw();
 
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-std::vector<Ship *> const & getShips() { return shipList_; }
+std::vector<std::unique_ptr<Ship>> const & getShips() { return shipList_; }
 
 void clear()
 {
-    for (std::vector<Ship *>::iterator it = shipList_.begin();
-         it != shipList_.end(); ++it)
-        delete *it;
-    shipList_.clear();
+    if (!exiting)
+        shipList_.clear();
 }
 } // namespace ships

@@ -85,11 +85,10 @@ void Heal::activate() const
     if (parent_->fragStars_ > 0 && timer_ <= 0.f)
     {
         radius_ = radius();
-        std::vector<Ship *> const & ships = ships::getShips();
-        for (std::vector<Ship *>::const_iterator it = ships.begin();
-             it != ships.end(); ++it)
+        auto const & ships = ships::getShips();
+        for (auto it = ships.begin(); it != ships.end(); ++it)
         {
-            if ((*it) != parent_)
+            if (it->get() != parent_)
             {
                 float distance(
                     ((*it)->location() - parent_->location()).length());

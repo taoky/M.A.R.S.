@@ -64,6 +64,10 @@ Game::Game(games::GameType const & type)
 
 Game::~Game()
 {
+    // Careful!
+    // as programs will automatically destruct static objects on exit
+    // we will do bad things on uninitialized objects
+
     items::clear();
     ships::clear();
     balls::clear();

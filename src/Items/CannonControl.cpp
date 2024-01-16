@@ -31,15 +31,14 @@ void CannonControl::update()
 {
     if (!collected_)
     {
-        std::vector<Ship *> const & shipList = ships::getShips();
-        for (std::vector<Ship *>::const_iterator it = shipList.begin();
-             it != shipList.end(); ++it)
+        auto const & shipList = ships::getShips();
+        for (auto it = shipList.begin(); it != shipList.end(); ++it)
             if ((*it)->getLife() > 0.f &&
                 ((*it)->location() - location_).lengthSquare() <
                     std::pow(20.f + (*it)->radius(), 2))
             {
                 collected_ = true;
-                ship_ = *it;
+                ship_ = it->get();
             }
     }
     else

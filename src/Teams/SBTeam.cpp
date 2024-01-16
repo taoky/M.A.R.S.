@@ -42,10 +42,10 @@ void SBTeam::createJobs()
 
 void SBTeam::checkEnemies()
 {
-    std::vector<Ship *> ships = ships::getShips();
+    auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (std::vector<Ship *>::const_iterator it = ships.begin();
+    for (auto it = ships.begin();
          it != ships.end(); ++it)
         if ((*it)->getOwner()->team() != this && (*it)->attackable())
         {
@@ -60,10 +60,10 @@ void SBTeam::checkEnemies()
 
 void SBTeam::checkPowerUps()
 {
-    std::vector<Ship *> ships = ships::getShips();
+    auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (std::vector<Ship *>::const_iterator it = ships.begin();
+    for (auto it = ships.begin();
          it != ships.end(); ++it)
         if ((*it)->getOwner()->team() != this && (*it)->attackable())
         {
@@ -72,8 +72,8 @@ void SBTeam::checkPowerUps()
         }
 
     powerUpLocations_.clear();
-    std::list<PowerUp *> const & powerUps = items::getPowerUps();
-    for (std::list<PowerUp *>::const_iterator it = powerUps.begin();
+    auto const & powerUps = items::getPowerUps();
+    for (auto it = powerUps.begin();
          it != powerUps.end(); ++it)
     {
         if (!(*it)->isCollected())

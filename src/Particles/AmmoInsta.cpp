@@ -159,8 +159,7 @@ int AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
     for (int i = 0; i < 10 + settings::C_iDumb * 0.9f; ++i)
     {
         Vector2f acceleration;
-        for (std::vector<SpaceObject *>::const_iterator it =
-                 physics::getGravitySources().begin();
+        for (auto it = physics::getGravitySources().begin();
              it != physics::getGravitySources().end(); ++it)
         {
             float distanceSquared = (from - (*it)->location()).lengthSquare();
@@ -178,8 +177,8 @@ int AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
              glVertex2f(to.x_, to.y_);
          glEnd();*/
 
-        for (std::vector<Ship *>::const_iterator it = ships::getShips().begin();
-             it != ships::getShips().end(); ++it)
+        for (auto it = ships::getShips().begin(); it != ships::getShips().end();
+             ++it)
         {
             if ((*it)->attackable())
             {
@@ -222,8 +221,7 @@ int AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
             to.y_ > SPACE_Y_RESOLUTION + 100)
             return 0;
 
-        for (std::vector<SpaceObject *>::const_iterator it =
-                 physics::getGravitySources().begin();
+        for (auto it = physics::getGravitySources().begin();
              it != physics::getGravitySources().end(); ++it)
         {
             if ((*it)->type() != spaceObjects::oBlackHole &&

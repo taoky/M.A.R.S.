@@ -93,11 +93,10 @@ void Freezer::activate() const
         radius_ = radius();
         const float strength = parent_->fragStars_ * 14.f;
 
-        std::vector<Ship *> const & ships = ships::getShips();
-        for (std::vector<Ship *>::const_iterator it = ships.begin();
-             it != ships.end(); ++it)
+        auto const & ships = ships::getShips();
+        for (auto it = ships.begin(); it != ships.end(); ++it)
         {
-            if ((*it) != parent_ && (*it)->collidable() &&
+            if ((it->get()) != parent_ && (*it)->collidable() &&
                 !(*it)->collectedPowerUps_[items::puShield])
             {
                 float distance(
@@ -108,7 +107,7 @@ void Freezer::activate() const
                     (*it)->velocity_ = Vector2f();
                     (*it)->mass_ = 9999999999.f;
                     if ((*it)->frozen_ <= 0)
-                        decoObjects::addIce(*it);
+                        decoObjects::addIce(it->get());
                     (*it)->frozen_ = strength;
                 }
             }

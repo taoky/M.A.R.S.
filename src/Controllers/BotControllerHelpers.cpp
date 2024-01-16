@@ -112,15 +112,13 @@ Vector2f BotController::calcPath(Vector2f const & endPoint, bool avoidBall)
                                       toEndPoint * (obstacle->radius() + 20.f));
                 int count(0);
                 bool fits(false);
-                std::vector<Ship *> const & allShips = ships::getShips();
+                auto const & allShips = ships::getShips();
                 while (!fits && ++count < 6)
                 {
                     fits = true;
-                    for (std::vector<Ship *>::const_iterator it =
-                             allShips.begin();
-                         it != allShips.end(); ++it)
+                    for (auto it = allShips.begin(); it != allShips.end(); ++it)
                     {
-                        if ((*it) != ship() &&
+                        if ((it->get()) != ship() &&
                             ((*it)->location() - surfacePoint).lengthSquare() <
                                 225.f)
                         {

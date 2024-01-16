@@ -61,9 +61,8 @@ void AmmoBurner::update()
     lifeTime_ += time;
 
     // check for collisions with ships
-    std::vector<Ship *> const & shipsList = ships::getShips();
-    for (std::vector<Ship *>::const_iterator it = shipsList.begin();
-         it != shipsList.end(); ++it)
+    auto const & shipsList = ships::getShips();
+    for (auto it = shipsList.begin(); it != shipsList.end(); ++it)
         if ((location_ - (*it)->location()).lengthSquare() <
                 std::pow(radius_ + (*it)->radius(), 2) &&
             (*it)->collidable())

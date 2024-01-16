@@ -21,6 +21,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/Vector2f.hpp"
 
 #include <list>
+#include <memory>
 
 class CannonControl;
 class PowerUp;
@@ -43,7 +44,7 @@ void draw();
 void addCannonControl();
 CannonControl * getCannonControl();
 
-std::list<PowerUp *> const & getPowerUps();
+std::list<std::unique_ptr<PowerUp>> const & getPowerUps();
 
 void clear();
 } // namespace items

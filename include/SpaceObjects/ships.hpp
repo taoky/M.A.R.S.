@@ -19,6 +19,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define SHIPS_HPP_INCLUDED
 
 #include "System/Vector2f.hpp"
+#include <memory>
 #include <vector>
 
 class Player;
@@ -31,7 +32,7 @@ void addShip(Vector2f const & location, float rotation, Player * owner);
 void update();
 void draw();
 
-std::vector<Ship *> const & getShips();
+std::vector<std::unique_ptr<Ship>> const & getShips();
 
 void clear();
 } // namespace ships

@@ -38,10 +38,10 @@ void TutTeam::createJobs()
 
 void TutTeam::checkEnemies()
 {
-    std::vector<Ship *> ships = ships::getShips();
+    auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (std::vector<Ship *>::const_iterator it = ships.begin();
+    for (auto it = ships.begin();
          it != ships.end(); ++it)
         if ((*it)->getOwner()->team() != this && (*it)->attackable())
         {
@@ -63,10 +63,10 @@ void TutTeam::checkEnemies()
 
 void TutTeam::checkPowerUps()
 {
-    std::vector<Ship *> ships = ships::getShips();
+    auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (std::vector<Ship *>::const_iterator it = ships.begin();
+    for (auto it = ships.begin();
          it != ships.end(); ++it)
         if ((*it)->getOwner()->team() != this && (*it)->attackable())
         {
@@ -75,8 +75,8 @@ void TutTeam::checkPowerUps()
         }
 
     powerUpLocations_.clear();
-    std::list<PowerUp *> const & powerUps = items::getPowerUps();
-    for (std::list<PowerUp *>::const_iterator it = powerUps.begin();
+    auto const & powerUps = items::getPowerUps();
+    for (auto it = powerUps.begin();
          it != powerUps.end(); ++it)
     {
         if (!(*it)->isCollected())

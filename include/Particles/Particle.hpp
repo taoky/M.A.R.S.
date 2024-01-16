@@ -21,7 +21,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "SpaceObjects/MobileSpaceObject.hpp"
 #include "System/timer.hpp"
 
+#include <atomic>
 #include <list>
+
+extern std::atomic_bool exiting;
 
 /// Base class for all particles.
 
@@ -48,11 +51,13 @@ template <typename Derived> class Particle : public MobileSpaceObject
 
     static void clear()
     {
-        for (typename std::list<Derived *>::iterator it =
-                 Derived::activeParticles_.begin();
-             it != Derived::activeParticles_.end(); ++it)
-            delete *it;
-        Derived::activeParticles_.clear();
+        if (!exiting)
+        {
+            for (auto it = Derived::activeParticles_.begin();
+                 it != Derived::activeParticles_.end(); ++it)
+                delete *it;
+            Derived::activeParticles_.clear();
+        }
     }
 
     static void updateAll()

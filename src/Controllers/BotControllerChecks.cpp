@@ -135,12 +135,11 @@ void BotController::checkSpecial()
         case specials::sShocker:
         {
             int decision(0);
-            std::vector<Ship *> const & ships(ships::getShips());
-            for (std::vector<Ship *>::const_iterator it = ships.begin();
-                 it != ships.end(); ++it)
+            auto const & ships(ships::getShips());
+            for (auto it = ships.begin(); it != ships.end(); ++it)
             {
                 if ((*it)->collidable() && (*it)->frozen_ <= 0 &&
-                    (*it) != slave_->ship())
+                    (it->get()) != slave_->ship())
                 {
                     float distance(
                         ((*it)->location_ - ship()->location_).lengthSquare());
@@ -161,11 +160,10 @@ void BotController::checkSpecial()
         default:
         {
             int decision(0);
-            std::vector<Ship *> const & ships(ships::getShips());
-            for (std::vector<Ship *>::const_iterator it = ships.begin();
-                 it != ships.end(); ++it)
+            auto const & ships(ships::getShips());
+            for (auto it = ships.begin(); it != ships.end(); ++it)
             {
-                if ((*it)->attackable() && (*it) != slave_->ship())
+                if ((*it)->attackable() && (it->get()) != slave_->ship())
                 {
                     float distance(
                         ((*it)->location_ - ship()->location_).lengthSquare());
@@ -188,9 +186,8 @@ void BotController::checkSpecial()
 
 void BotController::checkCloseEnemies()
 {
-    std::vector<Ship *> const & ships(ships::getShips());
-    for (std::vector<Ship *>::const_iterator it = ships.begin();
-         it != ships.end(); ++it)
+    auto const & ships(ships::getShips());
+    for (auto it = ships.begin(); it != ships.end(); ++it)
     {
         if ((*it)->attackable() && (*it)->owner_->team() != slave_->team())
         {
@@ -201,7 +198,7 @@ void BotController::checkCloseEnemies()
             if (aggroGain < 0.f)
                 aggroGain = 0.f;
             aggroGain *= settings::C_iDumb * 0.01f;
-            aggroTable_[*it] += aggroGain;
+            aggroTable_[it->get()] += aggroGain;
         }
     }
 }

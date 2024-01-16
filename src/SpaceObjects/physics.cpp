@@ -24,6 +24,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <cmath>
 #include <vector>
+#include <memory>
+#include <atomic>
+
+extern std::atomic_bool exiting;
 
 namespace physics
 {
@@ -339,8 +343,10 @@ std::vector<SpaceObject *> const & getGravitySources()
 
 void clear()
 {
-    staticObjects_.clear();
-    mobileObjects_.clear();
-    gravitySources_.clear();
+    if (!exiting) {
+        staticObjects_.clear();
+        mobileObjects_.clear();
+        gravitySources_.clear();
+    }
 }
 } // namespace physics

@@ -119,15 +119,14 @@ void AmmoRocket::update()
             ballTarget_ = NULL;
             shipTarget_ = NULL;
 
-            std::vector<Ship *> const & ships(ships::getShips());
+            auto const & ships(ships::getShips());
             float closest(FLT_MAX);
-            for (std::vector<Ship *>::const_iterator it = ships.begin();
-                 it != ships.end(); ++it)
+            for (auto it = ships.begin(); it != ships.end(); ++it)
             {
                 float distance((location_ - (*it)->location()).lengthSquare());
                 if (distance < closest && (*it)->collidable())
                 {
-                    shipTarget_ = *it;
+                    shipTarget_ = it->get();
                     closest = distance;
                 }
             }

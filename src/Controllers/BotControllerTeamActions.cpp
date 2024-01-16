@@ -185,10 +185,9 @@ void BotController::attackAny()
     }
     else
     {
-        std::vector<Ship *> const & ships = ships::getShips();
+        auto const & ships = ships::getShips();
         float maxDistance(FLT_MAX);
-        for (std::vector<Ship *>::const_iterator it = ships.begin();
-             it != ships.end(); ++it)
+        for (auto it = ships.begin(); it != ships.end(); ++it)
         {
             if ((*it)->owner_->team() != slave_->team() && (*it)->attackable())
             {
@@ -198,7 +197,7 @@ void BotController::attackAny()
                 if (distance < maxDistance)
                 {
                     maxDistance = distance;
-                    target_ = (*it);
+                    target_ = it->get();
                 }
             }
         }

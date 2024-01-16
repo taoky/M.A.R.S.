@@ -30,7 +30,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/timer.hpp"
 #include "defines.hpp"
 
+#include <atomic>
 #include <list>
+
+extern std::atomic_bool exiting;
 
 namespace items
 {
@@ -38,7 +41,7 @@ namespace items
 namespace
 {
 CannonControl * cannonControl_(NULL);
-std::list<PowerUp *> powerUps_ = std::list<PowerUp *>();
+std::list<std::unique_ptr<PowerUp>> powerUps_;
 
 void spawnPowerUp()
 {
@@ -77,10 +80,10 @@ void spawnPowerUp()
             switch (randomizer::random(0, 1))
             {
             case 0:
-                powerUps_.push_back(new PUReverse(position));
+                powerUps_.push_back(std::make_unique<PUReverse>(position));
                 break;
             case 1:
-                powerUps_.push_back(new PUSleep(position));
+                powerUps_.push_back(std::make_unique<PUSleep>(position));
                 break;
             }
         }
@@ -90,13 +93,13 @@ void spawnPowerUp()
             switch (randomizer::random(0, 2))
             {
             case 0:
-                powerUps_.push_back(new PUShield(position));
+                powerUps_.push_back(std::make_unique<PUShield>(position));
                 break;
             case 1:
-                powerUps_.push_back(new PUHealth(position));
+                powerUps_.push_back(std::make_unique<PUHealth>(position));
                 break;
             case 2:
-                powerUps_.push_back(new PUFuel(position));
+                powerUps_.push_back(std::make_unique<PUFuel>(position));
                 break;
             }
         }
@@ -121,13 +124,13 @@ void update()
         }
     }
 
-    std::list<PowerUp *>::iterator it = powerUps_.begin();
+    auto it = powerUps_.begin();
     while (it != powerUps_.end())
     {
         (*it)->update();
         if ((*it)->isDead())
         {
-            delete *it;
+            it->reset();
             it = powerUps_.erase(it);
         }
         else
@@ -143,8 +146,7 @@ void draw()
     if (cannonControl_)
         cannonControl_->draw();
 
-    for (std::list<PowerUp *>::iterator it = powerUps_.begin();
-         it != powerUps_.end(); ++it)
+    for (auto it = powerUps_.begin(); it != powerUps_.end(); ++it)
         (*it)->draw();
 
     glDisable(GL_TEXTURE_2D);
@@ -171,7 +173,7 @@ void addCannonControl()
 
 CannonControl * getCannonControl() { return cannonControl_; }
 
-std::list<PowerUp *> const & getPowerUps() { return powerUps_; }
+std::list<std::unique_ptr<PowerUp>> const & getPowerUps() { return powerUps_; }
 
 void clear()
 {
@@ -180,9 +182,7 @@ void clear()
         delete cannonControl_;
         cannonControl_ = NULL;
     }
-    for (std::list<PowerUp *>::iterator it = powerUps_.begin();
-         it != powerUps_.end(); ++it)
-        delete (*it);
-    powerUps_.clear();
+    if (!exiting)
+        powerUps_.clear();
 }
 } // namespace items
