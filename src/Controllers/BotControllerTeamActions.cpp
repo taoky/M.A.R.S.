@@ -81,7 +81,7 @@ void BotController::kickBallToEnemy()
                 5000.f)
             {
                 bool ballIsCloseToPlanet(false);
-                for (std::vector<SpaceObject *>::const_iterator it =
+                for (auto it =
                          spaceObjects::getObjects().begin();
                      it != spaceObjects::getObjects().end(); ++it)
                     if ((*it)->type() != spaceObjects::oBlackHole &&

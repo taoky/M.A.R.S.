@@ -101,12 +101,11 @@ void Game::update()
             {
                 Team * best(NULL);
                 int most(0);
-                for (std::vector<Team *>::const_iterator it =
-                         teams::getAllTeams().begin();
+                for (auto it = teams::getAllTeams().begin();
                      it != teams::getAllTeams().end(); ++it)
                     if (most < (*it)->points())
                     {
-                        best = *it;
+                        best = it->get();
                         most = (*it)->points();
                     }
                 if (best)

@@ -20,6 +20,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Controllers/controllers.hpp"
 #include "System/Color3f.hpp"
+#include <memory>
 
 class Team;
 class Home;
@@ -43,7 +44,7 @@ void clear();
 
 Team const * getTeamL();
 Team const * getTeamR();
-std::vector<Team *> const & getAllTeams();
+std::vector<std::unique_ptr<Team>> const & getAllTeams();
 Team const * getEnemy(Team const * checker);
 
 int getFirstPoints();

@@ -101,7 +101,7 @@ Vector2f TacticalZone::getRandomPoint() const
             randomPoint.y_ > 0.f && randomPoint.y_ < SPACE_Y_RESOLUTION)
         {
             bool fits = true;
-            for (std::vector<SpaceObject *>::const_iterator it =
+            for (auto it =
                      spaceObjects::getObjects().begin();
                  it != spaceObjects::getObjects().end(); ++it)
             {

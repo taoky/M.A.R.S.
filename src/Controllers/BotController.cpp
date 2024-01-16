@@ -43,11 +43,10 @@ void BotController::update()
 {
     if (aggroTable_.empty())
     {
-        std::vector<Team *> const & teams = teams::getAllTeams();
-        for (std::vector<Team *>::const_iterator it = teams.begin();
-             it != teams.end(); ++it)
+        auto const & teams = teams::getAllTeams();
+        for (auto it = teams.begin(); it != teams.end(); ++it)
         {
-            if ((*it) != slave_->team())
+            if (it->get() != slave_->team())
             {
                 std::vector<Player *> const & players = (*it)->members();
                 for (std::vector<Player *>::const_iterator it = players.begin();

@@ -61,8 +61,7 @@ void TabStats::update()
     {
         // check for necessity of a map-update
         int currentPoints(0);
-        for (std::vector<Team *>::const_iterator it =
-                 teams::getAllTeams().begin();
+        for (auto it = teams::getAllTeams().begin();
              it != teams::getAllTeams().end(); ++it)
             currentPoints += (*it)->points();
 
@@ -74,13 +73,12 @@ void TabStats::update()
             teamMap_ =
                 std::multimap<Team *, std::multiset<Player *, playerPtrCmp>,
                               teamPtrCmp>();
-            std::vector<Team *> const & teams = teams::getAllTeams();
-            for (std::vector<Team *>::const_iterator it = teams.begin();
-                 it != teams.end(); ++it)
-                teamMap_.insert(
-                    std::make_pair(*it, std::multiset<Player *, playerPtrCmp>(
-                                            (*it)->members().begin(),
-                                            (*it)->members().end())));
+            auto const & teams = teams::getAllTeams();
+            for (auto it = teams.begin(); it != teams.end(); ++it)
+                teamMap_.insert(std::make_pair(
+                    it->get(),
+                    std::multiset<Player *, playerPtrCmp>(
+                        (*it)->members().begin(), (*it)->members().end())));
         }
     }
 }

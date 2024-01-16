@@ -31,6 +31,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include <memory>
 #include <vector>
 
+extern std::atomic_bool exiting;
+
 namespace decoObjects
 {
 
@@ -179,9 +181,12 @@ void clear()
         delete cannon_;
         cannon_ = NULL;
     }
-    decos_.clear();
-    heats_.clear();
-    names_.clear();
-    ices_.clear();
+    if (!exiting)
+    {
+        decos_.clear();
+        heats_.clear();
+        names_.clear();
+        ices_.clear();
+    }
 }
 } // namespace decoObjects

@@ -21,24 +21,27 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Teams/Team.hpp"
 
 #include <climits>
+#include <memory>
+
+extern std::atomic_bool exiting;
 
 namespace teams
 {
 namespace
 {
-std::vector<Team *> allTeams_;
+std::vector<std::unique_ptr<Team>> allTeams_;
 }
 
 Team * addTeam(Team * newTeam)
 {
-    allTeams_.push_back(newTeam);
+    allTeams_.push_back(std::unique_ptr<Team>(newTeam));
     return newTeam;
 }
 
 void assignHomes(Home * home)
 {
     if (allTeams_.size() > 0)
-        for (std::vector<Team *>::iterator it = allTeams_.begin();
+        for (auto it = allTeams_.begin();
              it != allTeams_.end(); ++it)
             (*it)->setHome(home);
     else
@@ -59,26 +62,26 @@ void assignHomes(Home * homeL, Home * homeR)
 
 void update()
 {
-    for (std::vector<Team *>::iterator it = allTeams_.begin();
+    for (auto it = allTeams_.begin();
          it != allTeams_.end(); ++it)
         (*it)->update();
 }
 
-Team const * getTeamL() { return allTeams_[0]; }
+Team const * getTeamL() { return allTeams_[0].get(); }
 
-Team const * getTeamR() { return allTeams_[1]; }
+Team const * getTeamR() { return allTeams_[1].get(); }
 
-std::vector<Team *> const & getAllTeams() { return allTeams_; }
+std::vector<std::unique_ptr<Team>> const & getAllTeams() { return allTeams_; }
 
 Team const * getEnemy(Team const * checker)
 {
-    return checker == allTeams_[0] ? allTeams_[1] : allTeams_[0];
+    return checker == allTeams_[0].get() ? allTeams_[1].get() : allTeams_[0].get();
 }
 
 int getFirstPoints()
 {
     int highest(INT_MIN);
-    for (std::vector<Team *>::iterator it = allTeams_.begin();
+    for (auto it = allTeams_.begin();
          it != allTeams_.end(); ++it)
         if ((*it)->points() > highest)
             highest = (*it)->points();
@@ -89,7 +92,7 @@ int getSecondPoints()
 {
     int first(INT_MIN);
     int second(INT_MIN);
-    for (std::vector<Team *>::iterator it = allTeams_.begin();
+    for (auto it = allTeams_.begin();
          it != allTeams_.end(); ++it)
         if ((*it)->points() >= first)
         {
@@ -107,16 +110,14 @@ int getSecondPoints()
 
 void resetTeamPoints()
 {
-    for (std::vector<Team *>::iterator it = allTeams_.begin();
+    for (auto it = allTeams_.begin();
          it != allTeams_.end(); ++it)
         (*it)->resetPoints();
 }
 
 void clear()
 {
-    for (std::vector<Team *>::iterator it = allTeams_.begin();
-         it != allTeams_.end(); ++it)
-        delete *it;
-    allTeams_.clear();
+    if (!exiting)
+        allTeams_.clear();
 }
 } // namespace teams

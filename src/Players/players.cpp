@@ -19,6 +19,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Players/BotPlayer.hpp"
 #include "Players/LocalPlayer.hpp"
+#include "Players/Player.hpp"
 #include "SpaceObjects/Home.hpp"
 #include "System/generateName.hpp"
 #include "System/settings.hpp"
@@ -26,20 +27,23 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "defines.hpp"
 
 #include <climits>
+#include <memory>
+
+extern std::atomic_bool exiting;
 
 namespace players
 {
 namespace
 {
-std::vector<Player *> allPlayers_;
-Player * playerI_;
-Player * playerII_;
+std::vector<std::shared_ptr<Player>> allPlayers_;
+std::shared_ptr<Player> playerI_;
+std::shared_ptr<Player> playerII_;
 bool initialized_(false);
 
 void initLocalPlayers()
 {
-    playerI_ = new LocalPlayer(controllers::cPlayer1);
-    playerII_ = new LocalPlayer(controllers::cPlayer2);
+    playerI_ = std::make_shared<LocalPlayer>(controllers::cPlayer1);
+    playerII_ = std::make_shared<LocalPlayer>(controllers::cPlayer2);
     initialized_ = true;
 }
 } // namespace
@@ -52,13 +56,13 @@ void addPlayer(Team * team, controllers::ControlType type,
     case controllers::cPlayer1:
         if (!initialized_)
             initLocalPlayers();
-        team->addMember(playerI_);
+        team->addMember(playerI_.get());
         allPlayers_.push_back(playerI_);
         break;
     case controllers::cPlayer2:
         if (!initialized_)
             initLocalPlayers();
-        team->addMember(playerII_);
+        team->addMember(playerII_.get());
         allPlayers_.push_back(playerII_);
         break;
     default:
@@ -66,7 +70,7 @@ void addPlayer(Team * team, controllers::ControlType type,
             new BotPlayer(generateName::bot(((long)team % INT_MAX) / 97), color,
                           rand() % SHIP_GRAPHICS_COUNT + 1);
         team->addMember(bot);
-        allPlayers_.push_back(bot);
+        allPlayers_.push_back(std::unique_ptr<Player>(bot));
     }
 }
 
@@ -79,33 +83,31 @@ void createShips()
          homeIt != homes.end(); ++homeIt)
     {
         std::vector<Player *> inhabitants;
-        for (std::vector<Player *>::iterator playIt = allPlayers_.begin();
-             playIt != allPlayers_.end(); ++playIt)
+        for (auto playIt = allPlayers_.begin(); playIt != allPlayers_.end();
+             ++playIt)
         {
             if ((*playIt)->team()->home() == (*homeIt))
-                inhabitants.push_back(*playIt);
+                inhabitants.push_back(playIt->get());
         }
         (*homeIt)->createShips(inhabitants);
     }
 }
 
-Player const * getPlayerI() { return playerI_; }
+Player const * getPlayerI() { return playerI_.get(); }
 
-Player const * getPlayerII() { return playerII_; }
+Player const * getPlayerII() { return playerII_.get(); }
 
 void resetPlayerPoints()
 {
-    for (std::vector<Player *>::iterator it = allPlayers_.begin();
+    for (auto it = allPlayers_.begin();
          it != allPlayers_.end(); ++it)
         (*it)->resetPoints();
 }
 
 void clear()
 {
-    for (std::vector<Player *>::iterator it = allPlayers_.begin();
-         it != allPlayers_.end(); ++it)
-        delete *it;
-    allPlayers_.clear();
+    if (!exiting)
+        allPlayers_.clear();
     initialized_ = false;
 }
 } // namespace players

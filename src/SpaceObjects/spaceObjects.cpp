@@ -23,12 +23,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "SpaceObjects/BlackHole.hpp"
 #include "SpaceObjects/Home.hpp"
 #include "SpaceObjects/Planet.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/Sun.hpp"
 #include "SpaceObjects/balls.hpp"
 #include "System/randomizer.hpp"
 #include "defines.hpp"
 
+#include <memory>
 #include <vector>
+
+extern std::atomic_bool exiting;
 
 namespace spaceObjects
 {
@@ -37,7 +41,7 @@ namespace
 {
 // objectList contains all homes as well, but for easy accessing
 // they are saved twice
-std::vector<SpaceObject *> objectList_;
+std::vector<std::unique_ptr<SpaceObject>> objectList_;
 std::vector<Home *> homeList_;
 
 Vector2f possiblePlanetLocation(int radius, float minDistance)
@@ -56,8 +60,7 @@ Vector2f possiblePlanetLocation(int radius, float minDistance)
 
         // check for collisions with other objects
         newPlanetFits = true;
-        for (std::vector<SpaceObject *>::iterator it = objectList_.begin();
-             it != objectList_.end(); ++it)
+        for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
             if (((*it)->location() - position).lengthSquare() <
                 std::pow((*it)->radius() + radius + SPACEOBJECT_MIN_GAP, 2))
                 newPlanetFits = false;
@@ -87,8 +90,7 @@ Vector2f possiblePlanetLocation(int radius, float minDistance)
 
 void update()
 {
-    for (std::vector<SpaceObject *>::iterator it = objectList_.begin();
-         it != objectList_.end(); ++it)
+    for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
     {
         (*it)->update();
     }
@@ -96,8 +98,7 @@ void update()
 
 void draw()
 {
-    for (std::vector<SpaceObject *>::iterator it = objectList_.begin();
-         it != objectList_.end(); ++it)
+    for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
     {
         (*it)->draw();
     }
@@ -114,7 +115,7 @@ void addPlanet()
 
 void addPlanet(Vector2f const & location, float radius)
 {
-    objectList_.push_back(new Planet(location, radius));
+    objectList_.push_back(std::make_unique<Planet>(location, radius));
 }
 
 void addSun()
@@ -125,7 +126,7 @@ void addSun()
     if (position != Vector2f(0, 0))
     {
         Sun * newSun = new Sun(position, radius);
-        objectList_.push_back(newSun);
+        objectList_.push_back(std::unique_ptr<SpaceObject>(newSun));
         decoObjects::addSunHeat(newSun);
     }
 }
@@ -136,7 +137,7 @@ void addBlackHole()
                   SPACEOBJECT_MIN_RADIUS);
     Vector2f position = possiblePlanetLocation(radius, 200);
     if (position != Vector2f(0, 0))
-        objectList_.push_back(new BlackHole(position, radius));
+        objectList_.push_back(std::unique_ptr<SpaceObject>(new BlackHole(position, radius)));
 }
 
 Home * addHome(int where, int life, Color3f const & color)
@@ -169,14 +170,14 @@ Home * addHome(Vector2f const & location, int life, Color3f const & color,
                float radius, float mass)
 {
     Home * home = new Home(location, life, radius, mass, color);
-    objectList_.push_back(home);
+    objectList_.push_back(std::unique_ptr<SpaceObject>(home));
     homeList_.push_back(home);
     return home;
 }
 
 std::vector<Home *> const & getHomes() { return homeList_; }
 
-std::vector<SpaceObject *> const & getObjects() { return objectList_; }
+std::vector<std::unique_ptr<SpaceObject>> const & getObjects() { return objectList_; }
 
 SpaceObject const * getObstacle(Vector2f const & start, Vector2f const & end,
                                 bool avoidBall, float minDistance)
@@ -184,8 +185,7 @@ SpaceObject const * getObstacle(Vector2f const & start, Vector2f const & end,
     SpaceObject const * closest(NULL);
     float closestDistance = FLT_MAX;
 
-    for (std::vector<SpaceObject *>::const_iterator it = objectList_.begin();
-         it != objectList_.end(); ++it)
+    for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
     {
         if ((*it)->type() != oBlackHole)
         {
@@ -216,7 +216,7 @@ SpaceObject const * getObstacle(Vector2f const & start, Vector2f const & end,
                     if (distance < closestDistance)
                     {
                         closestDistance = distance;
-                        closest = *it;
+                        closest = it->get();
                     }
                 }
             }
@@ -269,12 +269,10 @@ bool isOnLine(Vector2f const & source, Vector2f const & direction,
 
 void clear()
 {
-    for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
-        delete *it;
-    // for (auto it = homeList_.begin(); it != homeList_.end(); ++it)
-    //     delete *it;
-    objectList_.clear();
-    homeList_.clear();
+    if (!exiting) {
+        objectList_.clear();
+        homeList_.clear();
+    }
 }
 
 void populateSpace(float holePercentage, float sunPercentage, int maxObjects)

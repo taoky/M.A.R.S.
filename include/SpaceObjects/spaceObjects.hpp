@@ -18,6 +18,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SPACEOBJECTS_HPP_INCLUDED
 #define SPACEOBJECTS_HPP_INCLUDED
 
+#include <memory>
 #define HOME_LEFT 0
 #define HOME_RIGHT 1
 #define HOME_MIDDLE 2
@@ -89,7 +90,7 @@ bool isOnLine(Vector2f const & source, Vector2f const & direction,
               Vector2f const & target, float maxAngle);
 
 std::vector<Home *> const & getHomes();
-std::vector<SpaceObject *> const & getObjects();
+std::vector<std::unique_ptr<SpaceObject>> const & getObjects();
 
 /// Populates the space with planets, suns and black holes.
 void populateSpace(float holePercentage, float sunPercentage, int maxObjects);

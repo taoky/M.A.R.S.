@@ -59,7 +59,7 @@ void spawnPowerUp()
 
         // check for collisions with other objects
         newPowerUpFits = true;
-        for (std::vector<SpaceObject *>::const_iterator it =
+        for (auto it =
                  spaceObjects::getObjects().begin();
              it != spaceObjects::getObjects().end(); ++it)
             if (((*it)->location() - position).lengthSquare() <

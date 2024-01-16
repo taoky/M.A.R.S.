@@ -20,25 +20,29 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "TrailEffects/FloatingTrail.hpp"
 #include "TrailEffects/PersistantTrail.hpp"
 
+#include <atomic>
+#include <memory>
 #include <set>
 #include <vector>
+
+extern std::atomic_bool exiting;
 
 namespace trailEffects
 {
 namespace
 {
-std::vector<Trail *> trails_;
+std::vector<std::unique_ptr<Trail>> trails_;
 std::set<SpaceObject *> toBeDetached_;
 } // namespace
 
 void update()
 {
-    std::vector<Trail *>::iterator it = trails_.begin();
+    auto it = trails_.begin();
     while (it != trails_.end())
     {
         if ((*it)->isDead())
         {
-            delete *it;
+            it->reset();
             it = trails_.erase(it);
         }
         else
@@ -54,8 +58,7 @@ void update()
 
 void draw()
 {
-    for (std::vector<Trail *>::iterator it = trails_.begin();
-         it != trails_.end(); ++it)
+    for (auto it = trails_.begin(); it != trails_.end(); ++it)
         (*it)->draw();
 }
 
@@ -67,7 +70,7 @@ Trail * attach(SpaceObject * target, float timeStep, float duration,
         trail = new PersistantTrail(target, timeStep, duration, width, color);
     else
         trail = new FloatingTrail(target, timeStep, duration, width, color);
-    trails_.push_back(trail);
+    trails_.push_back(std::unique_ptr<Trail>(trail));
     return trail;
 }
 
@@ -77,9 +80,7 @@ int count() { return trails_.size(); }
 
 void clear()
 {
-    for (std::vector<Trail *>::iterator it = trails_.begin();
-         it != trails_.end(); ++it)
-        delete *it;
-    trails_.clear();
+    if (!exiting)
+        trails_.clear();
 }
 } // namespace trailEffects
