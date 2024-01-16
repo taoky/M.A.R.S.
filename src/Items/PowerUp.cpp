@@ -27,11 +27,11 @@ PowerUp::PowerUp(items::PowerUpType type, Vector2f const& location, float radius
     radius_(radius),
     ships_(),
     collected_(false),
-    texX_(texX),
-    texY_(texY),
     type_(type),
     lifeTime_(0.f),
     totalLifeTime_(totalLifeTime),
+    texX_(texX),
+    texY_(texY),
     bgColor_(bgColor) {}
 
 PowerUp::~PowerUp() {

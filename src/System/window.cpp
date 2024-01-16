@@ -30,6 +30,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 # include "Hud/hud.hpp"
 # include "defines.hpp"
 
+#include <SFML/Graphics/Texture.hpp>
 # include <SFML/OpenGL.hpp>
 # include <sstream>
 # include <time.h>
@@ -350,7 +351,13 @@ namespace window {
     }
 
     void screenShot() {
-        sf::Image shot = window_.capture();
+        // sf::Image shot = window_.capture();
+        sf::Vector2u windowSize = window_.getSize();
+        sf::Texture texture;
+        texture.create(windowSize.x, windowSize.y);
+        texture.update(window_);
+        sf::Image shot = texture.copyToImage();
+
        // const int windowHeight(window_.GetHeight()), windowWidth(window_.GetWidth());
        // if (static_cast<float>(windowWidth)/windowHeight > ratio)
        //     shot.Copy(window_, sf::IntRect((windowWidth-viewPort_.x_)*0.5f, 0, viewPort_.x_, viewPort_.y_));

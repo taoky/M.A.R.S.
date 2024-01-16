@@ -34,9 +34,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 ComboBox::ComboBox (sf::String* text, sf::String* toolTip, sf::String* value, std::vector<sf::String> const& values, Vector2f const& topLeft, int width, int labelWidth):
     UiElement(topLeft, width, 16),
     dropBox_(NULL),
+    currentValue_(value),
     values_(values),
     labelWidth_(labelWidth),
-    currentValue_(value),
     opened_(false),
     toolTip_(toolTip) {
 

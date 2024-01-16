@@ -22,8 +22,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 Weapon::Weapon(weapons::WeaponType type, Ship* parent, sf::String name):
     parent_(parent),
     timer_(0),
-    type_(type),
-    name_(name) {}
+    name_(name),
+    type_(type) {}
 
 void Weapon::next() {
     parent_->currentWeapon_ = weapons::createNext(type_, parent_);

@@ -25,7 +25,7 @@ if(ENABLE_ASAN)
 endif()
 
 # Add all warnings
-add_compile_options(-Wall)
+add_compile_options(-Wall -Wno-sign-compare)
 
 #####################################################################
 # Installation directories

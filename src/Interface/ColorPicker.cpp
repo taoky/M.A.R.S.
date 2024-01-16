@@ -33,8 +33,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 ColorPicker::ColorPicker (sf::String* text, Color3f* value, Vector2f const& topLeft, int width, int labelWidth):
     UiElement(topLeft, width, 16),
     colorWindow_(NULL),
-    labelWidth_(labelWidth),
     currentValue_(value),
+    labelWidth_(labelWidth),
     opened_(false) {
 
     label_ = new Label(text, TEXT_ALIGN_LEFT, Vector2f(0,0));

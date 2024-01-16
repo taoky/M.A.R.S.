@@ -57,7 +57,7 @@ namespace postFX {
                     exposure_ = 1.f;
             }
 
-            postFX_.setParameter("Exposure", exposure_);
+            postFX_.setUniform("Exposure", exposure_);
         }
     }
 
@@ -81,8 +81,8 @@ namespace postFX {
             glOrtho(0, SPACE_X_RESOLUTION, SPACE_Y_RESOLUTION, 0, -1, 1);
             glEnable(GL_BLEND);
             glMatrixMode(GL_MODELVIEW);
-            postFX_.setParameter("BumpMap", bumpMap_.getTexture());
-            postFX_.setParameter("Exposure", exposure_);
+            postFX_.setUniform("BumpMap", bumpMap_.getTexture());
+            postFX_.setUniform("Exposure", exposure_);
         }
         else
             std::cout << "Shaders are not supported on your hardware! There will be no fancy graphics..." << std::endl;

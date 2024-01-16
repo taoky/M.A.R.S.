@@ -28,10 +28,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 ColorPickerWindow::ColorPickerWindow (ColorPicker* parent, Color3f* color):
     UiWindow(190, 185),
-    parent_(parent),
-    color_(color),
     Ok_(new Button(locales::getLocale(locales::Ok), NULL, &kOk_, Vector2f(110, 155), 70, 20)),
-    kOk_(false) {
+    kOk_(false),
+    parent_(parent),
+    color_(color) {
 
     addWidget(Ok_);
 }

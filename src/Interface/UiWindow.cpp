@@ -28,8 +28,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 UiWindow::UiWindow (int width, int height, Vector2f const& position):
     UiElement(position, width, height),
-    topMost_(false),
-    focusedWidget_(NULL) {}
+    focusedWidget_(NULL),
+    topMost_(false) {}
 
 UiWindow::~UiWindow() {
     for (std::vector<UiElement*>::iterator i=widgets_.begin(); i != widgets_.end(); ++i)
