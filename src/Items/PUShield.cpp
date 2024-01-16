@@ -15,19 +15,24 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Items/PUShield.hpp"
+#include "Items/PUShield.hpp"
 
-# include "SpaceObjects/Ship.hpp"
-# include "Players/Player.hpp"
-# include "Particles/particles.hpp"
+#include "Particles/particles.hpp"
+#include "Players/Player.hpp"
+#include "SpaceObjects/Ship.hpp"
 
-void PUShield::draw() const {
-    if (!collected_) {
+void PUShield::draw() const
+{
+    if (!collected_)
+    {
         PowerUp::draw();
     }
-    else {
+    else
+    {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-        for (std::list<Ship*>::const_iterator it = ships_.begin(); it != ships_.end(); ++it) {
+        for (std::list<Ship *>::const_iterator it = ships_.begin();
+             it != ships_.end(); ++it)
+        {
 
             glPushMatrix();
             glLoadIdentity();
@@ -36,12 +41,16 @@ void PUShield::draw() const {
             // shield bubble
             glColor4f(1.0f, 0.5f, 0.8f, 0.9f);
             glBegin(GL_QUADS);
-                    const int posX = 5;
-                    const int posY = 0;
-                    glTexCoord2f(posX*0.15625f,     posY*0.15625f);     glVertex2f(-35, -35);
-                    glTexCoord2f(posX*0.15625f,     (posY+1)*0.15625f); glVertex2f(-35, +35);
-                    glTexCoord2f((posX+1)*0.15625f, (posY+1)*0.15625f); glVertex2f(+35, +35);
-                    glTexCoord2f((posX+1)*0.15625f, posY*0.15625f);     glVertex2f(+35, -35);
+            const int posX = 5;
+            const int posY = 0;
+            glTexCoord2f(posX * 0.15625f, posY * 0.15625f);
+            glVertex2f(-35, -35);
+            glTexCoord2f(posX * 0.15625f, (posY + 1) * 0.15625f);
+            glVertex2f(-35, +35);
+            glTexCoord2f((posX + 1) * 0.15625f, (posY + 1) * 0.15625f);
+            glVertex2f(+35, +35);
+            glTexCoord2f((posX + 1) * 0.15625f, posY * 0.15625f);
+            glVertex2f(+35, -35);
             glEnd();
 
             glPopMatrix();
@@ -49,9 +58,11 @@ void PUShield::draw() const {
     }
 }
 
-void PUShield::refreshLifeTime() {
+void PUShield::refreshLifeTime()
+{
     lifeTime_ = 0.f;
     totalLifeTime_ = 10.f;
     // direction is abused for texture coords
-    particles::spawnMultiple(5, particles::pPowerUpCollect, location_, Vector2f(4,0));
+    particles::spawnMultiple(5, particles::pPowerUpCollect, location_,
+                             Vector2f(4, 0));
 }

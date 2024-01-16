@@ -15,31 +15,32 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MINIAMMOFLUBBA_HPP_INCLUDED
-# define MINIAMMOFLUBBA_HPP_INCLUDED
+#ifndef MINIAMMOFLUBBA_HPP_INCLUDED
+#define MINIAMMOFLUBBA_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-class MiniAmmoFlubba: public Particle<MiniAmmoFlubba> {
-    public:
-        MiniAmmoFlubba(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class MiniAmmoFlubba : public Particle<MiniAmmoFlubba>
+{
+  public:
+    MiniAmmoFlubba(Vector2f const & location, Vector2f const & direction,
+                   Vector2f const & velocity, Color3f const & color,
+                   Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-        static void shockWave(Vector2f const& location, float strength, float radius);
+    static void shockWave(Vector2f const & location, float strength,
+                          float radius);
 
-        friend class Particle<MiniAmmoFlubba>;
+    friend class Particle<MiniAmmoFlubba>;
 
-    private:
-        Color3f color_;
-        static std::list<MiniAmmoFlubba*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<MiniAmmoFlubba *> activeParticles_;
 };
 
-# endif // MINIAMMOFLUBBA_HPP_INCLUDED
-
-
-
+#endif // MINIAMMOFLUBBA_HPP_INCLUDED

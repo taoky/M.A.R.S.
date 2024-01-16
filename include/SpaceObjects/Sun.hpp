@@ -15,23 +15,24 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SUN_HPP_INCLUDED
-# define SUN_HPP_INCLUDED
+#ifndef SUN_HPP_INCLUDED
+#define SUN_HPP_INCLUDED
 
-# include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 
-class Sun: public SpaceObject {
-    public:
-        Sun(Vector2f const& location, float radius);
+class Sun : public SpaceObject
+{
+  public:
+    Sun(Vector2f const & location, float radius);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-    private:
-        float eruptionTimer_;
+  private:
+    float eruptionTimer_;
 };
 
-# endif // SUN_HPP_INCLUDED
+#endif // SUN_HPP_INCLUDED

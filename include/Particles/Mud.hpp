@@ -15,27 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MUD_HPP_INCLUDED
-# define MUD_HPP_INCLUDED
+#ifndef MUD_HPP_INCLUDED
+#define MUD_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class Mud: public Particle<Mud> {
-    public:
-        Mud(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class Mud : public Particle<Mud>
+{
+  public:
+    Mud(Vector2f const & location, Vector2f const & direction,
+        Vector2f const & velocity, Color3f const & color,
+        Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<Mud>;
+    friend class Particle<Mud>;
 
-    private:
-        Color3f color_;
-        static std::list<Mud*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<Mud *> activeParticles_;
 };
 
-# endif // MUD_HPP_INCLUDED
-
-
+#endif // MUD_HPP_INCLUDED

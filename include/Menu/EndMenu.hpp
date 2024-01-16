@@ -15,28 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef ENDMENU_HPP_INCLUDED
-# define ENDMENU_HPP_INCLUDED
+#ifndef ENDMENU_HPP_INCLUDED
+#define ENDMENU_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class EndMenu: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class EndMenu : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        EndMenu(int width, int height): UiWindow(width, height) {}
-        EndMenu(EndMenu const& copy);
+  private:
+    EndMenu(int width, int height) : UiWindow(width, height) {}
+    EndMenu(EndMenu const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kNew_, kOptions_, kToMainMenu_, kHide_;
+    static bool kNew_, kOptions_, kToMainMenu_, kHide_;
 };
 
-# endif // ENDMENU_HPP_INCLUDED
-
-
+#endif // ENDMENU_HPP_INCLUDED

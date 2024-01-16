@@ -15,31 +15,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef LOCALPLAYER_HPP_INCLUDED
-# define LOCALPLAYER_HPP_INCLUDED
+#ifndef LOCALPLAYER_HPP_INCLUDED
+#define LOCALPLAYER_HPP_INCLUDED
 
-# include "Players/Player.hpp"
+#include "Players/Player.hpp"
 
 class Team;
 class KeyController;
 
-class LocalPlayer: public Player {
-    public:
-        LocalPlayer(controllers::ControlType type);
+class LocalPlayer : public Player
+{
+  public:
+    LocalPlayer(controllers::ControlType type);
 
-        Color3f const&           color()  const {return *color_;}
-        sf::String const&        name()   const {return *name_;}
-        int                      graphic()const {return *graphic_;}
+    Color3f const & color() const { return *color_; }
+    sf::String const & name() const { return *name_; }
+    int graphic() const { return *graphic_; }
 
-        friend class Team;
+    friend class Team;
 
-    private:
-        sf::String*  name_;
-        Color3f* color_;
-        int* graphic_;
-        KeyController* controller_;
+  private:
+    sf::String * name_;
+    Color3f * color_;
+    int * graphic_;
+    KeyController * controller_;
 };
 
-# endif // LOCALPLAYER_HPP_INCLUDED
-
-
+#endif // LOCALPLAYER_HPP_INCLUDED

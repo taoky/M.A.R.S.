@@ -15,35 +15,32 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef FREEZER_HPP_INCLUDED
-# define FREEZER_HPP_INCLUDED
+#ifndef FREEZER_HPP_INCLUDED
+#define FREEZER_HPP_INCLUDED
 
-# include "Specials/Special.hpp"
+#include "Specials/Special.hpp"
 
 /// Special: Freezer.
 /// A Freezing wave.
 
-class Freezer: public Special {
-    public:
-        /// Ctor which constructs the special.
-        Freezer(Ship* parent):
-              Special(specials::sFreeze, parent, sf::String("FREEZER")),
-              radius_(0.f) {};
+class Freezer : public Special
+{
+  public:
+    /// Ctor which constructs the special.
+    Freezer(Ship * parent)
+        : Special(specials::sFreeze, parent, sf::String("FREEZER")),
+          radius_(0.f){};
 
-        /// Freezes nearby ships.
-        void activate() const;
+    /// Freezes nearby ships.
+    void activate() const;
 
-        float radius() const;
+    float radius() const;
 
-        /// Draws the special.
-        void draw(float alpha) const;
+    /// Draws the special.
+    void draw(float alpha) const;
 
-    private:
-        mutable float radius_;
+  private:
+    mutable float radius_;
 };
 
-# endif // FREEZER_HPP_INCLUDED
-
-
-
-
+#endif // FREEZER_HPP_INCLUDED

@@ -15,35 +15,32 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef BLAST_HPP_INCLUDED
-# define BLAST_HPP_INCLUDED
+#ifndef BLAST_HPP_INCLUDED
+#define BLAST_HPP_INCLUDED
 
-# include "Specials/Special.hpp"
+#include "Specials/Special.hpp"
 
 /// Special: Blast.
 /// A blast wave.
 
-class Blast: public Special {
-    public:
-        /// Ctor which constructs the special.
-        Blast(Ship* parent):
-              Special(specials::sBlast, parent, sf::String("BLAST")),
-              radius_(0.f) {};
+class Blast : public Special
+{
+  public:
+    /// Ctor which constructs the special.
+    Blast(Ship * parent)
+        : Special(specials::sBlast, parent, sf::String("BLAST")),
+          radius_(0.f){};
 
-        /// Blasts away nearby ships.
-        void activate() const;
+    /// Blasts away nearby ships.
+    void activate() const;
 
-        float radius() const;
+    float radius() const;
 
-        /// Draws the special.
-        void draw(float alpha) const;
+    /// Draws the special.
+    void draw(float alpha) const;
 
-    private:
-        mutable float radius_;
+  private:
+    mutable float radius_;
 };
 
-# endif // BLAST_HPP_INCLUDED
-
-
-
-
+#endif // BLAST_HPP_INCLUDED

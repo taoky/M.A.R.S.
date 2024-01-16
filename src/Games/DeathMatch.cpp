@@ -15,66 +15,64 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Games/DeathMatch.hpp"
+#include "Games/DeathMatch.hpp"
 
-# include "Teams/DMTeam.hpp"
-# include "Players/players.hpp"
-# include "System/settings.hpp"
-# include "Media/music.hpp"
-# include "Players/players.hpp"
-# include "SpaceObjects/spaceObjects.hpp"
-# include "Teams/teams.hpp"
-# include "System/randomizer.hpp"
+#include "Media/music.hpp"
+#include "Players/players.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/randomizer.hpp"
+#include "System/settings.hpp"
+#include "Teams/DMTeam.hpp"
+#include "Teams/teams.hpp"
 
-DeathMatch::DeathMatch():
-    Game(games::gDeathMatch) {
+DeathMatch::DeathMatch() : Game(games::gDeathMatch)
+{
 
-    settings::C_EnabledWeapons  = settings::C_EnabledWeaponsByUser;
+    settings::C_EnabledWeapons = settings::C_EnabledWeaponsByUser;
     settings::C_EnabledSpecials = settings::C_EnabledSpecialsByUser;
 
     music::play();
 
-    if (settings::C_playerIteamL  | settings::C_playerIteamR)
-        players::addPlayer (teams::addTeam(new DMTeam(settings::C_playerITeamColor)), controllers::cPlayer1);
+    if (settings::C_playerIteamL | settings::C_playerIteamR)
+        players::addPlayer(
+            teams::addTeam(new DMTeam(settings::C_playerITeamColor)),
+            controllers::cPlayer1);
     if (settings::C_playerIIteamL | settings::C_playerIIteamR)
-        players::addPlayer (teams::addTeam(new DMTeam(settings::C_playerIITeamColor)), controllers::cPlayer2);
+        players::addPlayer(
+            teams::addTeam(new DMTeam(settings::C_playerIITeamColor)),
+            controllers::cPlayer2);
 
-    for (int i=0; i<settings::C_botsDeath; ++i) {
-        Team* newTeam = teams::addTeam(new DMTeam());
+    for (int i = 0; i < settings::C_botsDeath; ++i)
+    {
+        Team * newTeam = teams::addTeam(new DMTeam());
         Color3f color(newTeam->color());
-        color.h(newTeam->color().h()+10*randomizer::random(-5, 5));
-        color.v(newTeam->color().v()+randomizer::random(-0.5f, 0.5f));
+        color.h(newTeam->color().h() + 10 * randomizer::random(-5, 5));
+        color.v(newTeam->color().v() + randomizer::random(-0.5f, 0.5f));
         players::addPlayer(newTeam, controllers::cBot, color);
     }
 
-    teams::assignHomes(spaceObjects::addHome(HOME_MIDDLE, 100, Color3f(0.9f, 0.7f, 1.0f)));
+    teams::assignHomes(
+        spaceObjects::addHome(HOME_MIDDLE, 100, Color3f(0.9f, 0.7f, 1.0f)));
     players::createShips();
 
     spaceObjects::populateSpace(5.f, 10.f, 4);
-    zones::createRaster(4,3);
+    zones::createRaster(4, 3);
 }
-void DeathMatch::draw() const {
-    if (settings::C_drawZones) zones::draw();
+void DeathMatch::draw() const
+{
+    if (settings::C_drawZones)
+        zones::draw();
     Game::draw();
-
 }
 
-void DeathMatch::restart() {
+void DeathMatch::restart()
+{
     Game::restart();
 
-    teams::assignHomes(spaceObjects::addHome(HOME_MIDDLE, 100, Color3f(1.f, 1.f, 1.f)));
+    teams::assignHomes(
+        spaceObjects::addHome(HOME_MIDDLE, 100, Color3f(1.f, 1.f, 1.f)));
     players::createShips();
 
     spaceObjects::populateSpace(5.f, 10.f, 4);
-    zones::createRaster(4,3);
+    zones::createRaster(4, 3);
 }
-
-
-
-
-
-
-
-
-
-

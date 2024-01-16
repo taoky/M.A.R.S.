@@ -15,45 +15,55 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Games/Game.hpp"
+#include "Games/Game.hpp"
 
-# include "SpaceObjects/spaceObjects.hpp"
-# include "SpaceObjects/balls.hpp"
-# include "SpaceObjects/ships.hpp"
-# include "Particles/particles.hpp"
-# include "System/timer.hpp"
-# include "System/settings.hpp"
-# include "Players/players.hpp"
-# include "Teams/Team.hpp"
-# include "Hud/hud.hpp"
-# include "Zones/zones.hpp"
-# include "DecoObjects/decoObjects.hpp"
-# include "Items/items.hpp"
-# include "Menu/menus.hpp"
-# include "System/window.hpp"
-# include "Media/announcer.hpp"
-# include "Shaders/postFX.hpp"
-# include "SpaceObjects/stars.hpp"
-# include "TrailEffects/trailEffects.hpp"
-# include "Teams/teams.hpp"
+#include "DecoObjects/decoObjects.hpp"
+#include "Hud/hud.hpp"
+#include "Items/items.hpp"
+#include "Media/announcer.hpp"
+#include "Menu/menus.hpp"
+#include "Particles/particles.hpp"
+#include "Players/players.hpp"
+#include "Shaders/postFX.hpp"
+#include "SpaceObjects/balls.hpp"
+#include "SpaceObjects/ships.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "SpaceObjects/stars.hpp"
+#include "System/settings.hpp"
+#include "System/timer.hpp"
+#include "System/window.hpp"
+#include "Teams/Team.hpp"
+#include "Teams/teams.hpp"
+#include "TrailEffects/trailEffects.hpp"
+#include "Zones/zones.hpp"
 
-Game::Game(games::GameType const& type):
-    type_(type),
-    startTime_(timer::totalTime()),
-    ended_(false) {
-        switch (type_) {
-            case games::gSpaceBall:  pointLimit_ = settings::C_pointLimitSB;    break;
-            case games::gCannonKeep: pointLimit_ = settings::C_pointLimitCK;    break;
-            case games::gDeathMatch: pointLimit_ = settings::C_pointLimitDM;  break;
-            case games::gMenu:       pointLimit_ = 9999999;                   break;
-            default:                 pointLimit_ = settings::C_pointLimitTDM;
-        }
+Game::Game(games::GameType const & type)
+    : type_(type), startTime_(timer::totalTime()), ended_(false)
+{
+    switch (type_)
+    {
+    case games::gSpaceBall:
+        pointLimit_ = settings::C_pointLimitSB;
+        break;
+    case games::gCannonKeep:
+        pointLimit_ = settings::C_pointLimitCK;
+        break;
+    case games::gDeathMatch:
+        pointLimit_ = settings::C_pointLimitDM;
+        break;
+    case games::gMenu:
+        pointLimit_ = 9999999;
+        break;
+    default:
+        pointLimit_ = settings::C_pointLimitTDM;
+    }
 
     hud::init();
     stars::init();
-    }
+}
 
-Game::~Game() {
+Game::~Game()
+{
     items::clear();
     ships::clear();
     balls::clear();
@@ -69,22 +79,29 @@ Game::~Game() {
     timer::resetSlowMotion();
 }
 
-void Game::update() {
+void Game::update()
+{
     announcer::update();
     hud::update();
-    if ((!menus::visible()) || (type_ == games::gMenu)) {
+    if ((!menus::visible()) || (type_ == games::gMenu))
+    {
         spaceObjects::update();
         particles::update();
         items::update();
         postFX::update();
         trailEffects::update();
 
-        if (teams::getFirstPoints() >= pointLimit_) {
-            if (!ended_) {
-                Team* best(NULL);
-                int   most(0);
-                for (std::vector<Team*>::const_iterator it = teams::getAllTeams().begin(); it != teams::getAllTeams().end(); ++it)
-                    if (most < (*it)->points()) {
+        if (teams::getFirstPoints() >= pointLimit_)
+        {
+            if (!ended_)
+            {
+                Team * best(NULL);
+                int most(0);
+                for (std::vector<Team *>::const_iterator it =
+                         teams::getAllTeams().begin();
+                     it != teams::getAllTeams().end(); ++it)
+                    if (most < (*it)->points())
+                    {
                         best = *it;
                         most = (*it)->points();
                     }
@@ -97,7 +114,8 @@ void Game::update() {
             if (type_ != games::gDeathMatch)
                 hud::displayPoints();
         }
-        else {
+        else
+        {
             decoObjects::update();
             ships::update();
             balls::update();
@@ -110,7 +128,8 @@ void Game::update() {
         startTime_ += timer::frameTime();
 }
 
-void Game::draw() const {
+void Game::draw() const
+{
     if (settings::C_StarField)
         particles::drawStars();
     particles::drawLower();
@@ -124,7 +143,8 @@ void Game::draw() const {
     items::draw();
 }
 
-void Game::restart() {
+void Game::restart()
+{
     items::clear();
     ships::clear();
     balls::clear();
@@ -145,16 +165,8 @@ void Game::restart() {
     ended_ = false;
 }
 
-games::GameType Game::type() const {
-    return type_;
-}
+games::GameType Game::type() const { return type_; }
 
-float Game::elapsedTime() const {
-    return timer::totalTime() - startTime_;
-}
+float Game::elapsedTime() const { return timer::totalTime() - startTime_; }
 
-bool Game::ended() const {
-    return ended_;
-}
-
-
+bool Game::ended() const { return ended_; }

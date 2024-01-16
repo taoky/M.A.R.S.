@@ -15,39 +15,35 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SHOCKER_HPP_INCLUDED
-# define SHOCKER_HPP_INCLUDED
+#ifndef SHOCKER_HPP_INCLUDED
+#define SHOCKER_HPP_INCLUDED
 
-# include "Specials/Special.hpp"
-# include "SpaceObjects/Ball.hpp"
+#include "SpaceObjects/Ball.hpp"
+#include "Specials/Special.hpp"
 
-# include <list>
+#include <list>
 
 /// Special: Shocker.
 /// Fires shocking bolts.
 
-class Shocker: public Special {
-    public:
-        /// Ctor which constructs the special.
-        Shocker(Ship* parent):
-              Special(specials::sShocker, parent, sf::String("SHOCKER")) {};
+class Shocker : public Special
+{
+  public:
+    /// Ctor which constructs the special.
+    Shocker(Ship * parent)
+        : Special(specials::sShocker, parent, sf::String("SHOCKER")){};
 
-        /// Blasts away nearby ships.
-        void activate() const;
+    /// Blasts away nearby ships.
+    void activate() const;
 
-        float radius() const;
+    float radius() const;
 
-        /// Draws the special.
-        void draw(float alpha) const;
+    /// Draws the special.
+    void draw(float alpha) const;
 
-    private:
-        mutable std::list<Ship*> targets_;
-        mutable Ball* ballTarget_;
+  private:
+    mutable std::list<Ship *> targets_;
+    mutable Ball * ballTarget_;
 };
 
-# endif // SHOCKER_HPP_INCLUDED
-
-
-
-
-
+#endif // SHOCKER_HPP_INCLUDED

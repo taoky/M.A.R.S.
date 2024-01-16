@@ -15,33 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TUTORIALWINDOW_HPP_INCLUDED
-# define TUTORIALWINDOW_HPP_INCLUDED
+#ifndef TUTORIALWINDOW_HPP_INCLUDED
+#define TUTORIALWINDOW_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class TutorialWindow: public UiWindow {
-    public:
-        static UiWindow* get(sf::String* text, sf::String* title, int index, bool info, bool next);
-        void checkWidgets();
-        void onShow() {}
+class TutorialWindow : public UiWindow
+{
+  public:
+    static UiWindow * get(sf::String * text, sf::String * title, int index,
+                          bool info, bool next);
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        TutorialWindow(int width, int height): UiWindow(width, height) {}
-        TutorialWindow(TutorialWindow const& copy);
+  private:
+    TutorialWindow(int width, int height) : UiWindow(width, height) {}
+    TutorialWindow(TutorialWindow const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_;
-        static sf::String index_;
+    static bool kOk_;
+    static sf::String index_;
 };
 
-# endif // TUTORIALWINDOW_HPP_INCLUDED
-
-
-
-
-
-
+#endif // TUTORIALWINDOW_HPP_INCLUDED

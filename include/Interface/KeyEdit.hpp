@@ -15,32 +15,33 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef KEYEDIT_HPP_INCLUDED
-# define KEYEDIT_HPP_INCLUDED
+#ifndef KEYEDIT_HPP_INCLUDED
+#define KEYEDIT_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Label.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiElement.hpp"
 
-class KeyEdit: public UiElement {
-    public:
-        KeyEdit (sf::String* text, sf::String* toolTip, Key* value, Vector2f const& topLeft, int width, int labelWidth);
-        ~KeyEdit ();
+class KeyEdit : public UiElement
+{
+  public:
+    KeyEdit(sf::String * text, sf::String * toolTip, Key * value,
+            Vector2f const & topLeft, int width, int labelWidth);
+    ~KeyEdit();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
+    void mouseMoved(Vector2f const & position);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
 
-        void draw() const;
+    void draw() const;
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-    private:
-        Key* value_;
-        Label* label_;
-        sf::String* toolTip_;
-        int labelWidth_;
+  private:
+    Key * value_;
+    Label * label_;
+    sf::String * toolTip_;
+    int labelWidth_;
 };
 
-# endif
-
+#endif

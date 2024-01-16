@@ -15,29 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef DUST_HPP_INCLUDED
-# define DUST_HPP_INCLUDED
+#ifndef DUST_HPP_INCLUDED
+#define DUST_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class Dust: public Particle<Dust> {
-    public:
-        Dust(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class Dust : public Particle<Dust>
+{
+  public:
+    Dust(Vector2f const & location, Vector2f const & direction,
+         Vector2f const & velocity, Color3f const & color,
+         Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        static void shockWave(Vector2f const& location, float strength, float radius);
+    static void shockWave(Vector2f const & location, float strength,
+                          float radius);
 
-        friend class Particle<Dust>;
+    friend class Particle<Dust>;
 
-    private:
-        Color3f color_;
-        static std::list<Dust*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<Dust *> activeParticles_;
 };
 
-# endif // DUST_HPP_INCLUDED
-
-
+#endif // DUST_HPP_INCLUDED

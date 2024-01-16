@@ -15,34 +15,33 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef NEWGAMEMENU_HPP_INCLUDED
-# define NEWGAMEMENU_HPP_INCLUDED
+#ifndef NEWGAMEMENU_HPP_INCLUDED
+#define NEWGAMEMENU_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
 class Tab;
 
-class NewGameMenu: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow();
+class NewGameMenu : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow();
 
-        static void reset();
+    static void reset();
 
-    private:
-        NewGameMenu(int width, int height): UiWindow(width, height) {}
-        NewGameMenu(NewGameMenu const& copy);
+  private:
+    NewGameMenu(int width, int height) : UiWindow(width, height) {}
+    NewGameMenu(NewGameMenu const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kStart_, kInfo_, kCancel_, playerI_, playerII_,
-                    tSB_, tDM_, tTDM_, tCK_, tGI_, tRLY_, kWeaponOptions_;
+    static bool kStart_, kInfo_, kCancel_, playerI_, playerII_, tSB_, tDM_,
+        tTDM_, tCK_, tGI_, tRLY_, kWeaponOptions_;
 
-        static Tab *tabSpaceBall_, *tabDeathMatch_, *tabTeamDeathMatch_, *tabCannonKeep_,
-                   *tabGraveItation_, *tabRally_;
+    static Tab *tabSpaceBall_, *tabDeathMatch_, *tabTeamDeathMatch_,
+        *tabCannonKeep_, *tabGraveItation_, *tabRally_;
 };
 
-# endif // NEWGAMEMENU_HPP_INCLUDED
-
-
+#endif // NEWGAMEMENU_HPP_INCLUDED

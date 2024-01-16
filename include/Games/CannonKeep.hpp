@@ -15,10 +15,10 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef CANNONKEEP_HPP_INCLUDED
-# define CANNONKEEP_HPP_INCLUDED
+#ifndef CANNONKEEP_HPP_INCLUDED
+#define CANNONKEEP_HPP_INCLUDED
 
-# include "Games/Game.hpp"
+#include "Games/Game.hpp"
 
 /// Game: CannonKeep (CK).
 /// A funny game, where both teams aim on keeping the control of
@@ -26,16 +26,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 /// oponents home planet. The team which is the first to destroy
 /// the others planet will win the match.
 
-class CannonKeep: public Game {
-    public:
-        /// Ctor starts a new game.
-        CannonKeep();
+class CannonKeep : public Game
+{
+  public:
+    /// Ctor starts a new game.
+    CannonKeep();
 
-        /// Draws the game.
-        void draw() const;
+    /// Draws the game.
+    void draw() const;
 
-        /// Restarts the game.
-        void restart();
+    /// Restarts the game.
+    void restart();
 };
 
-# endif // CANNONKEEP_HPP_INCLUDED
+#endif // CANNONKEEP_HPP_INCLUDED

@@ -15,32 +15,25 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef GRAVEITATION_HPP_INCLUDED
-# define GRAVEITATION_HPP_INCLUDED
+#ifndef GRAVEITATION_HPP_INCLUDED
+#define GRAVEITATION_HPP_INCLUDED
 
-# include "Games/Game.hpp"
+#include "Games/Game.hpp"
 
 /// Game: GraveItation (GI).
 /// InstaGib with one instantly killing weapon.
 
-class GraveItation: public Game {
-    public:
-        /// Ctor starts a new game.
-        GraveItation();
+class GraveItation : public Game
+{
+  public:
+    /// Ctor starts a new game.
+    GraveItation();
 
-        /// Draws the game.
-        void draw() const;
+    /// Draws the game.
+    void draw() const;
 
-        /// Restarts the game.
-        void restart();
+    /// Restarts the game.
+    void restart();
 };
 
-# endif // GRAVEITATION_HPP_INCLUDED
-
-
-
-
-
-
-
-
+#endif // GRAVEITATION_HPP_INCLUDED

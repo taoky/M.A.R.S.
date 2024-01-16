@@ -15,35 +15,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef WEAPONOPTIONS_HPP_INCLUDED
-# define WEAPONOPTIONS_HPP_INCLUDED
+#ifndef WEAPONOPTIONS_HPP_INCLUDED
+#define WEAPONOPTIONS_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class WeaponOptions: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow();
+class WeaponOptions : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow();
 
-        static void reset();
+    static void reset();
 
-    private:
-        WeaponOptions(int width, int height): UiWindow(width, height) {}
-        WeaponOptions(WeaponOptions const& copy);
+  private:
+    WeaponOptions(int width, int height) : UiWindow(width, height) {}
+    WeaponOptions(WeaponOptions const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_;
-        static bool kAFK_, kBurner_, kFist_, kFlubba, kShotgun_, kRocket_, kRofle_, kH2OMG_;
-        static bool kFreeze_, kHeal_, kBlast_, kFireWall_, kShocker_;
+    static bool kOk_;
+    static bool kAFK_, kBurner_, kFist_, kFlubba, kShotgun_, kRocket_, kRofle_,
+        kH2OMG_;
+    static bool kFreeze_, kHeal_, kBlast_, kFireWall_, kShocker_;
 };
 
-# endif // WEAPONOPTIONS_HPP_INCLUDED
-
-
-
-
-
-
-
+#endif // WEAPONOPTIONS_HPP_INCLUDED

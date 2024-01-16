@@ -15,10 +15,10 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TUTORIAL_HPP_INCLUDED
-# define TUTORIAL_HPP_INCLUDED
+#ifndef TUTORIAL_HPP_INCLUDED
+#define TUTORIAL_HPP_INCLUDED
 
-# include "Games/Game.hpp"
+#include "Games/Game.hpp"
 
 class Home;
 class Player;
@@ -26,45 +26,46 @@ class Player;
 /// Game: Tutorial.
 /// This is the tutorial which, in fact,  is a special game.
 
-class Tutorial: public Game {
-    public:
-        /// Ctor starts the tutorial.
-        Tutorial();
+class Tutorial : public Game
+{
+  public:
+    /// Ctor starts the tutorial.
+    Tutorial();
 
-        /// Updates the game.
-        void update();
+    /// Updates the game.
+    void update();
 
-        /// Draws the game.
-        void draw() const;
+    /// Draws the game.
+    void draw() const;
 
-        /// Restarts the game.
-        void restart();
+    /// Restarts the game.
+    void restart();
 
-    private:
-        /// State of the tutorial.
-        /// Increases step by step when advancing in th tutorial.
-        int state_;
+  private:
+    /// State of the tutorial.
+    /// Increases step by step when advancing in th tutorial.
+    int state_;
 
-        /// Used for jumps between states.
-        int savedState_;
+    /// Used for jumps between states.
+    int savedState_;
 
-        /// Pointer to the evil left-hand planet.
-        Home* evilHome_;
+    /// Pointer to the evil left-hand planet.
+    Home * evilHome_;
 
-        /// Pointer to the weak opponent.
-        Player* evilPlayer1_;
+    /// Pointer to the weak opponent.
+    Player * evilPlayer1_;
 
-        /// Pointer to the strong opponent.
-        Player* evilPlayer2_;
+    /// Pointer to the strong opponent.
+    Player * evilPlayer2_;
 
-        /// A friend.
-        Player* friendPlayer_;
+    /// A friend.
+    Player * friendPlayer_;
 
-        /// Some data
-        ///@{
-        float timer_, deadTimer_;
-        bool dead_, life_, fuel_, name_;
-        ///@}
+    /// Some data
+    ///@{
+    float timer_, deadTimer_;
+    bool dead_, life_, fuel_, name_;
+    ///@}
 };
 
-# endif // TUTORIAL_HPP_INCLUDED
+#endif // TUTORIAL_HPP_INCLUDED

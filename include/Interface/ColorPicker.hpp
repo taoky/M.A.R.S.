@@ -15,38 +15,39 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef COLORPICKER_HPP_INCLUDED
-# define COLORPICKER_HPP_INCLUDED
+#ifndef COLORPICKER_HPP_INCLUDED
+#define COLORPICKER_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Label.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiElement.hpp"
 
 class UiWindow;
 
-class ColorPicker: public UiElement {
-    public:
-        ColorPicker (sf::String* text, Color3f* value, Vector2f const& topLeft, int width, int labelWidth=185);
-        ~ColorPicker ();
+class ColorPicker : public UiElement
+{
+  public:
+    ColorPicker(sf::String * text, Color3f * value, Vector2f const & topLeft,
+                int width, int labelWidth = 185);
+    ~ColorPicker();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
+    void mouseMoved(Vector2f const & position);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
 
-        void draw() const;
+    void draw() const;
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-        friend class ColorPickerWindow;
+    friend class ColorPickerWindow;
 
-    private:
-        UiWindow* colorWindow_;
+  private:
+    UiWindow * colorWindow_;
 
-        Color3f* currentValue_;
-        Label* label_;
-        int labelWidth_;
-        bool opened_;
+    Color3f * currentValue_;
+    Label * label_;
+    int labelWidth_;
+    bool opened_;
 };
 
-# endif // COLORPICKER_HPP_INCLUDED
-
+#endif // COLORPICKER_HPP_INCLUDED

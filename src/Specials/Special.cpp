@@ -15,26 +15,25 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Specials/Special.hpp"
+#include "Specials/Special.hpp"
 
-# include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/Ship.hpp"
 
-Special::Special(specials::SpecialType type, Ship* parent, sf::String name):
-    parent_(parent),
-    timer_(0),
-    type_(type),
-    name_(name) {}
+Special::Special(specials::SpecialType type, Ship * parent, sf::String name)
+    : parent_(parent), timer_(0), type_(type), name_(name)
+{
+}
 
-void Special::next() {
+void Special::next()
+{
     parent_->currentSpecial_ = specials::createNext(type_, parent_);
     delete this;
 }
 
-void Special::previous() {
+void Special::previous()
+{
     parent_->currentSpecial_ = specials::createPrev(type_, parent_);
     delete this;
 }
 
-void Special::stop() {
-    timer_ = 0.f;
-}
+void Special::stop() { timer_ = 0.f; }

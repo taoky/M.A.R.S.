@@ -15,33 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef PUFUEL_HPP_INCLUDED
-# define PUFUEL_HPP_INCLUDED
+#ifndef PUFUEL_HPP_INCLUDED
+#define PUFUEL_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
-# include "Items/PowerUp.hpp"
-# include "System/randomizer.hpp"
+#include "Items/PowerUp.hpp"
+#include "System/Vector2f.hpp"
+#include "System/randomizer.hpp"
 
-# include <SFML/System.hpp>
+#include <SFML/System.hpp>
 
-class PUFuel: public PowerUp{
-    public:
-        PUFuel(Vector2f const& location):
-            PowerUp(items::puFuel, location, 15.f, randomizer::random(8.f, 12.f), 3, 1, Color3f(1.f, 1.f, 0.2f)){}
+class PUFuel : public PowerUp
+{
+  public:
+    PUFuel(Vector2f const & location)
+        : PowerUp(items::puFuel, location, 15.f, randomizer::random(8.f, 12.f),
+                  3, 1, Color3f(1.f, 1.f, 0.2f))
+    {
+    }
 
-        void draw() const;
+    void draw() const;
 
-    private:
-        void refreshLifeTime();
+  private:
+    void refreshLifeTime();
 };
 
-# endif // PUFUEL_HPP_INCLUDED
-
-
-
-
-
-
-
-
-
+#endif // PUFUEL_HPP_INCLUDED

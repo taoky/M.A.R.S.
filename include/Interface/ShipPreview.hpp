@@ -15,25 +15,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef COLORPREVIEW_HPP_INCLUDED
-# define COLORPREVIEW_HPP_INCLUDED
+#ifndef COLORPREVIEW_HPP_INCLUDED
+#define COLORPREVIEW_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "System/Color3f.hpp"
+#include "Interface/UiElement.hpp"
+#include "System/Color3f.hpp"
 
-class ShipPreview: public UiElement {
-    public:
-        ShipPreview (Color3f* color, Color3f* teamColor, int* graphic, Vector2f const& topLeft);
+class ShipPreview : public UiElement
+{
+  public:
+    ShipPreview(Color3f * color, Color3f * teamColor, int * graphic,
+                Vector2f const & topLeft);
 
-        void draw() const;
+    void draw() const;
 
-        bool isTabable() const {return false;}
+    bool isTabable() const { return false; }
 
-    private:
-        Color3f* color_;
-        Color3f* teamColor_;
-        int*     graphic_;
+  private:
+    Color3f * color_;
+    Color3f * teamColor_;
+    int * graphic_;
 };
 
-# endif
-
+#endif

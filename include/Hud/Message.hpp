@@ -15,37 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MESSAGE_HPP_INCLUDED
-# define MESSAGE_HPP_INCLUDED
+#ifndef MESSAGE_HPP_INCLUDED
+#define MESSAGE_HPP_INCLUDED
 
-# include "Hud/HudElement.hpp"
-# include "System/Color3f.hpp"
-# include "System/window.hpp"
+#include "Hud/HudElement.hpp"
+#include "System/Color3f.hpp"
+#include "System/window.hpp"
 
-class Message: public HudElement {
-    public:
-        Message(sf::String const& message, Color3f const& color);
-        virtual ~Message() {};
+class Message : public HudElement
+{
+  public:
+    Message(sf::String const & message, Color3f const & color);
+    virtual ~Message(){};
 
-        void draw() const;
-        void update();
+    void draw() const;
+    void update();
 
-        bool isDead() const;
+    bool isDead() const;
 
-    private:
-        sf::String text_;
-        Color3f    color_;
-        Vector2f   location_;
-        float      timer_;
-        float      alpha_;
-        float      speed_;
+  private:
+    sf::String text_;
+    Color3f color_;
+    Vector2f location_;
+    float timer_;
+    float alpha_;
+    float speed_;
 };
 
-# endif // MESSAGE_HPP_INCLUDED
-
-
-
-
-
-
-
+#endif // MESSAGE_HPP_INCLUDED

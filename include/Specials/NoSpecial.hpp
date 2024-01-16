@@ -15,31 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef NOSPECIAL_HPP_INCLUDED
-# define NOSPECIAL_HPP_INCLUDED
+#ifndef NOSPECIAL_HPP_INCLUDED
+#define NOSPECIAL_HPP_INCLUDED
 
-# include "Specials/Special.hpp"
+#include "Specials/Special.hpp"
 
 /// Special: NoSpecial.
 /// Nothing at all...
 
-class NoSpecial: public Special {
-    public:
-        /// Ctor which constructs the special.
-        NoSpecial(Ship* parent):
-              Special(specials::sNoSpecial, parent, sf::String("Nothing")) {};
+class NoSpecial : public Special
+{
+  public:
+    /// Ctor which constructs the special.
+    NoSpecial(Ship * parent)
+        : Special(specials::sNoSpecial, parent, sf::String("Nothing")){};
 
-        /// Does nothing.
-        void activate() const {}
+    /// Does nothing.
+    void activate() const {}
 
-        float radius() const { return .0F; }
+    float radius() const { return .0F; }
 
-        /// Draws the special.
-        void draw(float alpha) const;
+    /// Draws the special.
+    void draw(float alpha) const;
 };
 
-# endif // NOSPECIAL_HPP_INCLUDED
-
-
-
-
+#endif // NOSPECIAL_HPP_INCLUDED

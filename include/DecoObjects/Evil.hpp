@@ -15,19 +15,17 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef EVIL_HPP_INCLUDED
-# define EVIL_HPP_INCLUDED
+#ifndef EVIL_HPP_INCLUDED
+#define EVIL_HPP_INCLUDED
 
-# include "DecoObjects/DecoObject.hpp"
+#include "DecoObjects/DecoObject.hpp"
 
 /// A very evil sign
 
-class Evil: public DecoObject {
-    public:
-        void draw() const;
+class Evil : public DecoObject
+{
+  public:
+    void draw() const;
 };
 
-# endif // EVIL_HPP_INCLUDED
-
-
-
+#endif // EVIL_HPP_INCLUDED

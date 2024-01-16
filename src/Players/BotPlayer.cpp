@@ -15,16 +15,17 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Players/BotPlayer.hpp"
+#include "Players/BotPlayer.hpp"
 
-# include "Controllers/controllers.hpp"
-# include "System/settings.hpp"
+#include "Controllers/controllers.hpp"
+#include "System/settings.hpp"
 
-BotPlayer::BotPlayer(std::pair<sf::String, int>const& nameStrength, Color3f const& color, int  graphic):
-    Player(controllers::cBot),
-    name_(nameStrength.first),
-    color_(color),
-    graphic_(graphic) {
-        controller_ = controllers::addBotController(this, static_cast<float>(nameStrength.second+settings::C_iDumb)*0.005f);
+BotPlayer::BotPlayer(std::pair<sf::String, int> const & nameStrength,
+                     Color3f const & color, int graphic)
+    : Player(controllers::cBot), name_(nameStrength.first), color_(color),
+      graphic_(graphic)
+{
+    controller_ = controllers::addBotController(
+        this,
+        static_cast<float>(nameStrength.second + settings::C_iDumb) * 0.005f);
 }
-

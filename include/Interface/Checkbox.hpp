@@ -15,31 +15,32 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef CHECKBOX_HPP_INCLUDED
-# define CHECKBOX_HPP_INCLUDED
+#ifndef CHECKBOX_HPP_INCLUDED
+#define CHECKBOX_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Label.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiElement.hpp"
 
-class Checkbox: public UiElement {
-    public:
-        Checkbox (sf::String* text, sf::String* toolTip, bool* value, Vector2f const& topLeft, int width);
-        ~Checkbox ();
+class Checkbox : public UiElement
+{
+  public:
+    Checkbox(sf::String * text, sf::String * toolTip, bool * value,
+             Vector2f const & topLeft, int width);
+    ~Checkbox();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
+    void mouseMoved(Vector2f const & position);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
 
-        void draw() const;
+    void draw() const;
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-    private:
-        bool* value_;
-        Label* label_;
-        sf::String* toolTip_;
+  private:
+    bool * value_;
+    Label * label_;
+    sf::String * toolTip_;
 };
 
-# endif
-
+#endif

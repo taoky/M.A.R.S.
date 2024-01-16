@@ -15,30 +15,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef POWERUPCOLLECT_HPP_INCLUDED
-# define POWERUPCOLLECT_HPP_INCLUDED
+#ifndef POWERUPCOLLECT_HPP_INCLUDED
+#define POWERUPCOLLECT_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class PowerUpCollect: public Particle<PowerUpCollect> {
-    public:
-        PowerUpCollect(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class PowerUpCollect : public Particle<PowerUpCollect>
+{
+  public:
+    PowerUpCollect(Vector2f const & location, Vector2f const & direction,
+                   Vector2f const & velocity, Color3f const & color,
+                   Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<PowerUpCollect>;
+    friend class Particle<PowerUpCollect>;
 
-    private:
-        Color3f color_;
-        int const texX_;
-        int const texY_;
-        static std::list<PowerUpCollect*> activeParticles_;
+  private:
+    Color3f color_;
+    int const texX_;
+    int const texY_;
+    static std::list<PowerUpCollect *> activeParticles_;
 };
 
-# endif // POWERUPCOLLECT_HPP_INCLUDED
-
-
-
+#endif // POWERUPCOLLECT_HPP_INCLUDED

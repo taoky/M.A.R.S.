@@ -15,19 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SPECIALS_HPP_INCLUDED
-# define SPECIALS_HPP_INCLUDED
+#ifndef SPECIALS_HPP_INCLUDED
+#define SPECIALS_HPP_INCLUDED
 
 class Special;
 class Ship;
 
-namespace specials {
-    enum SpecialType {sFreeze=1, sHeal=2, sBlast=4, sFireWall=8, sShocker=16, sNoSpecial=32};
+namespace specials
+{
+enum SpecialType
+{
+    sFreeze = 1,
+    sHeal = 2,
+    sBlast = 4,
+    sFireWall = 8,
+    sShocker = 16,
+    sNoSpecial = 32
+};
 
-    Special* create    (SpecialType type, Ship* parent);
-    Special* createNext(SpecialType type, Ship* parent);
-    Special* createPrev(SpecialType type, Ship* parent);
-}
+Special * create(SpecialType type, Ship * parent);
+Special * createNext(SpecialType type, Ship * parent);
+Special * createPrev(SpecialType type, Ship * parent);
+} // namespace specials
 
-# endif // SPECIALS_HPP_INCLUDED
-
+#endif // SPECIALS_HPP_INCLUDED

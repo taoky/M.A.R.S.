@@ -15,19 +15,15 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef COUNTDOWN_HPP_INCLUDED
-# define COUNTDOWN_HPP_INCLUDED
+#ifndef COUNTDOWN_HPP_INCLUDED
+#define COUNTDOWN_HPP_INCLUDED
 
-# include "Hud/HudElement.hpp"
+#include "Hud/HudElement.hpp"
 
-class CountDown: public HudElement {
-    public:
-        void draw() const;
+class CountDown : public HudElement
+{
+  public:
+    void draw() const;
 };
 
-# endif // CANNON_HPP_INCLUDED
-
-
-
-
-
+#endif // CANNON_HPP_INCLUDED

@@ -15,36 +15,35 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef FLUBBA_HPP_INCLUDED
-# define FLUBBA_HPP_INCLUDED
+#ifndef FLUBBA_HPP_INCLUDED
+#define FLUBBA_HPP_INCLUDED
 
-# include "Weapons/Weapon.hpp"
+#include "Weapons/Weapon.hpp"
 
 /// Weapon: Flubba.
 /// A short distance gun, populates the screen with ugly green bubbles.
 
-class Flubba: public Weapon {
-    public:
-        /// Ctor which constructs the weapon.
-        Flubba(Ship* parent):
-              Weapon(weapons::wFlubba, parent, sf::String("FLUBBA")) {};
+class Flubba : public Weapon
+{
+  public:
+    /// Ctor which constructs the weapon.
+    Flubba(Ship * parent)
+        : Weapon(weapons::wFlubba, parent, sf::String("FLUBBA")){};
 
-        /// Spawns some particles.
-        void fire() const;
+    /// Spawns some particles.
+    void fire() const;
 
-        /// Draws the weapon.
-        void draw(float alpha) const;
+    /// Draws the weapon.
+    void draw(float alpha) const;
 
-        /// Returns the maximum distance from which this weapon should be used.
-        float maxDistance() const;
+    /// Returns the maximum distance from which this weapon should be used.
+    float maxDistance() const;
 
-        /// Returns the minimum distance from which this weapon should be used.
-        float minDistance() const;
+    /// Returns the minimum distance from which this weapon should be used.
+    float minDistance() const;
 
-        /// Returns the maximum angle from which this weapon should be used.
-        float maxAngle()   const;
+    /// Returns the maximum angle from which this weapon should be used.
+    float maxAngle() const;
 };
 
-# endif // FLUBBA_HPP_INCLUDED
-
-
+#endif // FLUBBA_HPP_INCLUDED

@@ -15,67 +15,79 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Games/CannonKeep.hpp"
+#include "Games/CannonKeep.hpp"
 
-# include "Teams/CKTeam.hpp"
-# include "System/settings.hpp"
-# include "Media/music.hpp"
-# include "Items/items.hpp"
-# include "DecoObjects/decoObjects.hpp"
-# include "Players/players.hpp"
-# include "Teams/teams.hpp"
-# include "SpaceObjects/spaceObjects.hpp"
+#include "DecoObjects/decoObjects.hpp"
+#include "Items/items.hpp"
+#include "Media/music.hpp"
+#include "Players/players.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/settings.hpp"
+#include "Teams/CKTeam.hpp"
+#include "Teams/teams.hpp"
 
-CannonKeep::CannonKeep():
-    Game(games::gCannonKeep) {
+CannonKeep::CannonKeep() : Game(games::gCannonKeep)
+{
 
-    settings::C_EnabledWeapons  = settings::C_EnabledWeaponsByUser;
+    settings::C_EnabledWeapons = settings::C_EnabledWeaponsByUser;
     settings::C_EnabledSpecials = settings::C_EnabledSpecialsByUser;
 
     music::play();
 
-    Team* myTeamL = NULL;
-    Team* myTeamR = NULL;
+    Team * myTeamL = NULL;
+    Team * myTeamR = NULL;
 
-    if (settings::C_playerIteamL) {
+    if (settings::C_playerIteamL)
+    {
         myTeamL = new CKTeam(settings::C_playerITeamColor);
         players::addPlayer(myTeamL, controllers::cPlayer1);
     }
-    else if (settings::C_playerIteamR) {
+    else if (settings::C_playerIteamR)
+    {
         myTeamR = new CKTeam(settings::C_playerITeamColor);
         players::addPlayer(myTeamR, controllers::cPlayer1);
     }
 
-    if (settings::C_playerIIteamL) {
-        if (!myTeamL) myTeamL = new CKTeam(settings::C_playerIITeamColor);
+    if (settings::C_playerIIteamL)
+    {
+        if (!myTeamL)
+            myTeamL = new CKTeam(settings::C_playerIITeamColor);
         players::addPlayer(myTeamL, controllers::cPlayer2);
     }
-    else if (settings::C_playerIIteamR) {
-        if (!myTeamR) myTeamR = new CKTeam(settings::C_playerIITeamColor);
+    else if (settings::C_playerIIteamR)
+    {
+        if (!myTeamR)
+            myTeamR = new CKTeam(settings::C_playerIITeamColor);
         players::addPlayer(myTeamR, controllers::cPlayer2);
     }
 
-    if (!myTeamR && !myTeamL) {
+    if (!myTeamR && !myTeamL)
+    {
         Color3f rand = Color3f::random();
         myTeamL = new CKTeam(rand.inverted());
         myTeamR = new CKTeam(rand);
-
     }
-    else if (!myTeamL) {
+    else if (!myTeamL)
+    {
         myTeamL = new CKTeam(myTeamR->color().inverted());
     }
-    else if (!myTeamR) {
+    else if (!myTeamR)
+    {
         myTeamR = new CKTeam(myTeamL->color().inverted());
     }
 
     teams::addTeam(myTeamL);
     teams::addTeam(myTeamR);
 
-    for (int i=0; i<settings::C_botsLeft;  ++i)     players::addPlayer(myTeamL, controllers::cBot);
-    for (int i=0; i<settings::C_botsRight; ++i)     players::addPlayer(myTeamR, controllers::cBot);
+    for (int i = 0; i < settings::C_botsLeft; ++i)
+        players::addPlayer(myTeamL, controllers::cBot);
+    for (int i = 0; i < settings::C_botsRight; ++i)
+        players::addPlayer(myTeamR, controllers::cBot);
 
-    Home* homeL = spaceObjects::addHome(HOME_LEFT, settings::C_pointLimitCK, myTeamL->color());
-    Home* homeR = spaceObjects::addHome(HOME_RIGHT, settings::C_pointLimitCK, myTeamR->color());
+    Home * homeL = spaceObjects::addHome(HOME_LEFT, settings::C_pointLimitCK,
+                                         myTeamL->color());
+    Home * homeR = spaceObjects::addHome(HOME_RIGHT, settings::C_pointLimitCK,
+                                         myTeamR->color());
 
     teams::assignHomes(homeL, homeR);
     players::createShips();
@@ -83,19 +95,24 @@ CannonKeep::CannonKeep():
     items::addCannonControl();
 
     spaceObjects::populateSpace(5.f, 10.f, 4);
-    zones::createRaster(4,3);
+    zones::createRaster(4, 3);
 }
 
-void CannonKeep::draw() const {
-    if (settings::C_drawZones) zones::draw();
+void CannonKeep::draw() const
+{
+    if (settings::C_drawZones)
+        zones::draw();
     Game::draw();
 }
 
-void CannonKeep::restart() {
+void CannonKeep::restart()
+{
     Game::restart();
 
-    Home* homeL = spaceObjects::addHome(HOME_LEFT, settings::C_pointLimitCK, teams::getTeamL()->color());
-    Home* homeR = spaceObjects::addHome(HOME_RIGHT, settings::C_pointLimitCK, teams::getTeamR()->color());
+    Home * homeL = spaceObjects::addHome(HOME_LEFT, settings::C_pointLimitCK,
+                                         teams::getTeamL()->color());
+    Home * homeR = spaceObjects::addHome(HOME_RIGHT, settings::C_pointLimitCK,
+                                         teams::getTeamR()->color());
 
     teams::assignHomes(homeL, homeR);
     players::createShips();
@@ -103,15 +120,5 @@ void CannonKeep::restart() {
     items::addCannonControl();
 
     spaceObjects::populateSpace(5.f, 10.f, 4);
-    zones::createRaster(4,3);
+    zones::createRaster(4, 3);
 }
-
-
-
-
-
-
-
-
-
-

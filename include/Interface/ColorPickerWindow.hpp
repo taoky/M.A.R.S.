@@ -15,31 +15,32 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef COLORPICKERWINDOW_HPP_INCLUDED
-# define COLORPICKERWINDOW_HPP_INCLUDED
+#ifndef COLORPICKERWINDOW_HPP_INCLUDED
+#define COLORPICKERWINDOW_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
 class Color3f;
 class ColorPicker;
 class Button;
 
-class ColorPickerWindow: public UiWindow {
-    public:
-        ColorPickerWindow (ColorPicker* parent, Color3f* color);
+class ColorPickerWindow : public UiWindow
+{
+  public:
+    ColorPickerWindow(ColorPicker * parent, Color3f * color);
 
-        void draw() const;
+    void draw() const;
 
-        void checkWidgets();
-        void onShow() {};
+    void checkWidgets();
+    void onShow(){};
 
-        void reset() {};
+    void reset(){};
 
-    private:
-        Button* Ok_;
-        bool kOk_;
-        ColorPicker* parent_;
-        Color3f*  color_;
+  private:
+    Button * Ok_;
+    bool kOk_;
+    ColorPicker * parent_;
+    Color3f * color_;
 };
 
-# endif // COLORPICKERWINDOW_HPP_INCLUDED
+#endif // COLORPICKERWINDOW_HPP_INCLUDED

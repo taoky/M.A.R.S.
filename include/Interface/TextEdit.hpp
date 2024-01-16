@@ -15,39 +15,42 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TEXTEDIT_HPP_INCLUDED
-# define TEXTEDIT_HPP_INCLUDED
+#ifndef TEXTEDIT_HPP_INCLUDED
+#define TEXTEDIT_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Label.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiElement.hpp"
 
-# define TEXT_EDIT  0
-# define PORT_EDIT  1
-# define IP_EDIT    2
+#define TEXT_EDIT 0
+#define PORT_EDIT 1
+#define IP_EDIT 2
 
-class TextEdit: public UiElement {
-    public:
-        TextEdit (sf::String* text, sf::String* value, sf::String fallBack, Vector2f const& topLeft, int width, int labelWidth, int type, int maxLength=0);
-        ~TextEdit ();
+class TextEdit : public UiElement
+{
+  public:
+    TextEdit(sf::String * text, sf::String * value, sf::String fallBack,
+             Vector2f const & topLeft, int width, int labelWidth, int type,
+             int maxLength = 0);
+    ~TextEdit();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
-        void textEntered(sf::Uint32 keyCode);
+    void mouseMoved(Vector2f const & position);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
+    void textEntered(sf::Uint32 keyCode);
 
-        void draw() const;
+    void draw() const;
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-    private:
-        sf::String* value_, fallBack_;
-        Label* label_;
-        unsigned maxLength_;
-        unsigned cursorPos_;
-        mutable int cursorTimer_;
-        int type_;
-        int labelWidth_;
+  private:
+    sf::String *value_, fallBack_;
+    Label * label_;
+    unsigned maxLength_;
+    unsigned cursorPos_;
+    mutable int cursorTimer_;
+    int type_;
+    int labelWidth_;
 };
 
-# endif
+#endif

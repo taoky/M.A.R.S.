@@ -15,20 +15,21 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef BLACKHOLE_HPP_INCLUDED
-# define BLACKHOLE_HPP_INCLUDED
+#ifndef BLACKHOLE_HPP_INCLUDED
+#define BLACKHOLE_HPP_INCLUDED
 
-# include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 
-class BlackHole: public SpaceObject {
-    public:
-        BlackHole(Vector2f const& location, float radius);
+class BlackHole : public SpaceObject
+{
+  public:
+    BlackHole(Vector2f const & location, float radius);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-    private:
-        float rotation_;
+  private:
+    float rotation_;
 };
 
-# endif // BLACKHOLE_HPP_INCLUDED
+#endif // BLACKHOLE_HPP_INCLUDED

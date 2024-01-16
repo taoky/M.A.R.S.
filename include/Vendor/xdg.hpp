@@ -31,26 +31,32 @@
 
 #include <unistd.h>
 
-namespace xdg {
+namespace xdg
+{
 
-class BaseDirectoryException : public std::exception {
-public:
+class BaseDirectoryException : public std::exception
+{
+  public:
     explicit BaseDirectoryException(std::string msg) : msg_(std::move(msg)) {}
 
-    [[nodiscard]] auto what() const noexcept -> const char * override {
+    [[nodiscard]] auto what() const noexcept -> const char * override
+    {
         return msg_.c_str();
     }
     [[nodiscard]] auto msg() const noexcept -> std::string { return msg_; }
 
-private:
+  private:
     const std::string msg_;
 };
 
-class BaseDirectories {
-public:
-    BaseDirectories() {
-        const char *home_env = getenv("HOME");
-        if (home_env == nullptr) {
+class BaseDirectories
+{
+  public:
+    BaseDirectories()
+    {
+        const char * home_env = getenv("HOME");
+        if (home_env == nullptr)
+        {
             throw BaseDirectoryException("$HOME must be set");
         }
         home_ = std::filesystem::path{home_env};
@@ -70,39 +76,49 @@ public:
         SetRuntimeDir();
     }
 
-    static auto GetInstance() -> BaseDirectories & {
+    static auto GetInstance() -> BaseDirectories &
+    {
         static BaseDirectories dirs;
 
         return dirs;
     }
 
-    [[nodiscard]] auto DataHome() -> const std::filesystem::path & {
+    [[nodiscard]] auto DataHome() -> const std::filesystem::path &
+    {
         return data_home_;
     }
-    [[nodiscard]] auto ConfigHome() -> const std::filesystem::path & {
+    [[nodiscard]] auto ConfigHome() -> const std::filesystem::path &
+    {
         return config_home_;
     }
-    [[nodiscard]] auto Data() -> const std::vector<std::filesystem::path> & {
+    [[nodiscard]] auto Data() -> const std::vector<std::filesystem::path> &
+    {
         return data_;
     }
-    [[nodiscard]] auto Config() -> const std::vector<std::filesystem::path> & {
+    [[nodiscard]] auto Config() -> const std::vector<std::filesystem::path> &
+    {
         return config_;
     }
-    [[nodiscard]] auto CacheHome() -> const std::filesystem::path & {
+    [[nodiscard]] auto CacheHome() -> const std::filesystem::path &
+    {
         return cache_home_;
     }
-    [[nodiscard]] auto Runtime()
-        -> const std::optional<std::filesystem::path> & {
+    [[nodiscard]] auto Runtime() -> const std::optional<std::filesystem::path> &
+    {
         return runtime_;
     }
 
-private:
-    void SetRuntimeDir() {
-        const char *runtime_env = getenv("XDG_RUNTIME_DIR");
-        if (runtime_env != nullptr) {
+  private:
+    void SetRuntimeDir()
+    {
+        const char * runtime_env = getenv("XDG_RUNTIME_DIR");
+        if (runtime_env != nullptr)
+        {
             std::filesystem::path runtime_dir{runtime_env};
-            if (runtime_dir.is_absolute()) {
-                if (!std::filesystem::exists(runtime_dir)) {
+            if (runtime_dir.is_absolute())
+            {
+                if (!std::filesystem::exists(runtime_dir))
+                {
                     throw BaseDirectoryException(
                         "$XDG_RUNTIME_DIR must exist on the system");
                 }
@@ -113,7 +129,8 @@ private:
                 // Check XDG_RUNTIME_DIR permissions are 0700
                 if (((runtime_dir_perms & perms::owner_all) == perms::none) ||
                     ((runtime_dir_perms & perms::group_all) != perms::none) ||
-                    ((runtime_dir_perms & perms::others_all) != perms::none)) {
+                    ((runtime_dir_perms & perms::others_all) != perms::none))
+                {
                     throw BaseDirectoryException(
                         "$XDG_RUNTIME_DIR must have 0700 as permissions");
                 }
@@ -123,27 +140,32 @@ private:
     }
 
     static auto
-    GetAbsolutePathFromEnvOrDefault(const char *env_name,
-                                    std::filesystem::path &&default_path)
-        -> std::filesystem::path {
-        const char *env_var = getenv(env_name);
-        if (env_var == nullptr) {
+    GetAbsolutePathFromEnvOrDefault(const char * env_name,
+                                    std::filesystem::path && default_path)
+        -> std::filesystem::path
+    {
+        const char * env_var = getenv(env_name);
+        if (env_var == nullptr)
+        {
             return std::move(default_path);
         }
         auto path = std::filesystem::path{env_var};
-        if (!path.is_absolute()) {
+        if (!path.is_absolute())
+        {
             return std::move(default_path);
         }
 
         return path;
     }
 
-    static auto
-    GetPathsFromEnvOrDefault(const char *env_name,
-                             std::vector<std::filesystem::path> &&default_paths)
-        -> std::vector<std::filesystem::path> {
-        auto *env = getenv(env_name);
-        if (env == nullptr) {
+    static auto GetPathsFromEnvOrDefault(
+        const char * env_name,
+        std::vector<std::filesystem::path> && default_paths)
+        -> std::vector<std::filesystem::path>
+    {
+        auto * env = getenv(env_name);
+        if (env == nullptr)
+        {
             return std::move(default_paths);
         }
         std::string paths{env};
@@ -151,22 +173,26 @@ private:
         std::vector<std::filesystem::path> dirs{};
         size_t start = 0;
         size_t pos = 0;
-        while ((pos = paths.find_first_of(':', start)) != std::string::npos) {
+        while ((pos = paths.find_first_of(':', start)) != std::string::npos)
+        {
             std::filesystem::path current_path{
                 paths.substr(start, pos - start)};
             if (current_path.is_absolute() &&
-                !VectorContainsPath(dirs, current_path)) {
+                !VectorContainsPath(dirs, current_path))
+            {
                 dirs.emplace_back(current_path);
             }
             start = pos + 1;
         }
         std::filesystem::path current_path{paths.substr(start, pos - start)};
         if (current_path.is_absolute() &&
-            !VectorContainsPath(dirs, current_path)) {
+            !VectorContainsPath(dirs, current_path))
+        {
             dirs.emplace_back(current_path);
         }
 
-        if (dirs.empty()) {
+        if (dirs.empty())
+        {
             return std::move(default_paths);
         }
 
@@ -174,8 +200,9 @@ private:
     }
 
     static auto
-    VectorContainsPath(const std::vector<std::filesystem::path> &paths,
-                       const std::filesystem::path &path) -> bool {
+    VectorContainsPath(const std::vector<std::filesystem::path> & paths,
+                       const std::filesystem::path & path) -> bool
+    {
         return std::find(std::begin(paths), std::end(paths), path) !=
                paths.end();
     }
@@ -191,25 +218,31 @@ private:
 
 }; // namespace xdg
 
-[[nodiscard]] inline auto DataHomeDir() -> const std::filesystem::path & {
+[[nodiscard]] inline auto DataHomeDir() -> const std::filesystem::path &
+{
     return BaseDirectories::GetInstance().DataHome();
 }
-[[nodiscard]] inline auto ConfigHomeDir() -> const std::filesystem::path & {
+[[nodiscard]] inline auto ConfigHomeDir() -> const std::filesystem::path &
+{
     return BaseDirectories::GetInstance().ConfigHome();
 }
 [[nodiscard]] inline auto DataDirs()
-    -> const std::vector<std::filesystem::path> & {
+    -> const std::vector<std::filesystem::path> &
+{
     return BaseDirectories::GetInstance().Data();
 }
 [[nodiscard]] inline auto ConfigDirs()
-    -> const std::vector<std::filesystem::path> & {
+    -> const std::vector<std::filesystem::path> &
+{
     return BaseDirectories::GetInstance().Config();
 }
-[[nodiscard]] inline auto CacheHomeDir() -> const std::filesystem::path & {
+[[nodiscard]] inline auto CacheHomeDir() -> const std::filesystem::path &
+{
     return BaseDirectories::GetInstance().CacheHome();
 }
 [[nodiscard]] inline auto RuntimeDir()
-    -> const std::optional<std::filesystem::path> & {
+    -> const std::optional<std::filesystem::path> &
+{
     return BaseDirectories::GetInstance().Runtime();
 }
 

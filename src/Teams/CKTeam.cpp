@@ -15,93 +15,125 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Teams/CKTeam.hpp"
+#include "Teams/CKTeam.hpp"
 
-# include "Teams/teams.hpp"
-# include "Players/Player.hpp"
-# include "Items/items.hpp"
-# include "Items/PowerUp.hpp"
-# include "SpaceObjects/ships.hpp"
-# include "Games/games.hpp"
-# include "Items/CannonControl.hpp"
+#include "Games/games.hpp"
+#include "Items/CannonControl.hpp"
+#include "Items/PowerUp.hpp"
+#include "Items/items.hpp"
+#include "Players/Player.hpp"
+#include "SpaceObjects/ships.hpp"
+#include "Teams/teams.hpp"
 
-void CKTeam::createJobs() {
+void CKTeam::createJobs()
+{
     checkEnemies();
     checkPowerUps();
     checkControl();
 
-    for (int i=0; i<botControllers_.size(); ++i) {
+    for (int i = 0; i < botControllers_.size(); ++i)
+    {
         addJob(Job(Job::jLand, 4));
         addJob(Job(Job::jCharge, 4));
     }
 }
 
-void CKTeam::checkEnemies() {
-    std::vector<Ship*> ships = ships::getShips();
+void CKTeam::checkEnemies()
+{
+    std::vector<Ship *> ships = ships::getShips();
     bool existAny(false);
 
-    for (std::vector<Ship*>::const_iterator it = ships.begin(); it != ships.end(); ++it)
-        if ((*it)->getOwner()->team() != this && (*it)->attackable()) {
+    for (std::vector<Ship *>::const_iterator it = ships.begin();
+         it != ships.end(); ++it)
+        if ((*it)->getOwner()->team() != this && (*it)->attackable())
+        {
             existAny = true;
             break;
         }
 
-    if (existAny) {
-        for (int i=0; i<botControllers_.size(); ++i)
+    if (existAny)
+    {
+        for (int i = 0; i < botControllers_.size(); ++i)
             addJob(Job(Job::jAttackAny, 60));
     }
-    else {
-        for (int i=0; i<botControllers_.size(); ++i)
+    else
+    {
+        for (int i = 0; i < botControllers_.size(); ++i)
             addJob(Job(Job::jEscape, 6));
     }
 }
 
-void CKTeam::checkPowerUps() {
-    std::vector<Ship*> ships = ships::getShips();
+void CKTeam::checkPowerUps()
+{
+    std::vector<Ship *> ships = ships::getShips();
     bool existAny(false);
 
-    for (std::vector<Ship*>::const_iterator it = ships.begin(); it != ships.end(); ++it)
-        if ((*it)->getOwner()->team() != this && (*it)->attackable()) {
+    for (std::vector<Ship *>::const_iterator it = ships.begin();
+         it != ships.end(); ++it)
+        if ((*it)->getOwner()->team() != this && (*it)->attackable())
+        {
             existAny = true;
             break;
         }
 
     powerUpLocations_.clear();
-    std::list<PowerUp*> const& powerUps = items::getPowerUps();
-    for (std::list<PowerUp*>::const_iterator it=powerUps.begin(); it!=powerUps.end(); ++it) {
-        if (!(*it)->isCollected()) {
+    std::list<PowerUp *> const & powerUps = items::getPowerUps();
+    for (std::list<PowerUp *>::const_iterator it = powerUps.begin();
+         it != powerUps.end(); ++it)
+    {
+        if (!(*it)->isCollected())
+        {
             powerUpLocations_.push_back((*it)->location());
-            switch ((*it)->type()) {
-                case items::puFuel:     addJob(Job(Job::jGetPUFuel,    70, &powerUpLocations_.back())); break;
-                case items::puHealth:   addJob(Job(Job::jGetPUHealth,  70, &powerUpLocations_.back())); break;
-                case items::puReverse:  if (existAny) addJob(Job(Job::jGetPUReverse, 70, &powerUpLocations_.back())); break;
-                case items::puShield:   addJob(Job(Job::jGetPUShield,  70, &powerUpLocations_.back())); break;
-                default:                if (existAny) addJob(Job(Job::jGetPUSleep,   70, &powerUpLocations_.back())); break;
+            switch ((*it)->type())
+            {
+            case items::puFuel:
+                addJob(Job(Job::jGetPUFuel, 70, &powerUpLocations_.back()));
+                break;
+            case items::puHealth:
+                addJob(Job(Job::jGetPUHealth, 70, &powerUpLocations_.back()));
+                break;
+            case items::puReverse:
+                if (existAny)
+                    addJob(
+                        Job(Job::jGetPUReverse, 70, &powerUpLocations_.back()));
+                break;
+            case items::puShield:
+                addJob(Job(Job::jGetPUShield, 70, &powerUpLocations_.back()));
+                break;
+            default:
+                if (existAny)
+                    addJob(
+                        Job(Job::jGetPUSleep, 70, &powerUpLocations_.back()));
+                break;
             }
         }
     }
 }
 
-void CKTeam::checkControl() {
-    CannonControl* control(items::getCannonControl());
-    if (control) {
-        Player* carrier(control->getCarrier());
+void CKTeam::checkControl()
+{
+    CannonControl * control(items::getCannonControl());
+    if (control)
+    {
+        Player * carrier(control->getCarrier());
 
-        if (carrier) {
-            if (carrier->team() == this) {
+        if (carrier)
+        {
+            if (carrier->team() == this)
+            {
                 addJob(Job(Job::jEscape, 100));
-                for (int i=0; i<botControllers_.size()-1; ++i)
+                for (int i = 0; i < botControllers_.size() - 1; ++i)
                     addJob(Job(Job::jAttackAny, 80));
             }
-            else {
-                for (int i=0; i<botControllers_.size(); ++i)
+            else
+            {
+                for (int i = 0; i < botControllers_.size(); ++i)
                     addJob(Job(Job::jAttackTarget, 80, carrier->ship()));
             }
         }
-        else {
+        else
+        {
             addJob(Job(Job::jGetControl, 100));
         }
     }
-
 }
-

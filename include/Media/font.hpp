@@ -15,20 +15,20 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef FONT_HPP_INCLUDED
-# define FONT_HPP_INCLUDED
+#ifndef FONT_HPP_INCLUDED
+#define FONT_HPP_INCLUDED
 
-# include "System/settings.hpp"
+#include "System/settings.hpp"
 
-# include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 /// A namespace for loading font files.
 
-namespace font {
-    /// Returns a const& to the SFML font.
-    /// The returned font is based on the current locale.
-    sf::Font* getFont(int languageID = settings::C_languageID);
-}
+namespace font
+{
+/// Returns a const& to the SFML font.
+/// The returned font is based on the current locale.
+sf::Font * getFont(int languageID = settings::C_languageID);
+} // namespace font
 
-# endif // FONT_HPP_INCLUDED
-
+#endif // FONT_HPP_INCLUDED

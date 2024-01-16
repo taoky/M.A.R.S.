@@ -15,31 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
+#ifndef TUTORIALZONE_HPP_INCLUDED
+#define TUTORIALZONE_HPP_INCLUDED
 
-# ifndef TUTORIALZONE_HPP_INCLUDED
-# define TUTORIALZONE_HPP_INCLUDED
-
-# include "Zones/Zone.hpp"
+#include "Zones/Zone.hpp"
 
 /// Zone: TutorialZone.
 /// A beautiful pinkish Zone, employed in the Tutorial.
 
-class TutorialZone: public Zone {
-    public:
-        /// Ctor, which creates the Zone.
-        TutorialZone(Vector2f const& location, float radius);
+class TutorialZone : public Zone
+{
+  public:
+    /// Ctor, which creates the Zone.
+    TutorialZone(Vector2f const & location, float radius);
 
-        /// Returns true, if the given SpaceObject is inside this Zone.
-        bool isInside(SpaceObject const& toBeChecked) const;
+    /// Returns true, if the given SpaceObject is inside this Zone.
+    bool isInside(SpaceObject const & toBeChecked) const;
 
-        /// Draws the zone.
-        void draw() const;
+    /// Draws the zone.
+    void draw() const;
 
-    private:
-        const float radius_;
-        Vector2f location_;
+  private:
+    const float radius_;
+    Vector2f location_;
 };
 
-# endif // TUTORIALZONE_HPP_INCLUDED
-
-
+#endif // TUTORIALZONE_HPP_INCLUDED

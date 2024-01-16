@@ -15,36 +15,37 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef HOME_HPP_INCLUDED
-# define HOME_HPP_INCLUDED
+#ifndef HOME_HPP_INCLUDED
+#define HOME_HPP_INCLUDED
 
-# include "SpaceObjects/SpaceObject.hpp"
-# include "Players/Player.hpp"
+#include "Players/Player.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 
-# include <float.h>
+#include <float.h>
 
-class Home: public SpaceObject {
-    public:
-        Home(Vector2f const& location, int life, float radius, float mass, Color3f const& color);
+class Home : public SpaceObject
+{
+  public:
+    Home(Vector2f const & location, int life, float radius, float mass,
+         Color3f const & color);
 
-        void update();
-        void draw() const;
-        void drawLife() const;
+    void update();
+    void draw() const;
+    void drawLife() const;
 
-        int getLife() const;
+    int getLife() const;
 
-        void createShips(std::vector<Player*>& inhabitants) const;
+    void createShips(std::vector<Player *> & inhabitants) const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-    private:
-        void explode();
+  private:
+    void explode();
 
-        Color3f color_;
-        int life_;
-        bool visible_;
+    Color3f color_;
+    int life_;
+    bool visible_;
 };
 
-# endif // HOME_HPP_INCLUDED
-
+#endif // HOME_HPP_INCLUDED

@@ -15,36 +15,33 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef BOLT_HPP_INCLUDED
-# define BOLT_HPP_INCLUDED
+#ifndef BOLT_HPP_INCLUDED
+#define BOLT_HPP_INCLUDED
 
-# include "DecoObjects/DecoObject.hpp"
+#include "DecoObjects/DecoObject.hpp"
 
 class SpaceObject;
 
 /// An object for drawing bolts between ships.
 
-class Bolt: public DecoObject {
-    public:
-        Bolt(SpaceObject *from, SpaceObject *to, float intensity):
-            from_(from),
-            to_(to),
-            intensity_(intensity >= 100.f ? 3 : (intensity >= 50.f ? 2 : 1)),
-            maxLifeTime_(0.3f),
-            lifeTime_(0.f),
-            boltImage_(0),
-            flickerTimer_(0.f) {}
+class Bolt : public DecoObject
+{
+  public:
+    Bolt(SpaceObject * from, SpaceObject * to, float intensity)
+        : from_(from), to_(to),
+          intensity_(intensity >= 100.f ? 3 : (intensity >= 50.f ? 2 : 1)),
+          maxLifeTime_(0.3f), lifeTime_(0.f), boltImage_(0), flickerTimer_(0.f)
+    {
+    }
 
-        void draw() const;
+    void draw() const;
 
-    private:
-        SpaceObject *from_, *to_;
-        int intensity_;
-        mutable float maxLifeTime_, lifeTime_;
-        mutable int boltImage_;
-        mutable float flickerTimer_;
+  private:
+    SpaceObject *from_, *to_;
+    int intensity_;
+    mutable float maxLifeTime_, lifeTime_;
+    mutable int boltImage_;
+    mutable float flickerTimer_;
 };
 
-# endif // BOLT_HPP_INCLUDED
-
-
+#endif // BOLT_HPP_INCLUDED

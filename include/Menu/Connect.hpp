@@ -15,31 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef CONNECT_HPP_INCLUDED
-# define CONNECT_HPP_INCLUDED
+#ifndef CONNECT_HPP_INCLUDED
+#define CONNECT_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class Connect: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class Connect : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        Connect(int width, int height): UiWindow(width, height) {}
-        Connect(Connect const& copy);
+  private:
+    Connect(int width, int height) : UiWindow(width, height) {}
+    Connect(Connect const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kClose_;
+    static bool kClose_;
 };
 
-# endif // CONNECT_HPP_INCLUDED
-
-
-
-
-
+#endif // CONNECT_HPP_INCLUDED

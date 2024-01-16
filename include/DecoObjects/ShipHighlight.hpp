@@ -15,10 +15,10 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SHIPHIGHLIGHT_HPP_INCLUDED
-# define SHIPHIGHLIGHT_HPP_INCLUDED
+#ifndef SHIPHIGHLIGHT_HPP_INCLUDED
+#define SHIPHIGHLIGHT_HPP_INCLUDED
 
-# include "DecoObjects/DecoObject.hpp"
+#include "DecoObjects/DecoObject.hpp"
 
 class Ship;
 
@@ -26,18 +26,17 @@ class Ship;
 /// Human controlled Ships are highlighed to make it
 /// easier to see the Ship
 
-class ShipHighlight: public DecoObject {
-    public:
-        ShipHighlight(Ship* ship): ship_(ship) {}
+class ShipHighlight : public DecoObject
+{
+  public:
+    ShipHighlight(Ship * ship) : ship_(ship) {}
 
-        void draw() const;
+    void draw() const;
 
-    private:
-        void draw(Vector2f const& location, float scale, float alpha) const;
+  private:
+    void draw(Vector2f const & location, float scale, float alpha) const;
 
-        Ship* ship_;
+    Ship * ship_;
 };
 
-# endif // SHIPHIGHLIGHT_HPP_INCLUDED
-
-
+#endif // SHIPHIGHLIGHT_HPP_INCLUDED

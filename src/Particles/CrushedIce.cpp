@@ -15,58 +15,72 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Particles/CrushedIce.hpp"
+#include "Particles/CrushedIce.hpp"
 
-# include "System/timer.hpp"
-# include "System/settings.hpp"
-# include "System/randomizer.hpp"
+#include "System/randomizer.hpp"
+#include "System/settings.hpp"
+#include "System/timer.hpp"
 
-std::list<CrushedIce*> CrushedIce::activeParticles_;
+std::list<CrushedIce *> CrushedIce::activeParticles_;
 
-CrushedIce::CrushedIce(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource):
-           Particle<CrushedIce>(spaceObjects::oDust, location, 4, 0, randomizer::random(0.5f, 1.5f)*settings::C_globalParticleLifeTime/100.f) {
+CrushedIce::CrushedIce(Vector2f const & location, Vector2f const & direction,
+                       Vector2f const & velocity, Color3f const & color,
+                       Player * damageSource)
+    : Particle<CrushedIce>(spaceObjects::oDust, location, 4, 0,
+                           randomizer::random(0.5f, 1.5f) *
+                               settings::C_globalParticleLifeTime / 100.f)
+{
 
-    velocity_ = Vector2f::randDir()*20*randomizer::random(1.f, 2.f)*randomizer::random(1.f, 2.f);
+    velocity_ = Vector2f::randDir() * 20 * randomizer::random(1.f, 2.f) *
+                randomizer::random(1.f, 2.f);
 
     color_ = Color3f::random();
     color_.s(0.0);
 }
 
-void CrushedIce::update() {
+void CrushedIce::update()
+{
     float time = timer::frameTime();
 
-    color_.v(-0.7/totalLifeTime_*lifeTime_+0.7);
+    color_.v(-0.7 / totalLifeTime_ * lifeTime_ + 0.7);
     physics::collide(this, STATICS);
-    Vector2f acceleration = physics::attract(this)*5.f;
+    Vector2f acceleration = physics::attract(this) * 5.f;
 
-    location_ += velocity_*time + acceleration*time*time;
-    velocity_ += acceleration*time;
+    location_ += velocity_ * time + acceleration * time * time;
+    velocity_ += acceleration * time;
 
     lifeTime_ += time;
 }
 
-void CrushedIce::draw() const {
+void CrushedIce::draw() const
+{
     color_.gl4f(1.0f);
     const int posX = 5;
     const int posY = 1;
-    glTexCoord2f(posX*0.125f,     posY*0.125f);     glVertex2f(location_.x_-radius_, location_.y_-radius_);
-    glTexCoord2f(posX*0.125f,     (posY+1)*0.125f); glVertex2f(location_.x_-radius_, location_.y_+radius_);
-    glTexCoord2f((posX+1)*0.125f, (posY+1)*0.125f); glVertex2f(location_.x_+radius_, location_.y_+radius_);
-    glTexCoord2f((posX+1)*0.125f, posY*0.125f);     glVertex2f(location_.x_+radius_, location_.y_-radius_);
+    glTexCoord2f(posX * 0.125f, posY * 0.125f);
+    glVertex2f(location_.x_ - radius_, location_.y_ - radius_);
+    glTexCoord2f(posX * 0.125f, (posY + 1) * 0.125f);
+    glVertex2f(location_.x_ - radius_, location_.y_ + radius_);
+    glTexCoord2f((posX + 1) * 0.125f, (posY + 1) * 0.125f);
+    glVertex2f(location_.x_ + radius_, location_.y_ + radius_);
+    glTexCoord2f((posX + 1) * 0.125f, posY * 0.125f);
+    glVertex2f(location_.x_ + radius_, location_.y_ - radius_);
 }
 
-void CrushedIce::shockWave(Vector2f const& location, float strength, float radius) {
-    for (std::list<CrushedIce*>::iterator it = activeParticles_.begin(); it != activeParticles_.end(); ++it) {
+void CrushedIce::shockWave(Vector2f const & location, float strength,
+                           float radius)
+{
+    for (std::list<CrushedIce *>::iterator it = activeParticles_.begin();
+         it != activeParticles_.end(); ++it)
+    {
         Vector2f direction((*it)->location_ - location);
         float distance = direction.length();
-        if (distance < radius && direction != Vector2f()) {
-            float intensity = radius-distance;
+        if (distance < radius && direction != Vector2f())
+        {
+            float intensity = radius - distance;
             direction = direction.normalize();
             direction *= intensity;
             (*it)->velocity_ += direction;
         }
     }
 }
-
-
-

@@ -15,23 +15,24 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef BALLS_HPP_INCLUDED
-# define BALLS_HPP_INCLUDED
+#ifndef BALLS_HPP_INCLUDED
+#define BALLS_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
-# include "SpaceObjects/Ball.hpp"
+#include "SpaceObjects/Ball.hpp"
+#include "System/Vector2f.hpp"
 
-# include <vector>
+#include <vector>
 
-namespace balls {
-    void addBall(Vector2f const& location = Vector2f(0, 0));
+namespace balls
+{
+void addBall(Vector2f const & location = Vector2f(0, 0));
 
-    void update();
-    void draw();
+void update();
+void draw();
 
-    Ball* getBall();
+Ball * getBall();
 
-    void clear();
-}
+void clear();
+} // namespace balls
 
-# endif // BALLS_HPP_INCLUDED
+#endif // BALLS_HPP_INCLUDED

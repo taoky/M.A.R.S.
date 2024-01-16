@@ -15,31 +15,37 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef ITEMS_HPP_INCLUDED
-# define ITEMS_HPP_INCLUDED
+#ifndef ITEMS_HPP_INCLUDED
+#define ITEMS_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
+#include "System/Vector2f.hpp"
 
-# include <list>
+#include <list>
 
 class CannonControl;
 class PowerUp;
 
-namespace items {
-    enum PowerUpType {puShield, puReverse, puSleep, puHealth, puFuel, COUNT};
+namespace items
+{
+enum PowerUpType
+{
+    puShield,
+    puReverse,
+    puSleep,
+    puHealth,
+    puFuel,
+    COUNT
+};
 
-    void update();
-    void draw();
+void update();
+void draw();
 
-    void addCannonControl();
-    CannonControl* getCannonControl();
+void addCannonControl();
+CannonControl * getCannonControl();
 
-    std::list<PowerUp*>const& getPowerUps();
+std::list<PowerUp *> const & getPowerUps();
 
-    void clear();
-}
+void clear();
+} // namespace items
 
-# endif // ITEMS_HPP_INCLUDED
-
-
-
+#endif // ITEMS_HPP_INCLUDED

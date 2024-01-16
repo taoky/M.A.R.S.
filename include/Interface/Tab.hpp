@@ -15,51 +15,49 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TAB_HPP_INCLUDED
-# define TAB_HPP_INCLUDED
+#ifndef TAB_HPP_INCLUDED
+#define TAB_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Label.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiElement.hpp"
 
-# include <vector>
+#include <vector>
 
-class Tab: public UiElement {
-    public:
-        Tab (sf::String* text, int width, bool* activated = NULL);
-        ~Tab();
+class Tab : public UiElement
+{
+  public:
+    Tab(sf::String * text, int width, bool * activated = NULL);
+    ~Tab();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseWheelMoved(Vector2f const& position, int delta);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
-        void textEntered(sf::Uint32 keyCode);
+    void mouseMoved(Vector2f const & position);
+    void mouseWheelMoved(Vector2f const & position, int delta);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
+    void textEntered(sf::Uint32 keyCode);
 
-        bool tabNext();
-        bool tabPrevious();
+    bool tabNext();
+    bool tabPrevious();
 
-        void draw () const;
+    void draw() const;
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-        void addWidget (UiElement* toBeAdded);
+    void addWidget(UiElement * toBeAdded);
 
-        /* virtual */
-        Vector2f getTopLeft() const;
-        bool isActive() const {return active_;}
+    /* virtual */
+    Vector2f getTopLeft() const;
+    bool isActive() const { return active_; }
 
-        friend class TabList;
+    friend class TabList;
 
-    private:
-        std::vector<UiElement*> widgets_;
-        UiElement* focusedWidget_;
-        sf::String* name_;
-        Label* label_;
-        bool* activated_;
-        bool active_;
+  private:
+    std::vector<UiElement *> widgets_;
+    UiElement * focusedWidget_;
+    sf::String * name_;
+    Label * label_;
+    bool * activated_;
+    bool active_;
 };
 
-# endif
-
-
-
+#endif

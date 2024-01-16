@@ -15,27 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MAINMENU_HPP_INCLUDED
-# define MAINMENU_HPP_INCLUDED
+#ifndef MAINMENU_HPP_INCLUDED
+#define MAINMENU_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class MainMenu: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class MainMenu : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        MainMenu(int width, int height, Vector2f const& position): UiWindow(width, height, position) {}
-        MainMenu(MainMenu const& copy);
+  private:
+    MainMenu(int width, int height, Vector2f const & position)
+        : UiWindow(width, height, position)
+    {
+    }
+    MainMenu(MainMenu const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kStartLocal_, kStartTut_, kStartMulti_, kJoinMulti_, kOptions_, kAbout_, kExit_;
+    static bool kStartLocal_, kStartTut_, kStartMulti_, kJoinMulti_, kOptions_,
+        kAbout_, kExit_;
 };
 
-# endif // MAINMENU_HPP_INCLUDED
-
+#endif // MAINMENU_HPP_INCLUDED

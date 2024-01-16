@@ -15,27 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef PAUSEMENU_HPP_INCLUDED
-# define PAUSEMENU_HPP_INCLUDED
+#ifndef PAUSEMENU_HPP_INCLUDED
+#define PAUSEMENU_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class PauseMenu: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class PauseMenu : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        PauseMenu(int width, int height): UiWindow(width, height) {}
-        PauseMenu(PauseMenu const& copy);
+  private:
+    PauseMenu(int width, int height) : UiWindow(width, height) {}
+    PauseMenu(PauseMenu const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kResume_, kNew_, kOptions_, kToMainMenu_, kHide_;
+    static bool kResume_, kNew_, kOptions_, kToMainMenu_, kHide_;
 };
 
-# endif // PAUSEMENU_HPP_INCLUDED
-
+#endif // PAUSEMENU_HPP_INCLUDED

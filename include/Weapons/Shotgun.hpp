@@ -15,36 +15,35 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SHOTGUN_HPP_INCLUDED
-# define SHOTGUN_HPP_INCLUDED
+#ifndef SHOTGUN_HPP_INCLUDED
+#define SHOTGUN_HPP_INCLUDED
 
-# include "Weapons/Weapon.hpp"
+#include "Weapons/Weapon.hpp"
 
 /// Weapon: Shotgun.
 /// A short distance gun, which fires some particles in multiple direction.
 
-class Shotgun: public Weapon {
-    public:
-        /// Ctor which constructs the weapon.
-        Shotgun(Ship* parent):
-              Weapon(weapons::wShotgun, parent, sf::String("SHOTGUN")) {};
+class Shotgun : public Weapon
+{
+  public:
+    /// Ctor which constructs the weapon.
+    Shotgun(Ship * parent)
+        : Weapon(weapons::wShotgun, parent, sf::String("SHOTGUN")){};
 
-        /// Spawns some particles.
-        void fire() const;
+    /// Spawns some particles.
+    void fire() const;
 
-        /// Draws the weapon.
-        void draw(float alpha) const;
+    /// Draws the weapon.
+    void draw(float alpha) const;
 
-        /// Returns the maximum distance from which this weapon should be used.
-        float maxDistance() const;
+    /// Returns the maximum distance from which this weapon should be used.
+    float maxDistance() const;
 
-        /// Returns the minimum distance from which this weapon should be used.
-        float minDistance() const;
+    /// Returns the minimum distance from which this weapon should be used.
+    float minDistance() const;
 
-        /// Returns the maximum angle from which this weapon should be used.
-        float maxAngle()   const;
+    /// Returns the maximum angle from which this weapon should be used.
+    float maxAngle() const;
 };
 
-# endif // SHOTGUN_HPP_INCLUDED
-
-
+#endif // SHOTGUN_HPP_INCLUDED

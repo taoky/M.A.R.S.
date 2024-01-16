@@ -15,36 +15,35 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef INSTA_HPP_INCLUDED
-# define INSTA_HPP_INCLUDED
+#ifndef INSTA_HPP_INCLUDED
+#define INSTA_HPP_INCLUDED
 
-# include "Weapons/Weapon.hpp"
+#include "Weapons/Weapon.hpp"
 
 /// Weapon: Insta.
 /// A long distance gun, killing instantly.
 
-class Insta: public Weapon {
-    public:
-        /// Ctor which constructs the weapon.
-        Insta(Ship* parent):
-              Weapon(weapons::wInsta, parent, sf::String("INSTA-GRAVE")) {};
+class Insta : public Weapon
+{
+  public:
+    /// Ctor which constructs the weapon.
+    Insta(Ship * parent)
+        : Weapon(weapons::wInsta, parent, sf::String("INSTA-GRAVE")){};
 
-        /// Spawns some particles.
-        void fire() const;
+    /// Spawns some particles.
+    void fire() const;
 
-        /// Draws the weapon.
-        void draw(float alpha) const;
+    /// Draws the weapon.
+    void draw(float alpha) const;
 
-        /// Returns the maximum distance from which this weapon should be used.
-        float maxDistance() const;
+    /// Returns the maximum distance from which this weapon should be used.
+    float maxDistance() const;
 
-        /// Returns the minimum distance from which this weapon should be used.
-        float minDistance() const;
+    /// Returns the minimum distance from which this weapon should be used.
+    float minDistance() const;
 
-        /// Returns the maximum angle from which this weapon should be used.
-        float maxAngle()   const;
+    /// Returns the maximum angle from which this weapon should be used.
+    float maxAngle() const;
 };
 
-# endif // INSTA_HPP_INCLUDED
-
-
+#endif // INSTA_HPP_INCLUDED

@@ -15,34 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef HEAL_HPP_INCLUDED
-# define HEAL_HPP_INCLUDED
+#ifndef HEAL_HPP_INCLUDED
+#define HEAL_HPP_INCLUDED
 
-# include "Specials/Special.hpp"
+#include "Specials/Special.hpp"
 
 /// Special: Heal.
 /// A healing wave.
 
-class Heal: public Special {
-    public:
-        /// Ctor which constructs the special.
-        Heal(Ship* parent):
-              Special(specials::sHeal, parent, sf::String("HEAL")),
-              radius_(0.f) {};
+class Heal : public Special
+{
+  public:
+    /// Ctor which constructs the special.
+    Heal(Ship * parent)
+        : Special(specials::sHeal, parent, sf::String("HEAL")), radius_(0.f){};
 
-        /// Heals nearby friends.
-        void activate() const;
+    /// Heals nearby friends.
+    void activate() const;
 
-        float radius() const;
+    float radius() const;
 
-        /// Draws the special.
-        void draw(float alpha) const;
+    /// Draws the special.
+    void draw(float alpha) const;
 
-    private:
-        mutable float radius_;
+  private:
+    mutable float radius_;
 };
 
-# endif // HEAL_HPP_INCLUDED
-
-
-
+#endif // HEAL_HPP_INCLUDED

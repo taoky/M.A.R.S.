@@ -15,28 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef EXITCONFIRM_HPP_INCLUDED
-# define EXITCONFIRM_HPP_INCLUDED
+#ifndef EXITCONFIRM_HPP_INCLUDED
+#define EXITCONFIRM_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class ExitConfirm: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class ExitConfirm : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        ExitConfirm(int width, int height): UiWindow(width, height) {}
-        ExitConfirm(ExitConfirm const& copy);
+  private:
+    ExitConfirm(int width, int height) : UiWindow(width, height) {}
+    ExitConfirm(ExitConfirm const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_, kCancel_;
+    static bool kOk_, kCancel_;
 };
 
-# endif // EXITCONFIRM_HPP_INCLUDED
-
-
+#endif // EXITCONFIRM_HPP_INCLUDED

@@ -15,20 +15,15 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef RIGHTLIFE_HPP_INCLUDED
-# define RIGHTLIFE_HPP_INCLUDED
+#ifndef RIGHTLIFE_HPP_INCLUDED
+#define RIGHTLIFE_HPP_INCLUDED
 
-# include "Hud/HudElement.hpp"
+#include "Hud/HudElement.hpp"
 
-class RightLife: public HudElement {
-    public:
-        void draw() const;
+class RightLife : public HudElement
+{
+  public:
+    void draw() const;
 };
 
-# endif // RIGHTLIFE_HPP_INCLUDED
-
-
-
-
-
-
+#endif // RIGHTLIFE_HPP_INCLUDED

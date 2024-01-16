@@ -15,15 +15,16 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "DecoObjects/Evil.hpp"
+#include "DecoObjects/Evil.hpp"
 
-# include "Media/texture.hpp"
-# include "System/timer.hpp"
-# include "defines.hpp"
+#include "Media/texture.hpp"
+#include "System/timer.hpp"
+#include "defines.hpp"
 
-# include <SFML/OpenGL.hpp>
+#include <SFML/OpenGL.hpp>
 
-void Evil::draw() const {
+void Evil::draw() const
+{
     glPushMatrix();
     glLoadIdentity();
 
@@ -32,24 +33,22 @@ void Evil::draw() const {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glBindTexture(GL_TEXTURE_2D, texture::getTexture(texture::CannonSocket));
-    glColor3f(1,1,1);
-    glTranslatef(SPACE_X_RESOLUTION*0.5f+210.f, -100.f, 0.f);
-    glRotatef(std::sin(timer::totalTime())*5.f, 0.f, 0.f, 1.f);
+    glColor3f(1, 1, 1);
+    glTranslatef(SPACE_X_RESOLUTION * 0.5f + 210.f, -100.f, 0.f);
+    glRotatef(std::sin(timer::totalTime()) * 5.f, 0.f, 0.f, 1.f);
 
     glBegin(GL_QUADS);
-        glTexCoord2f(0.f, 0.5f); glVertex2f(-50.f, 90.f);
-        glTexCoord2f(0.f, 0.95f); glVertex2f(-50.f, 180.f);
-        glTexCoord2f(0.5f, 0.95f); glVertex2f( 50.f, 180.f);
-        glTexCoord2f(0.5f, 0.5f); glVertex2f( 50.f, 90.f);
+    glTexCoord2f(0.f, 0.5f);
+    glVertex2f(-50.f, 90.f);
+    glTexCoord2f(0.f, 0.95f);
+    glVertex2f(-50.f, 180.f);
+    glTexCoord2f(0.5f, 0.95f);
+    glVertex2f(50.f, 180.f);
+    glTexCoord2f(0.5f, 0.5f);
+    glVertex2f(50.f, 90.f);
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
     glPopMatrix();
 }
-
-
-
-
-
-

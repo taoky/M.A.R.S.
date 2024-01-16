@@ -15,52 +15,51 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TABSTATS_HPP_INCLUDED
-# define TABSTATS_HPP_INCLUDED
+#ifndef TABSTATS_HPP_INCLUDED
+#define TABSTATS_HPP_INCLUDED
 
-# include "Hud/HudElement.hpp"
+#include "Hud/HudElement.hpp"
 
-# include "Teams/Team.hpp"
-# include "Players/Player.hpp"
+#include "Players/Player.hpp"
+#include "Teams/Team.hpp"
 
-# include <map>
-# include <set>
+#include <map>
+#include <set>
 
-class TabStats: public HudElement {
-    public:
-        TabStats();
+class TabStats : public HudElement
+{
+  public:
+    TabStats();
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        void display(bool show = true);
-        void refresh();
+    void display(bool show = true);
+    void refresh();
 
-        bool visible() const;
+    bool visible() const;
 
-    private:
-        struct playerPtrCmp{
-            bool operator()(Player* lhs, Player* rhs) const {
-                return lhs->points_ > rhs->points_;
-            }
-        };
+  private:
+    struct playerPtrCmp
+    {
+        bool operator()(Player * lhs, Player * rhs) const
+        {
+            return lhs->points_ > rhs->points_;
+        }
+    };
 
-        struct teamPtrCmp{
-            bool operator()(Team* lhs, Team* rhs) const {
-                return lhs->points() > rhs->points();
-            }
-        };
+    struct teamPtrCmp
+    {
+        bool operator()(Team * lhs, Team * rhs) const
+        {
+            return lhs->points() > rhs->points();
+        }
+    };
 
-        bool visible_, refresh_;
-        int sumPoints_;
-        std::multimap<Team*, std::multiset<Player*, playerPtrCmp>, teamPtrCmp > teamMap_;
+    bool visible_, refresh_;
+    int sumPoints_;
+    std::multimap<Team *, std::multiset<Player *, playerPtrCmp>, teamPtrCmp>
+        teamMap_;
 };
 
-# endif // TABSTATS_HPP_INCLUDED
-
-
-
-
-
-
-
+#endif // TABSTATS_HPP_INCLUDED

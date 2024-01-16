@@ -15,23 +15,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Items/PUFuel.hpp"
+#include "Items/PUFuel.hpp"
 
-# include "SpaceObjects/Ship.hpp"
-# include "Particles/particles.hpp"
+#include "Particles/particles.hpp"
+#include "SpaceObjects/Ship.hpp"
 
-void PUFuel::draw() const {
-    if (!collected_) {
+void PUFuel::draw() const
+{
+    if (!collected_)
+    {
         PowerUp::draw();
     }
 }
 
-void PUFuel::refreshLifeTime() {
+void PUFuel::refreshLifeTime()
+{
     lifeTime_ = totalLifeTime_;
-    for (std::list<Ship*>::iterator it = ships_.begin(); it != ships_.end(); ++it)
+    for (std::list<Ship *>::iterator it = ships_.begin(); it != ships_.end();
+         ++it)
         (*it)->refuel((*it)->owner_, 100);
     // direction is abused for texture coords
-    particles::spawnMultiple(5, particles::pPowerUpCollect, location_, Vector2f(3,1));
+    particles::spawnMultiple(5, particles::pPowerUpCollect, location_,
+                             Vector2f(3, 1));
 }
-
-

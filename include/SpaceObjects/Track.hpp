@@ -15,36 +15,36 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TRACK_HPP_INCLUDED
-# define TRACK_HPP_INCLUDED
+#ifndef TRACK_HPP_INCLUDED
+#define TRACK_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-# include <vector>
+#include <vector>
 
 class Home;
 
-class Track {
-    public:
-        Track(Home* home);
+class Track
+{
+  public:
+    Track(Home * home);
 
-        void draw() const;
+    void draw() const;
 
-    private:
-        void calcTrack();
-        void findAnchors();
-        void addAnchor(Vector2f const& point);
-        void sortAnchors();
-        void sortLTR();
-        void sortHalf (Vector2f const& origin, int startIndex, int endIndex, bool rightHalf, bool CW);
-        void removeSharpCorners();
-        void createBezier();
+  private:
+    void calcTrack();
+    void findAnchors();
+    void addAnchor(Vector2f const & point);
+    void sortAnchors();
+    void sortLTR();
+    void sortHalf(Vector2f const & origin, int startIndex, int endIndex,
+                  bool rightHalf, bool CW);
+    void removeSharpCorners();
+    void createBezier();
 
-        std::vector<Vector2f> points_;
-        std::vector<Vector2f> anchors_;
+    std::vector<Vector2f> points_;
+    std::vector<Vector2f> anchors_;
 };
 
-# endif // TRACK_HPP_INCLUDED
-
-
+#endif // TRACK_HPP_INCLUDED

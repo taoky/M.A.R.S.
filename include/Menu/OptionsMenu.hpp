@@ -15,33 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef OPTIONSMENU_HPP_INCLUDED
-# define OPTIONSMENU_HPP_INCLUDED
+#ifndef OPTIONSMENU_HPP_INCLUDED
+#define OPTIONSMENU_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class OptionsMenu: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow();
+class OptionsMenu : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow();
 
-        static void reset();
+    static void reset();
 
-    private:
-        OptionsMenu(int width, int height): UiWindow(width, height) {}
-        OptionsMenu(OptionsMenu const& copy);
+  private:
+    OptionsMenu(int width, int height) : UiWindow(width, height) {}
+    OptionsMenu(OptionsMenu const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_;
+    static bool kOk_;
 
-        static bool       fullscreen_, vsync_, shaders_;
-        static sf::String resolution_, colorDepth_, format_;
-        static int        soundVolume_, musicVolume_, announcerVolume_, starfield_;
+    static bool fullscreen_, vsync_, shaders_;
+    static sf::String resolution_, colorDepth_, format_;
+    static int soundVolume_, musicVolume_, announcerVolume_, starfield_;
 };
 
-# endif // OPTIONSMENU_HPP_INCLUDED
-
-
-
+#endif // OPTIONSMENU_HPP_INCLUDED

@@ -15,28 +15,33 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Specials/NoSpecial.hpp"
+#include "Specials/NoSpecial.hpp"
 
-# include "SpaceObjects/Ship.hpp"
-# include "Players/Player.hpp"
-# include "Games/games.hpp"
-# include "Teams/Team.hpp"
+#include "Games/games.hpp"
+#include "Players/Player.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "Teams/Team.hpp"
 
-# include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
-void NoSpecial::draw(float alpha) const {
+void NoSpecial::draw(float alpha) const
+{
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
     // draw glow
-    parent_->getOwner()->team()->color().brightened().gl4f(0.7f*alpha);
+    parent_->getOwner()->team()->color().brightened().gl4f(0.7f * alpha);
 
     const int posX = 3;
     const int posY = 3;
 
     glBegin(GL_QUADS);
-        glTexCoord2f( posX*0.25f,    posY*0.25f);    glVertex2f(-parent_->radius()*4,-parent_->radius()*4);
-        glTexCoord2f( posX*0.25f,   (posY+1)*0.25f); glVertex2f(-parent_->radius()*4, parent_->radius()*4);
-        glTexCoord2f((posX+1)*0.25f,(posY+1)*0.25f); glVertex2f( parent_->radius()*4, parent_->radius()*4);
-        glTexCoord2f((posX+1)*0.25f, posY*0.25f);    glVertex2f( parent_->radius()*4,-parent_->radius()*4);
+    glTexCoord2f(posX * 0.25f, posY * 0.25f);
+    glVertex2f(-parent_->radius() * 4, -parent_->radius() * 4);
+    glTexCoord2f(posX * 0.25f, (posY + 1) * 0.25f);
+    glVertex2f(-parent_->radius() * 4, parent_->radius() * 4);
+    glTexCoord2f((posX + 1) * 0.25f, (posY + 1) * 0.25f);
+    glVertex2f(parent_->radius() * 4, parent_->radius() * 4);
+    glTexCoord2f((posX + 1) * 0.25f, posY * 0.25f);
+    glVertex2f(parent_->radius() * 4, -parent_->radius() * 4);
     glEnd();
 }

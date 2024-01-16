@@ -15,33 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef INFOHIDE_HPP_INCLUDED
-# define INFOHIDE_HPP_INCLUDED
+#ifndef INFOHIDE_HPP_INCLUDED
+#define INFOHIDE_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
 class TextBox;
 
-class InfoHide: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class InfoHide : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        InfoHide(int width, int height): UiWindow(width, height) {}
-        InfoHide(InfoHide const& copy);
+  private:
+    InfoHide(int width, int height) : UiWindow(width, height) {}
+    InfoHide(InfoHide const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_;
+    static bool kOk_;
 };
 
-# endif // INFOHIDE_HPP_INCLUDED
-
-
-
-
-
+#endif // INFOHIDE_HPP_INCLUDED

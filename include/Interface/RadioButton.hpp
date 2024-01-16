@@ -15,38 +15,39 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef RADIOBUTTON_HPP_INCLUDED
-# define RADIOBUTTON_HPP_INCLUDED
+#ifndef RADIOBUTTON_HPP_INCLUDED
+#define RADIOBUTTON_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Label.hpp"
-# include "Interface/RadioGroup.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/RadioGroup.hpp"
+#include "Interface/UiElement.hpp"
 
 class RadioGroup;
 
-class RadioButton: public UiElement {
-    public:
-        RadioButton(sf::String* text, sf::String* toolTip, bool* value, Vector2f const& topLeft, int width, bool offSwitchable = false);
-        ~RadioButton();
+class RadioButton : public UiElement
+{
+  public:
+    RadioButton(sf::String * text, sf::String * toolTip, bool * value,
+                Vector2f const & topLeft, int width,
+                bool offSwitchable = false);
+    ~RadioButton();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
+    void mouseMoved(Vector2f const & position);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
 
-        void draw() const;
+    void draw() const;
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-        friend class RadioGroup;
+    friend class RadioGroup;
 
-    private:
-        bool* value_;
-        Label* label_;
-        bool offSwitchable_;
-        sf::String* toolTip_;
+  private:
+    bool * value_;
+    Label * label_;
+    bool offSwitchable_;
+    sf::String * toolTip_;
 };
 
-# endif
-
-
+#endif

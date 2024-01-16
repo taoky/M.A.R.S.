@@ -15,24 +15,23 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef FILE_HPP_INCLUDED
-# define FILE_HPP_INCLUDED
+#ifndef FILE_HPP_INCLUDED
+#define FILE_HPP_INCLUDED
 
-# include <SFML/System.hpp>
-# include <string>
-# include <vector>
+#include <SFML/System.hpp>
+#include <string>
+#include <vector>
 
 /// A namespace for UTF-8 encoded text file handling.
 /// It contains function which work with
 /// UTF-8 encoded text files.
 
-namespace file {
-    /// Loads an UTF-8 encoded text file.
-    /// The lines of this file are stored in a std::vector of SFML-Strings.
-    /// Comments (//) and empty lines in this file will be ignored.
-    bool load(std::string fileName, std::vector<sf::String>& strings);
-}
+namespace file
+{
+/// Loads an UTF-8 encoded text file.
+/// The lines of this file are stored in a std::vector of SFML-Strings.
+/// Comments (//) and empty lines in this file will be ignored.
+bool load(std::string fileName, std::vector<sf::String> & strings);
+} // namespace file
 
-# endif // FILE_HPP_INCLUDED
-
-
+#endif // FILE_HPP_INCLUDED

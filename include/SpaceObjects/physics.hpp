@@ -15,36 +15,38 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef PHYSICS_HPP_INCLUDED
-# define PHYSICS_HPP_INCLUDED
+#ifndef PHYSICS_HPP_INCLUDED
+#define PHYSICS_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
+#include "System/Vector2f.hpp"
 
-# include <vector>
-# include <list>
+#include <list>
+#include <vector>
 
-# define MOBILES   1
-# define STATICS   2
-# define PARTICLES 4
+#define MOBILES 1
+#define STATICS 2
+#define PARTICLES 4
 
 class SpaceObject;
 class MobileSpaceObject;
 class Player;
 
-namespace physics {
-    void     collide        (MobileSpaceObject* source, int with);
-    Vector2f attract        (MobileSpaceObject* attracted);
-    void     causeShockWave (Player* damageSource, Vector2f const& location, float strength, float radius, float damage);
+namespace physics
+{
+void collide(MobileSpaceObject * source, int with);
+Vector2f attract(MobileSpaceObject * attracted);
+void causeShockWave(Player * damageSource, Vector2f const & location,
+                    float strength, float radius, float damage);
 
-    void addMobileObject    (MobileSpaceObject* source);
-    void removeMobileObject (MobileSpaceObject* source);
-    void addStaticObject    (SpaceObject* source);
-    void removeStaticObject (SpaceObject* source);
-    void addGravitySource   (SpaceObject* source);
+void addMobileObject(MobileSpaceObject * source);
+void removeMobileObject(MobileSpaceObject * source);
+void addStaticObject(SpaceObject * source);
+void removeStaticObject(SpaceObject * source);
+void addGravitySource(SpaceObject * source);
 
-    std::vector<SpaceObject*> const& getGravitySources();
+std::vector<SpaceObject *> const & getGravitySources();
 
-    void clear              ();
-}
+void clear();
+} // namespace physics
 
-# endif // PHYSICS_HPP_INCLUDED
+#endif // PHYSICS_HPP_INCLUDED

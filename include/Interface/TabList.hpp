@@ -15,42 +15,41 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TABLIST_HPP_INCLUDED
-# define TABLIST_HPP_INCLUDED
+#ifndef TABLIST_HPP_INCLUDED
+#define TABLIST_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Tab.hpp"
+#include "Interface/Tab.hpp"
+#include "Interface/UiElement.hpp"
 
-# include <vector>
+#include <vector>
 
-class TabList: public UiElement {
-    public:
-        TabList (Vector2f const& topLeft, int width, int height);
-        ~TabList();
+class TabList : public UiElement
+{
+  public:
+    TabList(Vector2f const & topLeft, int width, int height);
+    ~TabList();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseWheelMoved(Vector2f const& position, int delta);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
-        void textEntered(sf::Uint32 keyCode);
+    void mouseMoved(Vector2f const & position);
+    void mouseWheelMoved(Vector2f const & position, int delta);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
+    void textEntered(sf::Uint32 keyCode);
 
-        bool tabNext();
-        bool tabPrevious();
+    bool tabNext();
+    bool tabPrevious();
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-        void draw() const;
+    void draw() const;
 
-        void addTab(Tab* toBeAdded);
-        void activate(Tab* toBeActivated);
+    void addTab(Tab * toBeAdded);
+    void activate(Tab * toBeActivated);
 
-    private:
-        std::vector<Tab*> tabs_;
-        Tab* focusedTab_;
-        int lastTabEnd_;
+  private:
+    std::vector<Tab *> tabs_;
+    Tab * focusedTab_;
+    int lastTabEnd_;
 };
 
-# endif
-
-
+#endif

@@ -15,35 +15,37 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef AMMOINSTA_HPP_INCLUDED
-# define AMMOINSTA_HPP_INCLUDED
+#ifndef AMMOINSTA_HPP_INCLUDED
+#define AMMOINSTA_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
 class Trail;
 class Team;
 
-class AmmoInsta: public Particle<AmmoInsta> {
-    public:
-        AmmoInsta(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
-        ~AmmoInsta();
+class AmmoInsta : public Particle<AmmoInsta>
+{
+  public:
+    AmmoInsta(Vector2f const & location, Vector2f const & direction,
+              Vector2f const & velocity, Color3f const & color,
+              Player * damageSource);
+    ~AmmoInsta();
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-        static int hitsAny(Vector2f const& location, Vector2f const& direction, Team* team);
+    static int hitsAny(Vector2f const & location, Vector2f const & direction,
+                       Team * team);
 
-        friend class Particle<AmmoInsta>;
+    friend class Particle<AmmoInsta>;
 
-    private:
-        static std::list<AmmoInsta*> activeParticles_;
-        Trail* trail_;
-        Color3f color_;
+  private:
+    static std::list<AmmoInsta *> activeParticles_;
+    Trail * trail_;
+    Color3f color_;
 };
 
-# endif // AMMOINSTA_HPP_INCLUDED
-
-
+#endif // AMMOINSTA_HPP_INCLUDED

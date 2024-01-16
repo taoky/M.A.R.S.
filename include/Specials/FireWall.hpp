@@ -15,36 +15,32 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef FIREWALL_HPP_INCLUDED
-# define FIREWALL_HPP_INCLUDED
+#ifndef FIREWALL_HPP_INCLUDED
+#define FIREWALL_HPP_INCLUDED
 
-# include "Specials/Special.hpp"
+#include "Specials/Special.hpp"
 
 /// Special: FireWall.
 /// A fire wave.
 
-class FireWall: public Special {
-    public:
-        /// Ctor which constructs the special.
-        FireWall(Ship* parent):
-              Special(specials::sFireWall, parent, sf::String("FIRE WALL")),
-              burnTimer_(0.f) {};
+class FireWall : public Special
+{
+  public:
+    /// Ctor which constructs the special.
+    FireWall(Ship * parent)
+        : Special(specials::sFireWall, parent, sf::String("FIRE WALL")),
+          burnTimer_(0.f){};
 
-        /// Blasts away nearby ships.
-        void activate() const;
+    /// Blasts away nearby ships.
+    void activate() const;
 
-        float radius() const;
+    float radius() const;
 
-        /// Draws the special.
-        void draw(float alpha) const;
+    /// Draws the special.
+    void draw(float alpha) const;
 
-    private:
-        mutable float burnTimer_;
+  private:
+    mutable float burnTimer_;
 };
 
-# endif // FIREWALL_HPP_INCLUDED
-
-
-
-
-
+#endif // FIREWALL_HPP_INCLUDED

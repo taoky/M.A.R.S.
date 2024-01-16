@@ -15,31 +15,32 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef PLANETSIGN_HPP_INCLUDED
-# define PLANETSIGN_HPP_INCLUDED
+#ifndef PLANETSIGN_HPP_INCLUDED
+#define PLANETSIGN_HPP_INCLUDED
 
-# include "DecoObjects/DecoObject.hpp"
+#include "DecoObjects/DecoObject.hpp"
 
-# include "Media/texture.hpp"
+#include "Media/texture.hpp"
 
 class Planet;
 
 /// A random sign on a Planet.
 /// Very decorative.
 
-class PlanetSign: public DecoObject {
-    public:
-        /// Creates a randomly positioned Sign on the target Planet.
-        PlanetSign(Planet* planet);
+class PlanetSign : public DecoObject
+{
+  public:
+    /// Creates a randomly positioned Sign on the target Planet.
+    PlanetSign(Planet * planet);
 
-        /// Draws the sign.
-        void draw() const;
+    /// Draws the sign.
+    void draw() const;
 
-    private:
-        texture::TextureType texture_;
-        Vector2f location_;
-        float rotation_;
-        float scale_;
+  private:
+    texture::TextureType texture_;
+    Vector2f location_;
+    float rotation_;
+    float scale_;
 };
 
-# endif // PLANETSIGN_HPP_INCLUDED
+#endif // PLANETSIGN_HPP_INCLUDED

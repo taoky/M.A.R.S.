@@ -15,31 +15,34 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef BUTTON_HPP_INCLUDED
-# define BUTTON_HPP_INCLUDED
+#ifndef BUTTON_HPP_INCLUDED
+#define BUTTON_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Label.hpp"
-# include "Media/text.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiElement.hpp"
+#include "Media/text.hpp"
 
-class Button: public UiElement {
-    public:
-        Button (sf::String* text, sf::String* toolTip, bool* key, Vector2f const& topLeft, int width, int height, int align = TEXT_ALIGN_CENTER, sf::Font* font = NULL);
-        ~Button ();
+class Button : public UiElement
+{
+  public:
+    Button(sf::String * text, sf::String * toolTip, bool * key,
+           Vector2f const & topLeft, int width, int height,
+           int align = TEXT_ALIGN_CENTER, sf::Font * font = NULL);
+    ~Button();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
+    void mouseMoved(Vector2f const & position);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
 
-        void draw() const;
+    void draw() const;
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-    private:
-        bool* key_;
-        Label* label_;
-        sf::String* toolTip_;
+  private:
+    bool * key_;
+    Label * label_;
+    sf::String * toolTip_;
 };
 
-# endif
+#endif

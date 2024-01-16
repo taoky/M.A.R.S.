@@ -15,11 +15,11 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef DECOOBJECTS_HPP_INCLUDED
-# define DECOOBJECTS_HPP_INCLUDED
+#ifndef DECOOBJECTS_HPP_INCLUDED
+#define DECOOBJECTS_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
 class Planet;
 class Ship;
@@ -30,72 +30,74 @@ class Bolt;
 class DecoObject;
 class SpaceObject;
 
-/// A namespace which handles objects in the space, which can't be interacted with.
+/// A namespace which handles objects in the space, which can't be interacted
+/// with.
 
-namespace decoObjects {
-    /// Updates every DecoObject.
-    void update();
+namespace decoObjects
+{
+/// Updates every DecoObject.
+void update();
 
-    /// Draws every DecoObject. Except for the ShipNames and the SunHeats.
-    void draw();
+/// Draws every DecoObject. Except for the ShipNames and the SunHeats.
+void draw();
 
-    /// Draws every SunHeat.
-    void drawHeat();
+/// Draws every SunHeat.
+void drawHeat();
 
-    /// Draws every ShipName.
-    void drawNames();
+/// Draws every ShipName.
+void drawNames();
 
-    /// Draws an arrow between the given points.
-    void drawArrow(Vector2f const& from,  Vector2f const& to, Color3f const& color, float width = 10.f);
+/// Draws an arrow between the given points.
+void drawArrow(Vector2f const & from, Vector2f const & to,
+               Color3f const & color, float width = 10.f);
 
-    /// Adds the CannonKeep Cannon.
-    void addCannon();
+/// Adds the CannonKeep Cannon.
+void addCannon();
 
-    /// Adds a random PlanetSign on the target Planet.
-    /// \param planet The Planet to be decored.
-    void addPlanetSign(Planet* planet);
+/// Adds a random PlanetSign on the target Planet.
+/// \param planet The Planet to be decored.
+void addPlanetSign(Planet * planet);
 
-    /// Adds a heat texture on the target Sun.
-    /// \param sun The Sun to be decored.
-    void addSunHeat(Sun* sun);
+/// Adds a heat texture on the target Sun.
+/// \param sun The Sun to be decored.
+void addSunHeat(Sun * sun);
 
-    /// Adds an ice block at the ship's position.
-    /// \param ship The ship to be frozen.
-    void addIce(Ship* ship);
+/// Adds an ice block at the ship's position.
+/// \param ship The ship to be frozen.
+void addIce(Ship * ship);
 
-    /// Adds an ice block at the ball's position.
-    /// \param ball The ball to be frozen.
-    void addIce(Ball* ball);
+/// Adds an ice block at the ball's position.
+/// \param ball The ball to be frozen.
+void addIce(Ball * ball);
 
-    /// Adds an ice block on the rocket's position.
-    /// \param rocket The rocket to be frozen.
-    void addIce(AmmoRocket* rocket);
+/// Adds an ice block on the rocket's position.
+/// \param rocket The rocket to be frozen.
+void addIce(AmmoRocket * rocket);
 
-    /// Removes an ice block from the list.
-    /// \param toBeRemoved The ice block to be removed.
-    void removeIce(DecoObject const* toBeRemoved);
+/// Removes an ice block from the list.
+/// \param toBeRemoved The ice block to be removed.
+void removeIce(DecoObject const * toBeRemoved);
 
-    /// Adds a Bolt between two Ships.
-    /// \param from The Ship the Bolt is coming from.
-    /// \param to The Ship the Bolt is going to.
-    /// \param width The Bolt's width.
-    void addBolt      (SpaceObject* from, SpaceObject* to, float width);
+/// Adds a Bolt between two Ships.
+/// \param from The Ship the Bolt is coming from.
+/// \param to The Ship the Bolt is going to.
+/// \param width The Bolt's width.
+void addBolt(SpaceObject * from, SpaceObject * to, float width);
 
-    /// Removes a Bolt from the Bolt list.
-    /// \param toBeRemoved The Bolt to be removed.
-    void removeBolt   (DecoObject const* toBeRemoved);
+/// Removes a Bolt from the Bolt list.
+/// \param toBeRemoved The Bolt to be removed.
+void removeBolt(DecoObject const * toBeRemoved);
 
-    /// Adds a ShipName to the target Ship.
-    /// \param ship The Ship to be named.
-    void addName      (Ship* ship);
+/// Adds a ShipName to the target Ship.
+/// \param ship The Ship to be named.
+void addName(Ship * ship);
 
-    /// Adds a ShipHighlight to the target Ship.
-    /// \param ship The Ship to be highlighted.
-    void addHighlight (Ship* ship);
+/// Adds a ShipHighlight to the target Ship.
+/// \param ship The Ship to be highlighted.
+void addHighlight(Ship * ship);
 
-    /// Deletes every DecoObject.
-    void clear();
-};
+/// Deletes every DecoObject.
+void clear();
+}; // namespace decoObjects
 
-# endif //DECOOBJECTS_HPP_INCLUDED
-
+#endif // DECOOBJECTS_HPP_INCLUDED

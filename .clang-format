@@ -1,0 +1,6 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+BreakBeforeBraces: Allman
+PointerAlignment: Middle
+DerivePointerAlignment: false
+IndentCaseLabels: false

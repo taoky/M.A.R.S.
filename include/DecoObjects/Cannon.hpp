@@ -15,27 +15,24 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef CANNON_HPP_INCLUDED
-# define CANNON_HPP_INCLUDED
+#ifndef CANNON_HPP_INCLUDED
+#define CANNON_HPP_INCLUDED
 
-# include "DecoObjects/DecoObject.hpp"
+#include "DecoObjects/DecoObject.hpp"
 
 /// The cannon, displayed at the top of the screen when playing CannonKeep.
 
-class Cannon: public DecoObject {
-    public:
-        Cannon();
+class Cannon : public DecoObject
+{
+  public:
+    Cannon();
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-    private:
-        float timer_;
-        float rotation_;
+  private:
+    float timer_;
+    float rotation_;
 };
 
-# endif // CANNON_HPP_INCLUDED
-
-
-
-
+#endif // CANNON_HPP_INCLUDED

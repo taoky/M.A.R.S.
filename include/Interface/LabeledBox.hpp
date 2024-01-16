@@ -15,27 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef LABELEDBOX_HPP_INCLUDED
-# define LABELEDBOX_HPP_INCLUDED
+#ifndef LABELEDBOX_HPP_INCLUDED
+#define LABELEDBOX_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "System/Color3f.hpp"
+#include "Interface/UiElement.hpp"
+#include "System/Color3f.hpp"
 
 class Label;
 
-class LabeledBox: public UiElement {
-    public:
-        LabeledBox(sf::String* text, Vector2f const& topLeft, int width, int height);
+class LabeledBox : public UiElement
+{
+  public:
+    LabeledBox(sf::String * text, Vector2f const & topLeft, int width,
+               int height);
 
-        ~LabeledBox();
+    ~LabeledBox();
 
-        void draw() const;
+    void draw() const;
 
-        bool isTabable() const {return false;}
+    bool isTabable() const { return false; }
 
-    private:
-        Label* label_;
+  private:
+    Label * label_;
 };
 
-# endif //LABELEDBOX_HPP_INCLUDED
-
+#endif // LABELEDBOX_HPP_INCLUDED

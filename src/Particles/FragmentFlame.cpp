@@ -15,20 +15,25 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Particles/FragmentFlame.hpp"
+#include "Particles/FragmentFlame.hpp"
 
-# include "System/timer.hpp"
-# include "System/settings.hpp"
-# include "System/randomizer.hpp"
+#include "System/randomizer.hpp"
+#include "System/settings.hpp"
+#include "System/timer.hpp"
 
-std::list<FragmentFlame*> FragmentFlame::activeParticles_;
+std::list<FragmentFlame *> FragmentFlame::activeParticles_;
 
-FragmentFlame::FragmentFlame(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource):
-           Particle<FragmentFlame>(spaceObjects::oFragmentFlame, location, 1.f, 0.f, randomizer::random(0.15f, 0.25f)) {
+FragmentFlame::FragmentFlame(Vector2f const & location,
+                             Vector2f const & direction,
+                             Vector2f const & velocity, Color3f const & color,
+                             Player * damageSource)
+    : Particle<FragmentFlame>(spaceObjects::oFragmentFlame, location, 1.f, 0.f,
+                              randomizer::random(0.15f, 0.25f))
+{
 
     Vector2f distortion(Vector2f::randDirLen());
     location_ = location + distortion;
-    velocity_ = velocity*0.5f + distortion*20.f;
+    velocity_ = velocity * 0.5f + distortion * 20.f;
 
     radius_ = randomizer::random(1.f, 3.f);
 
@@ -37,27 +42,32 @@ FragmentFlame::FragmentFlame(Vector2f const& location, Vector2f const& direction
     color_.s(0.8f);
 }
 
-void FragmentFlame::update() {
+void FragmentFlame::update()
+{
     float time = timer::frameTime();
     // update Color
-    color_.h((-1.0/totalLifeTime_*lifeTime_+1)*60+350);
-    color_.v(-1.0/totalLifeTime_*lifeTime_+1);
+    color_.h((-1.0 / totalLifeTime_ * lifeTime_ + 1) * 60 + 350);
+    color_.v(-1.0 / totalLifeTime_ * lifeTime_ + 1);
 
-   // radius_ += time*20;
+    // radius_ += time*20;
 
-    location_ += velocity_*time;
-    velocity_ += velocity_*(-10.f)*time;
+    location_ += velocity_ * time;
+    velocity_ += velocity_ * (-10.f) * time;
 
     lifeTime_ += time;
 }
 
-void FragmentFlame::draw() const {
+void FragmentFlame::draw() const
+{
     color_.gl3f();
     const int posX = 5;
     const int posY = 0;
-    glTexCoord2f(posX*0.125f,     posY*0.125f);     glVertex2f(location_.x_-radius_, location_.y_-radius_);
-    glTexCoord2f(posX*0.125f,     (posY+1)*0.125f); glVertex2f(location_.x_-radius_, location_.y_+radius_);
-    glTexCoord2f((posX+1)*0.125f, (posY+1)*0.125f); glVertex2f(location_.x_+radius_, location_.y_+radius_);
-    glTexCoord2f((posX+1)*0.125f, posY*0.125f);     glVertex2f(location_.x_+radius_, location_.y_-radius_);
+    glTexCoord2f(posX * 0.125f, posY * 0.125f);
+    glVertex2f(location_.x_ - radius_, location_.y_ - radius_);
+    glTexCoord2f(posX * 0.125f, (posY + 1) * 0.125f);
+    glVertex2f(location_.x_ - radius_, location_.y_ + radius_);
+    glTexCoord2f((posX + 1) * 0.125f, (posY + 1) * 0.125f);
+    glVertex2f(location_.x_ + radius_, location_.y_ + radius_);
+    glTexCoord2f((posX + 1) * 0.125f, posY * 0.125f);
+    glVertex2f(location_.x_ + radius_, location_.y_ - radius_);
 }
-

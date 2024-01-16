@@ -15,23 +15,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "SpaceObjects/BlackHole.hpp"
+#include "SpaceObjects/BlackHole.hpp"
 
-# include "System/timer.hpp"
+#include "System/timer.hpp"
 
-# include <cmath>
+#include <cmath>
 
-BlackHole::BlackHole(Vector2f const& location, float radius):
-                     SpaceObject(spaceObjects::oBlackHole, location, radius, radius*130),
-                     rotation_(0) {
+BlackHole::BlackHole(Vector2f const & location, float radius)
+    : SpaceObject(spaceObjects::oBlackHole, location, radius, radius * 130),
+      rotation_(0)
+{
     physics::addGravitySource(this);
 }
 
-void BlackHole::update() {
-    rotation_ = fmod(rotation_ += 10*timer::frameTime(), 360);
+void BlackHole::update()
+{
+    rotation_ = fmod(rotation_ += 10 * timer::frameTime(), 360);
 }
 
-void BlackHole::draw() const {
+void BlackHole::draw() const
+{
     glPushMatrix();
     glLoadIdentity();
     glTranslatef(location_.x_, location_.y_, 0);
@@ -41,36 +44,46 @@ void BlackHole::draw() const {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, texture::getTexture(texture::Hole1));
 
-    glColor4f(1,1,1,0.2);
-    float drawRadius = radius_*1.8f;
+    glColor4f(1, 1, 1, 0.2);
+    float drawRadius = radius_ * 1.8f;
     glBegin(GL_QUADS);
-        glTexCoord2i(0, 0); glVertex2f(-drawRadius, -drawRadius);
-        glTexCoord2i(0, 1); glVertex2f(-drawRadius,  drawRadius);
-        glTexCoord2i(1, 1); glVertex2f( drawRadius,  drawRadius);
-        glTexCoord2i(1, 0); glVertex2f( drawRadius, -drawRadius);
+    glTexCoord2i(0, 0);
+    glVertex2f(-drawRadius, -drawRadius);
+    glTexCoord2i(0, 1);
+    glVertex2f(-drawRadius, drawRadius);
+    glTexCoord2i(1, 1);
+    glVertex2f(drawRadius, drawRadius);
+    glTexCoord2i(1, 0);
+    glVertex2f(drawRadius, -drawRadius);
     glEnd();
-    glColor4f(1,1,1,0.6);
-    glRotatef(rotation_*-2, 0, 0, 1);
-    drawRadius = radius_*1.3f;
+    glColor4f(1, 1, 1, 0.6);
+    glRotatef(rotation_ * -2, 0, 0, 1);
+    drawRadius = radius_ * 1.3f;
     glBegin(GL_QUADS);
-        glTexCoord2i(0, 0); glVertex2f(-drawRadius, -drawRadius);
-        glTexCoord2i(0, 1); glVertex2f(-drawRadius,  drawRadius);
-        glTexCoord2i(1, 1); glVertex2f( drawRadius,  drawRadius);
-        glTexCoord2i(1, 0); glVertex2f( drawRadius, -drawRadius);
+    glTexCoord2i(0, 0);
+    glVertex2f(-drawRadius, -drawRadius);
+    glTexCoord2i(0, 1);
+    glVertex2f(-drawRadius, drawRadius);
+    glTexCoord2i(1, 1);
+    glVertex2f(drawRadius, drawRadius);
+    glTexCoord2i(1, 0);
+    glVertex2f(drawRadius, -drawRadius);
     glEnd();
-    glColor4f(1,1,1,1);
-    glRotatef(rotation_*4, 0, 0, 1);
+    glColor4f(1, 1, 1, 1);
+    glRotatef(rotation_ * 4, 0, 0, 1);
     drawRadius = radius_;
     glBegin(GL_QUADS);
-        glTexCoord2i(0, 0); glVertex2f(-drawRadius, -drawRadius);
-        glTexCoord2i(0, 1); glVertex2f(-drawRadius,  drawRadius);
-        glTexCoord2i(1, 1); glVertex2f( drawRadius,  drawRadius);
-        glTexCoord2i(1, 0); glVertex2f( drawRadius, -drawRadius);
+    glTexCoord2i(0, 0);
+    glVertex2f(-drawRadius, -drawRadius);
+    glTexCoord2i(0, 1);
+    glVertex2f(-drawRadius, drawRadius);
+    glTexCoord2i(1, 1);
+    glVertex2f(drawRadius, drawRadius);
+    glTexCoord2i(1, 0);
+    glVertex2f(drawRadius, -drawRadius);
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
     glPopMatrix();
 }
-
-

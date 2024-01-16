@@ -15,23 +15,25 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef HEATJET_HPP_INCLUDED
-# define HEATJET_HPP_INCLUDED
+#ifndef HEATJET_HPP_INCLUDED
+#define HEATJET_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-class HeatJet: public Particle<HeatJet> {
-    public:
-        HeatJet(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class HeatJet : public Particle<HeatJet>
+{
+  public:
+    HeatJet(Vector2f const & location, Vector2f const & direction,
+            Vector2f const & velocity, Color3f const & color,
+            Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<HeatJet>;
+    friend class Particle<HeatJet>;
 
-    private:
-        static std::list<HeatJet*> activeParticles_;
+  private:
+    static std::list<HeatJet *> activeParticles_;
 };
 
-# endif // HEATJET_HPP_INCLUDED
-
+#endif // HEATJET_HPP_INCLUDED

@@ -15,24 +15,24 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SHIPNAME_HPP_INCLUDED
-# define SHIPNAME_HPP_INCLUDED
+#ifndef SHIPNAME_HPP_INCLUDED
+#define SHIPNAME_HPP_INCLUDED
 
-# include "DecoObjects/DecoObject.hpp"
+#include "DecoObjects/DecoObject.hpp"
 
 class Ship;
 
 /// An object displaying the players name at his Ship.
 
-class ShipName: public DecoObject {
-    public:
-        ShipName(Ship* ship): ship_(ship) {}
+class ShipName : public DecoObject
+{
+  public:
+    ShipName(Ship * ship) : ship_(ship) {}
 
-        void draw() const;
+    void draw() const;
 
-    private:
-        Ship* ship_;
+  private:
+    Ship * ship_;
 };
 
-# endif // SHIPNAME_HPP_INCLUDED
-
+#endif // SHIPNAME_HPP_INCLUDED

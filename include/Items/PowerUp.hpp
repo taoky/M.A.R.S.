@@ -15,52 +15,48 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef ITEM_HPP_INCLUDED
-# define ITEM_HPP_INCLUDED
+#ifndef ITEM_HPP_INCLUDED
+#define ITEM_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
-# include "System/Color3f.hpp"
-# include "Items/items.hpp"
+#include "Items/items.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-# include <list>
+#include <list>
 
 class Ship;
 
-class PowerUp {
-    public:
-        PowerUp(items::PowerUpType type, Vector2f const& location, float radius,
-                float totalLifeTime, int texX, int texY, Color3f const& bgColor);
+class PowerUp
+{
+  public:
+    PowerUp(items::PowerUpType type, Vector2f const & location, float radius,
+            float totalLifeTime, int texX, int texY, Color3f const & bgColor);
 
-        virtual ~PowerUp();
+    virtual ~PowerUp();
 
-        virtual void update();
-        virtual void draw() const;
+    virtual void update();
+    virtual void draw() const;
 
-        Vector2f const& location() const;
-        float           radius()   const;
-        items::PowerUpType type()  const;
+    Vector2f const & location() const;
+    float radius() const;
+    items::PowerUpType type() const;
 
-        bool isDead()              const;
-        bool isCollected()         const;
+    bool isDead() const;
+    bool isCollected() const;
 
-    protected:
-        virtual void refreshLifeTime() = 0;
+  protected:
+    virtual void refreshLifeTime() = 0;
 
-        Vector2f location_;
-        float radius_;
-        std::list<Ship*> ships_;
-        bool collected_;
-        items::PowerUpType type_;
-        float lifeTime_, totalLifeTime_;
+    Vector2f location_;
+    float radius_;
+    std::list<Ship *> ships_;
+    bool collected_;
+    items::PowerUpType type_;
+    float lifeTime_, totalLifeTime_;
 
-    private:
-        int texX_, texY_;
-        Color3f bgColor_;
+  private:
+    int texX_, texY_;
+    Color3f bgColor_;
 };
 
-# endif // ITEM_HPP_INCLUDED
-
-
-
-
-
+#endif // ITEM_HPP_INCLUDED

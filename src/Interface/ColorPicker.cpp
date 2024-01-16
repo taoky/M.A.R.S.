@@ -15,57 +15,63 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Interface/ColorPicker.hpp"
+#include "Interface/ColorPicker.hpp"
 
-# include "System/settings.hpp"
-# include "System/window.hpp"
-# include "Media/text.hpp"
-# include "Media/texture.hpp"
-# include "Locales/locales.hpp"
-# include "Media/sound.hpp"
-# include "Menu/menus.hpp"
-# include "Interface/ColorPickerWindow.hpp"
-# include "Interface/Button.hpp"
+#include "Interface/Button.hpp"
+#include "Interface/ColorPickerWindow.hpp"
+#include "Locales/locales.hpp"
+#include "Media/sound.hpp"
+#include "Media/text.hpp"
+#include "Media/texture.hpp"
+#include "Menu/menus.hpp"
+#include "System/settings.hpp"
+#include "System/window.hpp"
 
-# include <SFML/OpenGL.hpp>
-# include <iostream>
+#include <SFML/OpenGL.hpp>
+#include <iostream>
 
-ColorPicker::ColorPicker (sf::String* text, Color3f* value, Vector2f const& topLeft, int width, int labelWidth):
-    UiElement(topLeft, width, 16),
-    colorWindow_(NULL),
-    currentValue_(value),
-    labelWidth_(labelWidth),
-    opened_(false) {
+ColorPicker::ColorPicker(sf::String * text, Color3f * value,
+                         Vector2f const & topLeft, int width, int labelWidth)
+    : UiElement(topLeft, width, 16), colorWindow_(NULL), currentValue_(value),
+      labelWidth_(labelWidth), opened_(false)
+{
 
-    label_ = new Label(text, TEXT_ALIGN_LEFT, Vector2f(0,0));
+    label_ = new Label(text, TEXT_ALIGN_LEFT, Vector2f(0, 0));
     label_->setParent(this);
 
     colorWindow_ = new ColorPickerWindow(this, currentValue_);
 }
 
-ColorPicker::~ColorPicker () {
+ColorPicker::~ColorPicker()
+{
     delete label_;
     delete colorWindow_;
 }
 
-void ColorPicker::mouseMoved(Vector2f const& position) {
+void ColorPicker::mouseMoved(Vector2f const & position)
+{
     UiElement::mouseMoved(position);
     label_->mouseMoved(position);
 }
 
-void ColorPicker::mouseLeft(bool down) {
+void ColorPicker::mouseLeft(bool down)
+{
     UiElement::mouseLeft(hovered_ && down);
-    if (!pressed_ && hovered_ && focused_) {
+    if (!pressed_ && hovered_ && focused_)
+    {
         hovered_ = false;
         sound::playSound(sound::Click);
         menus::showWindow(colorWindow_);
     }
 }
 
-void ColorPicker::keyEvent(bool down, Key const& key) {
-    if (key.navi_ == Key::nConfirm) {
+void ColorPicker::keyEvent(bool down, Key const & key)
+{
+    if (key.navi_ == Key::nConfirm)
+    {
         pressed_ = down;
-        if (!pressed_) {
+        if (!pressed_)
+        {
             hovered_ = false;
             sound::playSound(sound::Click);
             menus::showWindow(colorWindow_);
@@ -73,7 +79,8 @@ void ColorPicker::keyEvent(bool down, Key const& key) {
     }
 }
 
-void ColorPicker::draw() const {
+void ColorPicker::draw() const
+{
     UiElement::draw();
 
     int mirror(locales::getCurrentLocale().LTR_ ? 1 : -1);
@@ -83,66 +90,72 @@ void ColorPicker::draw() const {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glBegin(GL_QUADS);
-        // dark background
-        currentValue_->gl3f();
-        glVertex2f(labelWidth_*mirror+origin.x_, origin.y_);
-        glVertex2f(width() + origin.x_, origin.y_);
-        glVertex2f(width() + origin.x_, height_ + origin.y_);
-        glVertex2f(labelWidth_*mirror+origin.x_, height_ + origin.y_);
+    // dark background
+    currentValue_->gl3f();
+    glVertex2f(labelWidth_ * mirror + origin.x_, origin.y_);
+    glVertex2f(width() + origin.x_, origin.y_);
+    glVertex2f(width() + origin.x_, height_ + origin.y_);
+    glVertex2f(labelWidth_ * mirror + origin.x_, height_ + origin.y_);
 
-        // glossy bottom
-        glColor4f(1.0,1.0,1.0,0.0);
-        glVertex2f(labelWidth_*mirror+origin.x_, height_*0.7f + origin.y_);
-        glVertex2f(width() + origin.x_, height_*0.7f + origin.y_);
-        glColor4f(1.0,1.0,1.0,0.06);
-        glVertex2f(width() + origin.x_, height_ + origin.y_);
-        glVertex2f(labelWidth_*mirror+origin.x_, height_ + origin.y_);
+    // glossy bottom
+    glColor4f(1.0, 1.0, 1.0, 0.0);
+    glVertex2f(labelWidth_ * mirror + origin.x_, height_ * 0.7f + origin.y_);
+    glVertex2f(width() + origin.x_, height_ * 0.7f + origin.y_);
+    glColor4f(1.0, 1.0, 1.0, 0.06);
+    glVertex2f(width() + origin.x_, height_ + origin.y_);
+    glVertex2f(labelWidth_ * mirror + origin.x_, height_ + origin.y_);
 
-    if (pressed_ && hovered_) {
+    if (pressed_ && hovered_)
+    {
         // bottom glow
-        glColor4f(0.5,0.25,0.4,0.0);
-        glVertex2f(labelWidth_*mirror+origin.x_,origin.y_);
-        glVertex2f(origin.x_+width(),origin.y_);
-        glColor4f(0.5,0.25,0.4,0.4);
-        glVertex2f(origin.x_+width(),origin.y_+height_);
-        glVertex2f(labelWidth_*mirror+origin.x_,origin.y_+height_);
+        glColor4f(0.5, 0.25, 0.4, 0.0);
+        glVertex2f(labelWidth_ * mirror + origin.x_, origin.y_);
+        glVertex2f(origin.x_ + width(), origin.y_);
+        glColor4f(0.5, 0.25, 0.4, 0.4);
+        glVertex2f(origin.x_ + width(), origin.y_ + height_);
+        glVertex2f(labelWidth_ * mirror + origin.x_, origin.y_ + height_);
     }
-    else if (hovered_) {
-        glColor4f(0.5,0.25,0.4,0.0);
-        glVertex2f(labelWidth_*mirror+origin.x_,height_*0.5f + origin.y_);
-        glVertex2f(origin.x_+width(),height_*0.5f + origin.y_);
-        glColor4f(0.5,0.25,0.4,0.4);
-        glVertex2f(origin.x_+width(),origin.y_+height_);
-        glVertex2f(labelWidth_*mirror+origin.x_,origin.y_+height_);
+    else if (hovered_)
+    {
+        glColor4f(0.5, 0.25, 0.4, 0.0);
+        glVertex2f(labelWidth_ * mirror + origin.x_,
+                   height_ * 0.5f + origin.y_);
+        glVertex2f(origin.x_ + width(), height_ * 0.5f + origin.y_);
+        glColor4f(0.5, 0.25, 0.4, 0.4);
+        glVertex2f(origin.x_ + width(), origin.y_ + height_);
+        glVertex2f(labelWidth_ * mirror + origin.x_, origin.y_ + height_);
 
         // glossy top
-        glColor4f(1.0,1.0,1.0,0.2);
-        glVertex2f(labelWidth_*mirror+origin.x_, origin.y_);
+        glColor4f(1.0, 1.0, 1.0, 0.2);
+        glVertex2f(labelWidth_ * mirror + origin.x_, origin.y_);
         glVertex2f(width() + origin.x_, origin.y_);
-        glColor4f(1.0,1.0,1.0,0.05);
-        glVertex2f(width() + origin.x_, height_*0.5f + origin.y_);
-        glVertex2f(labelWidth_*mirror+origin.x_, height_*0.5f + origin.y_);
+        glColor4f(1.0, 1.0, 1.0, 0.05);
+        glVertex2f(width() + origin.x_, height_ * 0.5f + origin.y_);
+        glVertex2f(labelWidth_ * mirror + origin.x_,
+                   height_ * 0.5f + origin.y_);
     }
-    else {
+    else
+    {
         // glossy top
-        glColor4f(1.0,1.0,1.0,0.2);
-        glVertex2f(labelWidth_*mirror+origin.x_, origin.y_);
+        glColor4f(1.0, 1.0, 1.0, 0.2);
+        glVertex2f(labelWidth_ * mirror + origin.x_, origin.y_);
         glVertex2f(width() + origin.x_, origin.y_);
-        glColor4f(1.0,1.0,1.0,0.05);
-        glVertex2f(width() + origin.x_, height_*0.5f + origin.y_);
-        glVertex2f(labelWidth_*mirror+origin.x_, height_*0.5f + origin.y_);
+        glColor4f(1.0, 1.0, 1.0, 0.05);
+        glVertex2f(width() + origin.x_, height_ * 0.5f + origin.y_);
+        glVertex2f(labelWidth_ * mirror + origin.x_,
+                   height_ * 0.5f + origin.y_);
     }
     glEnd();
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     glLineWidth(1.f);
 
-    glColor4f(1.0,0.4,0.8,0.3f+hoveredFadeTime_*0.7f);
+    glColor4f(1.0, 0.4, 0.8, 0.3f + hoveredFadeTime_ * 0.7f);
     glBegin(GL_LINE_LOOP);
-        glVertex2f(labelWidth_*mirror+origin.x_,origin.y_+height_);
-        glVertex2f(labelWidth_*mirror+origin.x_,origin.y_);
-        glVertex2f(origin.x_+width(),origin.y_);
-        glVertex2f(origin.x_+width(),origin.y_+height_);
+    glVertex2f(labelWidth_ * mirror + origin.x_, origin.y_ + height_);
+    glVertex2f(labelWidth_ * mirror + origin.x_, origin.y_);
+    glVertex2f(origin.x_ + width(), origin.y_);
+    glVertex2f(origin.x_ + width(), origin.y_ + height_);
     glEnd();
 
     text::drawFooText();
@@ -150,13 +163,14 @@ void ColorPicker::draw() const {
     label_->draw();
 }
 
-void ColorPicker::setFocus (UiElement* toBeFocused, bool isPrevious) {
+void ColorPicker::setFocus(UiElement * toBeFocused, bool isPrevious)
+{
     UiElement::setFocus(this, isPrevious);
     label_->setFocus(this, isPrevious);
 }
 
-void ColorPicker::clearFocus() {
+void ColorPicker::clearFocus()
+{
     UiElement::clearFocus();
     label_->clearFocus();
 }
-

@@ -15,20 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef WEAPONS_HPP_INCLUDED
-# define WEAPONS_HPP_INCLUDED
+#ifndef WEAPONS_HPP_INCLUDED
+#define WEAPONS_HPP_INCLUDED
 
 class Weapon;
 class Ship;
 
-namespace weapons {
-    enum WeaponType {wInsta=1, wAFK47=2, wBurner=4, wFist=8, wFlubba=16,
-                     wShotgun=32, wRocketLauncher=64, wROFLE=128,
-                     wH2OMG=256, wNoWeapon=512};
+namespace weapons
+{
+enum WeaponType
+{
+    wInsta = 1,
+    wAFK47 = 2,
+    wBurner = 4,
+    wFist = 8,
+    wFlubba = 16,
+    wShotgun = 32,
+    wRocketLauncher = 64,
+    wROFLE = 128,
+    wH2OMG = 256,
+    wNoWeapon = 512
+};
 
-    Weapon* create    (WeaponType type, Ship* parent);
-    Weapon* createNext(WeaponType type, Ship* parent);
-    Weapon* createPrev(WeaponType type, Ship* parent);
-}
+Weapon * create(WeaponType type, Ship * parent);
+Weapon * createNext(WeaponType type, Ship * parent);
+Weapon * createPrev(WeaponType type, Ship * parent);
+} // namespace weapons
 
-# endif // WEAPONS_HPP_INCLUDED
+#endif // WEAPONS_HPP_INCLUDED

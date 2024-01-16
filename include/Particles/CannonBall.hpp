@@ -15,24 +15,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef CANNONBALL_HPP_INCLUDED
-# define CANNONBALL_HPP_INCLUDED
+#ifndef CANNONBALL_HPP_INCLUDED
+#define CANNONBALL_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-class CannonBall: public Particle<CannonBall> {
-    public:
-        CannonBall(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class CannonBall : public Particle<CannonBall>
+{
+  public:
+    CannonBall(Vector2f const & location, Vector2f const & direction,
+               Vector2f const & velocity, Color3f const & color,
+               Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<CannonBall>;
+    friend class Particle<CannonBall>;
 
-    private:
-        float timer1_, timer2_;
-        static std::list<CannonBall*> activeParticles_;
+  private:
+    float timer1_, timer2_;
+    static std::list<CannonBall *> activeParticles_;
 };
 
-# endif // CANNONBALL_HPP_INCLUDED
-
+#endif // CANNONBALL_HPP_INCLUDED

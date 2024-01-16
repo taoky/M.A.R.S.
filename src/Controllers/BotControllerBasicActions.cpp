@@ -15,16 +15,18 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Controllers/BotController.hpp"
+#include "Controllers/BotController.hpp"
 
-# include "SpaceObjects/Ship.hpp"
-# include "Players/Player.hpp"
-# include "Teams/Team.hpp"
-# include "SpaceObjects/Home.hpp"
-# include "System/randomizer.hpp"
+#include "Players/Player.hpp"
+#include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "System/randomizer.hpp"
+#include "Teams/Team.hpp"
 
-void BotController::charge() {
-    Vector2f direction = ship()->location() - slave_->team()->home()->location();
+void BotController::charge()
+{
+    Vector2f direction =
+        ship()->location() - slave_->team()->home()->location();
     turnTo(direction + ship()->location());
     slaveFire(0);
     slaveUp(0);
@@ -33,12 +35,15 @@ void BotController::charge() {
         switchSpecial();
 }
 
-void BotController::land() {
+void BotController::land()
+{
     moveTo(slave_->team()->home()->location(), 50.f, true, 0.f, true);
 }
 
-void BotController::switchWeapon() {
-    if (weaponChangeTimer_ <= 0.f) {
+void BotController::switchWeapon()
+{
+    if (weaponChangeTimer_ <= 0.f)
+    {
         slaveFire();
         slaveLeft();
         slaveFire();
@@ -50,8 +55,10 @@ void BotController::switchWeapon() {
     }
 }
 
-void BotController::switchSpecial() {
-    if (specialChangeTimer_ <= 0.f) {
+void BotController::switchSpecial()
+{
+    if (specialChangeTimer_ <= 0.f)
+    {
         slaveSpecial();
         slaveLeft();
         slaveSpecial();

@@ -15,17 +15,14 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef HUDELEMENT_HPP_INCLUDED
-# define HUDELEMENT_HPP_INCLUDED
+#ifndef HUDELEMENT_HPP_INCLUDED
+#define HUDELEMENT_HPP_INCLUDED
 
-class HudElement {
-    public:
-        virtual void draw() const = 0;
-        virtual void update() {};
+class HudElement
+{
+  public:
+    virtual void draw() const = 0;
+    virtual void update(){};
 };
 
-# endif // HUDELEMENT_HPP_INCLUDED
-
-
-
-
+#endif // HUDELEMENT_HPP_INCLUDED

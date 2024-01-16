@@ -15,21 +15,19 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef DECOOBJECT_HPP_INCLUDED
-# define DECOOBJECT_HPP_INCLUDED
+#ifndef DECOOBJECT_HPP_INCLUDED
+#define DECOOBJECT_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
+#include "System/Vector2f.hpp"
 
 /// A simple interface providing just a virtual draw function.
 
-class DecoObject {
-    public:
-        /// Draws the DecoObject.
-        virtual void draw() const = 0;
-        virtual ~DecoObject() {};
+class DecoObject
+{
+  public:
+    /// Draws the DecoObject.
+    virtual void draw() const = 0;
+    virtual ~DecoObject(){};
 };
 
-# endif // DECOOBJECT_HPP_INCLUDED
-
-
-
+#endif // DECOOBJECT_HPP_INCLUDED

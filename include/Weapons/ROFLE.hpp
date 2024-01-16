@@ -15,35 +15,35 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef ROFLE_HPP_INCLUDED
-# define ROFLE_HPP_INCLUDED
+#ifndef ROFLE_HPP_INCLUDED
+#define ROFLE_HPP_INCLUDED
 
-# include "Weapons/Weapon.hpp"
+#include "Weapons/Weapon.hpp"
 
 /// Weapon: ROFLE.
 /// A long distance gun, a sniper.
 
-class ROFLE: public Weapon {
-    public:
-        /// Ctor which constructs the weapon.
-        ROFLE(Ship* parent):
-              Weapon(weapons::wROFLE, parent, sf::String("ROFLE")) {};
+class ROFLE : public Weapon
+{
+  public:
+    /// Ctor which constructs the weapon.
+    ROFLE(Ship * parent)
+        : Weapon(weapons::wROFLE, parent, sf::String("ROFLE")){};
 
-        /// Spawns some particles.
-        void fire() const;
+    /// Spawns some particles.
+    void fire() const;
 
-        /// Draws the weapon.
-        void draw(float alpha) const;
+    /// Draws the weapon.
+    void draw(float alpha) const;
 
-        /// Returns the maximum distance from which this weapon should be used.
-        float maxDistance() const;
+    /// Returns the maximum distance from which this weapon should be used.
+    float maxDistance() const;
 
-        /// Returns the minimum distance from which this weapon should be used.
-        float minDistance() const;
+    /// Returns the minimum distance from which this weapon should be used.
+    float minDistance() const;
 
-        /// Returns the maximum angle from which this weapon should be used.
-        float maxAngle()   const;
+    /// Returns the maximum angle from which this weapon should be used.
+    float maxAngle() const;
 };
 
-# endif // ROFLE_HPP_INCLUDED
-
+#endif // ROFLE_HPP_INCLUDED

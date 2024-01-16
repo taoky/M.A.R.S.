@@ -15,26 +15,25 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SHIPS_HPP_INCLUDED
-# define SHIPS_HPP_INCLUDED
+#ifndef SHIPS_HPP_INCLUDED
+#define SHIPS_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
-# include <vector>
+#include "System/Vector2f.hpp"
+#include <vector>
 
 class Player;
 class Ship;
 
-namespace ships {
-    void addShip(Vector2f const& location, float rotation, Player* owner);
+namespace ships
+{
+void addShip(Vector2f const & location, float rotation, Player * owner);
 
-    void update();
-    void draw();
+void update();
+void draw();
 
-    std::vector<Ship*> const& getShips();
+std::vector<Ship *> const & getShips();
 
-    void clear();
-}
+void clear();
+} // namespace ships
 
-# endif // SHIPS_HPP_INCLUDED
-
-
+#endif // SHIPS_HPP_INCLUDED

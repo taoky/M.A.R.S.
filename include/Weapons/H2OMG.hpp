@@ -15,35 +15,35 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef H2OMG_HPP_INCLUDED
-# define H2OMG_HPP_INCLUDED
+#ifndef H2OMG_HPP_INCLUDED
+#define H2OMG_HPP_INCLUDED
 
-# include "Weapons/Weapon.hpp"
+#include "Weapons/Weapon.hpp"
 
 /// Weapon: H2OMG.
 /// A long distance gun, which fires some icy cubes.
 
-class H2OMG: public Weapon {
-    public:
-        /// Ctor which constructs the weapon.
-        H2OMG(Ship* parent):
-              Weapon(weapons::wH2OMG, parent, sf::String("H2O-MG")) {};
+class H2OMG : public Weapon
+{
+  public:
+    /// Ctor which constructs the weapon.
+    H2OMG(Ship * parent)
+        : Weapon(weapons::wH2OMG, parent, sf::String("H2O-MG")){};
 
-        /// Spawns some particles.
-        void fire() const;
+    /// Spawns some particles.
+    void fire() const;
 
-        /// Draws the weapon.
-        void draw(float alpha) const;
+    /// Draws the weapon.
+    void draw(float alpha) const;
 
-        /// Returns the maximum distance from which this weapon should be used.
-        float maxDistance() const;
+    /// Returns the maximum distance from which this weapon should be used.
+    float maxDistance() const;
 
-        /// Returns the minimum distance from which this weapon should be used.
-        float minDistance() const;
+    /// Returns the minimum distance from which this weapon should be used.
+    float minDistance() const;
 
-        /// Returns the maximum angle from which this weapon should be used.
-        float maxAngle()   const;
+    /// Returns the maximum angle from which this weapon should be used.
+    float maxAngle() const;
 };
 
-# endif // H2OMG_HPP_INCLUDED
-
+#endif // H2OMG_HPP_INCLUDED

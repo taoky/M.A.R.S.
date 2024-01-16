@@ -15,27 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef AMMOROFLE_HPP_INCLUDED
-# define AMMOROFLE_HPP_INCLUDED
+#ifndef AMMOROFLE_HPP_INCLUDED
+#define AMMOROFLE_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-class AmmoROFLE: public Particle<AmmoROFLE> {
-    public:
-        AmmoROFLE(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
-        ~AmmoROFLE();
+class AmmoROFLE : public Particle<AmmoROFLE>
+{
+  public:
+    AmmoROFLE(Vector2f const & location, Vector2f const & direction,
+              Vector2f const & velocity, Color3f const & color,
+              Player * damageSource);
+    ~AmmoROFLE();
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-        friend class Particle<AmmoROFLE>;
+    friend class Particle<AmmoROFLE>;
 
-    private:
-        static std::list<AmmoROFLE*> activeParticles_;
+  private:
+    static std::list<AmmoROFLE *> activeParticles_;
 };
 
-# endif // AMMOROFLE_HPP_INCLUDED
-
+#endif // AMMOROFLE_HPP_INCLUDED

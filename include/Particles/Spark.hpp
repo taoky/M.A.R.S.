@@ -15,27 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SPARK_HPP_INCLUDED
-# define SPARK_HPP_INCLUDED
+#ifndef SPARK_HPP_INCLUDED
+#define SPARK_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class Spark: public Particle<Spark> {
-    public:
-        Spark(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class Spark : public Particle<Spark>
+{
+  public:
+    Spark(Vector2f const & location, Vector2f const & direction,
+          Vector2f const & velocity, Color3f const & color,
+          Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<Spark>;
+    friend class Particle<Spark>;
 
-    private:
-        Color3f color_;
-        static std::list<Spark*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<Spark *> activeParticles_;
 };
 
-# endif // SPARK_HPP_INCLUDED
-
-
+#endif // SPARK_HPP_INCLUDED

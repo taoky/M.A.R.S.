@@ -15,18 +15,12 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "TrailEffects/Trail.hpp"
+#include "TrailEffects/Trail.hpp"
 
-# include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 
-Trail::Trail(SpaceObject* target):
-    target_(target) {}
+Trail::Trail(SpaceObject * target) : target_(target) {}
 
-void Trail::detach() {
-    target_ = NULL;
-}
+void Trail::detach() { target_ = NULL; }
 
-SpaceObject* Trail::target() const {
-    return target_;
-}
-
+SpaceObject * Trail::target() const { return target_; }

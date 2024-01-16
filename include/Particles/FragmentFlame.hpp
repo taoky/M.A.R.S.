@@ -15,27 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef FRAGMENTFLAME_HPP_INCLUDED
-# define FRAGMENTFLAME_HPP_INCLUDED
+#ifndef FRAGMENTFLAME_HPP_INCLUDED
+#define FRAGMENTFLAME_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class FragmentFlame: public Particle<FragmentFlame> {
-    public:
-        FragmentFlame(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class FragmentFlame : public Particle<FragmentFlame>
+{
+  public:
+    FragmentFlame(Vector2f const & location, Vector2f const & direction,
+                  Vector2f const & velocity, Color3f const & color,
+                  Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<FragmentFlame>;
+    friend class Particle<FragmentFlame>;
 
-    private:
-        Color3f color_;
-        static std::list<FragmentFlame*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<FragmentFlame *> activeParticles_;
 };
 
-# endif // FRAGMENTFLAME_HPP_INCLUDED
-
-
+#endif // FRAGMENTFLAME_HPP_INCLUDED

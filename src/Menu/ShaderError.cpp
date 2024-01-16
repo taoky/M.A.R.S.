@@ -15,41 +15,44 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Menu/ShaderError.hpp"
+#include "Menu/ShaderError.hpp"
 
-# include "Media/text.hpp"
-# include "Interface/UiWindow.hpp"
-# include "Interface/Button.hpp"
-# include "System/window.hpp"
-# include "Menu/menus.hpp"
-# include "Games/games.hpp"
-# include "Locales/locales.hpp"
+#include "Games/games.hpp"
+#include "Interface/Button.hpp"
+#include "Interface/UiWindow.hpp"
+#include "Locales/locales.hpp"
+#include "Media/text.hpp"
+#include "Menu/menus.hpp"
+#include "System/window.hpp"
 
-UiWindow* ShaderError::instance_(NULL);
+UiWindow * ShaderError::instance_(NULL);
 bool ShaderError::kOk_(false);
 
-UiWindow* ShaderError::get() {
-    if (instance_ == NULL) {
+UiWindow * ShaderError::get()
+{
+    if (instance_ == NULL)
+    {
         instance_ = new ShaderError(350, 80);
-        instance_->addWidget(new Button(locales::getLocale(locales::Ok),     NULL, &kOk_, Vector2f(250,50), 90, 20));
-        instance_->addWidget(new Label(locales::getLocale(locales::ShaderError), TEXT_ALIGN_LEFT, Vector2f(10, 8)));
+        instance_->addWidget(new Button(locales::getLocale(locales::Ok), NULL,
+                                        &kOk_, Vector2f(250, 50), 90, 20));
+        instance_->addWidget(new Label(locales::getLocale(locales::ShaderError),
+                                       TEXT_ALIGN_LEFT, Vector2f(10, 8)));
     }
     return instance_;
 }
 
-void ShaderError::checkWidgets() {
-    if (kOk_) {
+void ShaderError::checkWidgets()
+{
+    if (kOk_)
+    {
         kOk_ = false;
         menus::hideWindow();
     }
 }
 
-void ShaderError::reset() {
+void ShaderError::reset()
+{
     if (instance_)
         delete instance_;
     instance_ = NULL;
 }
-
-
-
-

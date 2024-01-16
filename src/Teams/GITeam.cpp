@@ -15,39 +15,44 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Teams/GITeam.hpp"
+#include "Teams/GITeam.hpp"
 
-# include "Teams/teams.hpp"
-# include "Players/Player.hpp"
-# include "SpaceObjects/ships.hpp"
+#include "Players/Player.hpp"
+#include "SpaceObjects/ships.hpp"
+#include "Teams/teams.hpp"
 
-void GITeam::createJobs() {
+void GITeam::createJobs()
+{
     checkEnemies();
 
-    for (int i=0; i<botControllers_.size(); ++i) {
+    for (int i = 0; i < botControllers_.size(); ++i)
+    {
         addJob(Job(Job::jLand, 1));
         addJob(Job(Job::jCharge, 1));
     }
 }
 
-void GITeam::checkEnemies() {
-    std::vector<Ship*> ships = ships::getShips();
+void GITeam::checkEnemies()
+{
+    std::vector<Ship *> ships = ships::getShips();
     bool existAny(false);
 
-    for (std::vector<Ship*>::const_iterator it = ships.begin(); it != ships.end(); ++it)
-        if ((*it)->getOwner()->team() != this && (*it)->attackable()) {
+    for (std::vector<Ship *>::const_iterator it = ships.begin();
+         it != ships.end(); ++it)
+        if ((*it)->getOwner()->team() != this && (*it)->attackable())
+        {
             existAny = true;
             break;
         }
 
-    if (existAny) {
-        for (int i=0; i<botControllers_.size(); ++i)
+    if (existAny)
+    {
+        for (int i = 0; i < botControllers_.size(); ++i)
             addJob(Job(Job::jAttackAny, 90));
     }
-    else {
-        for (int i=0; i<botControllers_.size(); ++i)
+    else
+    {
+        for (int i = 0; i < botControllers_.size(); ++i)
             addJob(Job(Job::jEscape, 3));
     }
 }
-
-

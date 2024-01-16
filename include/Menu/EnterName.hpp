@@ -15,32 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef ENTERNAME_HPP_INCLUDED
-# define ENTERNAME_HPP_INCLUDED
+#ifndef ENTERNAME_HPP_INCLUDED
+#define ENTERNAME_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class EnterName: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow();
+class EnterName : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow();
 
-        static void reset();
+    static void reset();
 
-    private:
-        EnterName(int width, int height): UiWindow(width, height) {}
-        EnterName(EnterName const& copy);
+  private:
+    EnterName(int width, int height) : UiWindow(width, height) {}
+    EnterName(EnterName const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_;
+    static bool kOk_;
 };
 
-# endif // ENTERNAME_HPP_INCLUDED
-
-
-
-
-
-
+#endif // ENTERNAME_HPP_INCLUDED

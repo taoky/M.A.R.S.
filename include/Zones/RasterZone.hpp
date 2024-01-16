@@ -15,42 +15,42 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
+#ifndef RASTERZONE_HPP_INCLUDED
+#define RASTERZONE_HPP_INCLUDED
 
-# ifndef RASTERZONE_HPP_INCLUDED
-# define RASTERZONE_HPP_INCLUDED
-
-# include "Zones/Zone.hpp"
+#include "Zones/Zone.hpp"
 
 /// Zone: RasterZone.
 /// A square shaped zone.
 
-class RasterZone: public Zone {
-    public:
-        /// Ctor, which creates the Zone.
-        RasterZone(Vector2f const& bottomLeft, Vector2f const& topRight);
+class RasterZone : public Zone
+{
+  public:
+    /// Ctor, which creates the Zone.
+    RasterZone(Vector2f const & bottomLeft, Vector2f const & topRight);
 
-        /// Returns true, if the given SpaceObject is inside this Zone.
-        bool isInside(SpaceObject const& toBeChecked) const;
+    /// Returns true, if the given SpaceObject is inside this Zone.
+    bool isInside(SpaceObject const & toBeChecked) const;
 
-        /// Updates the Zone.
-        void update();
+    /// Updates the Zone.
+    void update();
 
-        /// Draws the zone.
-        /// Only for debugging information.
-        void draw() const;
+    /// Draws the zone.
+    /// Only for debugging information.
+    void draw() const;
 
-        /// Returns a random point inside this Zone.
-        Vector2f getRandomPoint() const;
+    /// Returns a random point inside this Zone.
+    Vector2f getRandomPoint() const;
 
-        /// Returns true, if this Zone is covered.
-        /// A Zone is covered, when the percentage of a teams ships being inside
-        /// the Zone is larger than the percentage this zone does to the total
-        /// tactical zone area of a team.
-        bool covered() const;
+    /// Returns true, if this Zone is covered.
+    /// A Zone is covered, when the percentage of a teams ships being inside
+    /// the Zone is larger than the percentage this zone does to the total
+    /// tactical zone area of a team.
+    bool covered() const;
 
-    private:
-        Vector2f bottomLeft_, topRight_;
-        bool covered_;
+  private:
+    Vector2f bottomLeft_, topRight_;
+    bool covered_;
 };
 
-# endif // RASTERZONE_HPP_INCLUDED
+#endif // RASTERZONE_HPP_INCLUDED

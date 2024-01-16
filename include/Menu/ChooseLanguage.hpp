@@ -15,39 +15,34 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef CHOOSELANGUAGE_HPP_INCLUDED
-# define CHOOSELANGUAGE_HPP_INCLUDED
+#ifndef CHOOSELANGUAGE_HPP_INCLUDED
+#define CHOOSELANGUAGE_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-# include <map>
+#include <map>
 
-class ChooseLanguage: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class ChooseLanguage : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-        static void next();
-        static void previous();
+    static void next();
+    static void previous();
 
-    private:
-        ChooseLanguage(int width, int height): UiWindow(width, height) {}
-        ChooseLanguage(ChooseLanguage const& copy);
+  private:
+    ChooseLanguage(int width, int height) : UiWindow(width, height) {}
+    ChooseLanguage(ChooseLanguage const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kCancel_;
-        static std::map<int, bool*> languageKeyMap_;
-        static std::map<sf::String, int> sortedLocales_;
+    static bool kCancel_;
+    static std::map<int, bool *> languageKeyMap_;
+    static std::map<sf::String, int> sortedLocales_;
 };
 
-# endif // CHOOSELANGUAGE_HPP_INCLUDED
-
-
-
-
-
-
+#endif // CHOOSELANGUAGE_HPP_INCLUDED

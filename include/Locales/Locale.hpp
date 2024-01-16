@@ -15,24 +15,24 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef LOCALE_HPP_INCLUDED
-# define LOCALE_HPP_INCLUDED
+#ifndef LOCALE_HPP_INCLUDED
+#define LOCALE_HPP_INCLUDED
 
-# include <SFML/System.hpp>
+#include <SFML/System.hpp>
 
-struct Locale {
-    Locale():
-        name_("NULL"),
-        fileName_("NULL"),
-        font_("Comfortaa-Regular.ttf"),
-        author_(""),
-        LTR_(true) {}
+struct Locale
+{
+    Locale()
+        : name_("NULL"), fileName_("NULL"), font_("Comfortaa-Regular.ttf"),
+          author_(""), LTR_(true)
+    {
+    }
 
     sf::String name_;
     sf::String fileName_;
     sf::String font_;
     sf::String author_;
-    bool       LTR_;
+    bool LTR_;
 };
 
-# endif // LOCALE_HPP_INCLUDED
+#endif // LOCALE_HPP_INCLUDED

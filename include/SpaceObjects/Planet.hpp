@@ -15,24 +15,25 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef PLANET_HPP_INCLUDED
-# define PLANET_HPP_INCLUDED
+#ifndef PLANET_HPP_INCLUDED
+#define PLANET_HPP_INCLUDED
 
-# include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 
-class Planet: public SpaceObject {
-    public:
-        Planet(Vector2f const& location, float radius);
+class Planet : public SpaceObject
+{
+  public:
+    Planet(Vector2f const & location, float radius);
 
-        void update() {};
-        void draw() const;
+    void update(){};
+    void draw() const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-    private:
-        texture::TextureType texture_;
-        Color3f color_;
+  private:
+    texture::TextureType texture_;
+    Color3f color_;
 };
 
-# endif // PLANET_HPP_INCLUDED
+#endif // PLANET_HPP_INCLUDED

@@ -15,23 +15,25 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SHOCKWAVE_HPP_INCLUDED
-# define SHOCKWAVE_HPP_INCLUDED
+#ifndef SHOCKWAVE_HPP_INCLUDED
+#define SHOCKWAVE_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-class ShockWave: public Particle<ShockWave> {
-    public:
-        ShockWave(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class ShockWave : public Particle<ShockWave>
+{
+  public:
+    ShockWave(Vector2f const & location, Vector2f const & direction,
+              Vector2f const & velocity, Color3f const & color,
+              Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<ShockWave>;
+    friend class Particle<ShockWave>;
 
-    private:
-        static std::list<ShockWave*> activeParticles_;
+  private:
+    static std::list<ShockWave *> activeParticles_;
 };
 
-# endif // SHOCKWAVE_HPP_INCLUDED
-
+#endif // SHOCKWAVE_HPP_INCLUDED

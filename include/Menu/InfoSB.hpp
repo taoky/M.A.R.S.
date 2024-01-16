@@ -15,31 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef INFOSB_HPP_INCLUDED
-# define INFOSB_HPP_INCLUDED
+#ifndef INFOSB_HPP_INCLUDED
+#define INFOSB_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
 class TextBox;
 
-class InfoSB: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow();
+class InfoSB : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow();
 
-        static void reset();
+    static void reset();
 
-    private:
-        InfoSB(int width, int height): UiWindow(width, height) {}
-        InfoSB(InfoSB const& copy);
+  private:
+    InfoSB(int width, int height) : UiWindow(width, height) {}
+    InfoSB(InfoSB const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kClose_;
+    static bool kClose_;
 };
 
-# endif // INFOSB_HPP_INCLUDED
-
-
-
+#endif // INFOSB_HPP_INCLUDED

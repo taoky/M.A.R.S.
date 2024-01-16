@@ -15,19 +15,19 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MUSICNOTIFY_HPP_INCLUDED
-# define MUSICNOTIFY_HPP_INCLUDED
+#ifndef MUSICNOTIFY_HPP_INCLUDED
+#define MUSICNOTIFY_HPP_INCLUDED
 
-# include <string>
+#include <string>
 
-namespace musicNotify {
+namespace musicNotify
+{
 
-    void draw();
+void draw();
 
-    void update();
+void update();
 
-    void show(std::string const& fileName);
-}
+void show(std::string const & fileName);
+} // namespace musicNotify
 
-# endif // MUSICNOTIFY_HPP_INCLUDED
-
+#endif // MUSICNOTIFY_HPP_INCLUDED

@@ -15,32 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
+#ifndef HOMEZONE_HPP_INCLUDED
+#define HOMEZONE_HPP_INCLUDED
 
-
-# ifndef HOMEZONE_HPP_INCLUDED
-# define HOMEZONE_HPP_INCLUDED
-
-# include "Zones/Zone.hpp"
+#include "Zones/Zone.hpp"
 
 /// Zone: HomeZone.
 /// A large round Zone around the HomePlanet.
 
-class HomeZone: public Zone {
-    public:
-        /// Ctor, which creates the Zone.
-        HomeZone(Vector2f const& location);
+class HomeZone : public Zone
+{
+  public:
+    /// Ctor, which creates the Zone.
+    HomeZone(Vector2f const & location);
 
-        /// Returns true, if the given SpaceObject is inside this Zone.
-        bool isInside(SpaceObject const& toBeChecked) const;
+    /// Returns true, if the given SpaceObject is inside this Zone.
+    bool isInside(SpaceObject const & toBeChecked) const;
 
-        /// Draws the zone.
-        /// Only for debugging information.
-        void draw() const;
+    /// Draws the zone.
+    /// Only for debugging information.
+    void draw() const;
 
-    private:
-        float radius_;
-        Vector2f location_;
-        int homeSide_;
+  private:
+    float radius_;
+    Vector2f location_;
+    int homeSide_;
 };
 
-# endif // HOMEZONE_HPP_INCLUDED
+#endif // HOMEZONE_HPP_INCLUDED

@@ -15,41 +15,41 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef RADIOGROUP_HPP_INCLUDED
-# define RADIOGROUP_HPP_INCLUDED
+#ifndef RADIOGROUP_HPP_INCLUDED
+#define RADIOGROUP_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/RadioButton.hpp"
+#include "Interface/RadioButton.hpp"
+#include "Interface/UiElement.hpp"
 
-# include <vector>
+#include <vector>
 
 class RadioButton;
 
-class RadioGroup: public UiElement {
-        public:
-            RadioGroup();
-            ~RadioGroup();
+class RadioGroup : public UiElement
+{
+  public:
+    RadioGroup();
+    ~RadioGroup();
 
-            void mouseMoved(Vector2f const& position);
-            void mouseLeft(bool down);
-            void keyEvent(bool down, Key const& key);
+    void mouseMoved(Vector2f const & position);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
 
-            bool tabNext();
-            bool tabPrevious();
+    bool tabNext();
+    bool tabPrevious();
 
-            void setFocus  (UiElement* toBeFocused, bool isPrevious);
-            void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-            void draw() const;
+    void draw() const;
 
-            void allOff();
+    void allOff();
 
-            void addRadioButton(RadioButton* toBeAdded);
+    void addRadioButton(RadioButton * toBeAdded);
 
-        private:
-            std::vector<RadioButton*> radioButtons_;
-            RadioButton* focusedButton_;
+  private:
+    std::vector<RadioButton *> radioButtons_;
+    RadioButton * focusedButton_;
 };
 
-# endif
-
+#endif

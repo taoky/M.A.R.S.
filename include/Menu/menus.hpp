@@ -15,44 +15,45 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MENUS_HPP_INCLUDED
-# define MENUS_HPP_INCLUDED
+#ifndef MENUS_HPP_INCLUDED
+#define MENUS_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
+#include "System/Vector2f.hpp"
 
-# include "System/Key.hpp"
+#include "System/Key.hpp"
 
-# include <SFML/Window.hpp>
+#include <SFML/Window.hpp>
 
 class UiWindow;
 class UiElement;
 
-namespace menus {
+namespace menus
+{
 
-    void draw();
+void draw();
 
-    // events
-    void mouseMoved(Vector2f const& position);
-    void mouseWheelMoved(Vector2f const& position, int delta);
-    void mouseLeft(bool down);
-    void keyEvent(bool down, Key const& key);
-    void textEntered(sf::Uint32 keyCode);
+// events
+void mouseMoved(Vector2f const & position);
+void mouseWheelMoved(Vector2f const & position, int delta);
+void mouseLeft(bool down);
+void keyEvent(bool down, Key const & key);
+void textEntered(sf::Uint32 keyCode);
 
-    void showMain();
-    void showPause();
+void showMain();
+void showPause();
 
-    void showWindow(UiWindow* toBeShown);
-    void hideWindow();
-    void hideMenu();
+void showWindow(UiWindow * toBeShown);
+void hideWindow();
+void hideMenu();
 
-    void clearFocus();
-    void fixKeyboardOn(UiElement* target);
-    void unFixKeyboard();
-    bool keyboardFixed();
+void clearFocus();
+void fixKeyboardOn(UiElement * target);
+void unFixKeyboard();
+bool keyboardFixed();
 
-    void reload();
+void reload();
 
-    bool visible();
-}
+bool visible();
+} // namespace menus
 
-# endif // MENUS_HPP_INCLUDED
+#endif // MENUS_HPP_INCLUDED

@@ -15,32 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
+#ifndef TEAMZONE_HPP_INCLUDED
+#define TEAMZONE_HPP_INCLUDED
 
-# ifndef TEAMZONE_HPP_INCLUDED
-# define TEAMZONE_HPP_INCLUDED
-
-# include "Zone.hpp"
+#include "Zone.hpp"
 
 /// Zone: TutorialZone.
 /// A very large Zone, covering half the screen.
 
-class TeamZone: public Zone {
-    public:
-        /// Ctor, which creates the Zone.
-        TeamZone(int homeSide) :
-            Zone(),
-            homeSide_(homeSide) {}
+class TeamZone : public Zone
+{
+  public:
+    /// Ctor, which creates the Zone.
+    TeamZone(int homeSide) : Zone(), homeSide_(homeSide) {}
 
-        /// Returns true, if the given SpaceObject is inside this Zone.
-        bool isInside(SpaceObject const& toBeChecked) const;
+    /// Returns true, if the given SpaceObject is inside this Zone.
+    bool isInside(SpaceObject const & toBeChecked) const;
 
-        /// Draws the zone.
-        /// Only for debugging information.
-        void draw() const;
+    /// Draws the zone.
+    /// Only for debugging information.
+    void draw() const;
 
-    private:
-        int homeSide_;
+  private:
+    int homeSide_;
 };
 
-
-# endif // TEAMZONE_HPP_INCLUDED
+#endif // TEAMZONE_HPP_INCLUDED

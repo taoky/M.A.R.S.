@@ -15,18 +15,20 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Players/LocalPlayer.hpp"
+#include "Players/LocalPlayer.hpp"
 
-# include "Controllers/controllers.hpp"
-# include "System/settings.hpp"
+#include "Controllers/controllers.hpp"
+#include "System/settings.hpp"
 
-LocalPlayer::LocalPlayer(controllers::ControlType controlType):
-    Player(controlType),
-    name_(controlType == controllers::cPlayer1 ? &settings::C_playerIName : &settings::C_playerIIName),
-    color_(controlType == controllers::cPlayer1 ? &settings::C_playerIColor : &settings::C_playerIIColor),
-    graphic_(controlType == controllers::cPlayer1 ? &settings::C_playerIShip : &settings::C_playerIIShip) {
+LocalPlayer::LocalPlayer(controllers::ControlType controlType)
+    : Player(controlType),
+      name_(controlType == controllers::cPlayer1 ? &settings::C_playerIName
+                                                 : &settings::C_playerIIName),
+      color_(controlType == controllers::cPlayer1 ? &settings::C_playerIColor
+                                                  : &settings::C_playerIIColor),
+      graphic_(controlType == controllers::cPlayer1 ? &settings::C_playerIShip
+                                                    : &settings::C_playerIIShip)
+{
 
-        controller_ = controllers::addKeyController(this);
+    controller_ = controllers::addKeyController(this);
 }
-
-

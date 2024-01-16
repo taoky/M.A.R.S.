@@ -15,28 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SMOKE_HPP_INCLUDED
-# define SMOKE_HPP_INCLUDED
+#ifndef SMOKE_HPP_INCLUDED
+#define SMOKE_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-class Smoke: public Particle<Smoke> {
-    public:
-        Smoke(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class Smoke : public Particle<Smoke>
+{
+  public:
+    Smoke(Vector2f const & location, Vector2f const & direction,
+          Vector2f const & velocity, Color3f const & color,
+          Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        static void shockWave(Vector2f const& location, float strength, float radius);
+    static void shockWave(Vector2f const & location, float strength,
+                          float radius);
 
-        friend class Particle<Smoke>;
+    friend class Particle<Smoke>;
 
-    private:
-        Color3f color_;
-        static std::list<Smoke*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<Smoke *> activeParticles_;
 };
 
-# endif // SMOKE_HPP_INCLUDED
-
-
-
+#endif // SMOKE_HPP_INCLUDED

@@ -15,64 +15,66 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TEAM_HPP_INCLUDED
-# define TEAM_HPP_INCLUDED
+#ifndef TEAM_HPP_INCLUDED
+#define TEAM_HPP_INCLUDED
 
-# include "System/Color3f.hpp"
-# include "Controllers/controllers.hpp"
-# include "Zones/zones.hpp"
-# include "Teams/Job.hpp"
+#include "Controllers/controllers.hpp"
+#include "System/Color3f.hpp"
+#include "Teams/Job.hpp"
+#include "Zones/zones.hpp"
 
 class Player;
 class Home;
 class BotController;
 class KeyController;
 
-class Team {
-    public:
-        Team(Color3f const& color);
-        virtual ~Team() {};
+class Team
+{
+  public:
+    Team(Color3f const & color);
+    virtual ~Team(){};
 
-        void update();
+    void update();
 
-        void addMember(Player* player);
-        void setHome(Home* home);
+    void addMember(Player * player);
+    void setHome(Home * home);
 
-        void addJob(Job const& job);
+    void addJob(Job const & job);
 
-        std::vector<Player*> const& members()   const {return members_;}
-        Home                 const* home()      const {return home_;}
-        Color3f              const& color()     const {return color_;}
-        int                         points()    const {return points_;}
-        int                         victories() const {return victories_;}
-        void                        addStars()  const;
-        void                        addPoint()  const;
-        void                        subtractPoint() const;
-        void                        addVictory()    const;
-        void                        resetPoints()   const;
+    std::vector<Player *> const & members() const { return members_; }
+    Home const * home() const { return home_; }
+    Color3f const & color() const { return color_; }
+    int points() const { return points_; }
+    int victories() const { return victories_; }
+    void addStars() const;
+    void addPoint() const;
+    void subtractPoint() const;
+    void addVictory() const;
+    void resetPoints() const;
 
-        friend short zones::isInside(Team* checker, SpaceObject const& toBeChecked);
-        friend std::map<float, TacticalZone*> const zones::toProtect(Team* checker);
+    friend short zones::isInside(Team * checker,
+                                 SpaceObject const & toBeChecked);
+    friend std::map<float, TacticalZone *> const
+    zones::toProtect(Team * checker);
 
-    protected:
-        virtual void createJobs() = 0;
-        std::vector<BotController*> botControllers_;
-        std::vector<KeyController*> keyControllers_;
+  protected:
+    virtual void createJobs() = 0;
+    std::vector<BotController *> botControllers_;
+    std::vector<KeyController *> keyControllers_;
 
-    private:
-        void evaluate();
+  private:
+    void evaluate();
 
-        float evaluationTimer_;
-        std::vector<Player*> members_;
-        std::multimap<Job, std::multimap<short, BotController*> > jobMap_;
+    float evaluationTimer_;
+    std::vector<Player *> members_;
+    std::multimap<Job, std::multimap<short, BotController *>> jobMap_;
 
-        Home* home_;
-        Color3f color_;
-        Zone* homeZone_;
-        Zone* teamZone_;
-        mutable int victories_;
-        mutable int points_;
+    Home * home_;
+    Color3f color_;
+    Zone * homeZone_;
+    Zone * teamZone_;
+    mutable int victories_;
+    mutable int points_;
 };
 
-# endif // TEAM_HPP_INCLUDED
-
+#endif // TEAM_HPP_INCLUDED

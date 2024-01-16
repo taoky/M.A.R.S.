@@ -15,19 +15,15 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef LEFTLIFE_HPP_INCLUDED
-# define LEFTLIFE_HPP_INCLUDED
+#ifndef LEFTLIFE_HPP_INCLUDED
+#define LEFTLIFE_HPP_INCLUDED
 
-# include "Hud/HudElement.hpp"
+#include "Hud/HudElement.hpp"
 
-class LeftLife: public HudElement {
-    public:
-        void draw() const;
+class LeftLife : public HudElement
+{
+  public:
+    void draw() const;
 };
 
-# endif // LEFTLIFE_HPP_INCLUDED
-
-
-
-
-
+#endif // LEFTLIFE_HPP_INCLUDED

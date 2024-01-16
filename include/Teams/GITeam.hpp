@@ -15,24 +15,20 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef GITEAM_HPP_INCLUDED
-# define GITEAM_HPP_INCLUDED
+#ifndef GITEAM_HPP_INCLUDED
+#define GITEAM_HPP_INCLUDED
 
-# include "Teams/Team.hpp"
+#include "Teams/Team.hpp"
 
-class GITeam: public Team {
-    public:
-        GITeam(Color3f const& color = Color3f::random()):
-            Team(color) {}
+class GITeam : public Team
+{
+  public:
+    GITeam(Color3f const & color = Color3f::random()) : Team(color) {}
 
-    private:
-        void createJobs();
+  private:
+    void createJobs();
 
-        void checkEnemies();
+    void checkEnemies();
 };
 
-# endif // GITEAM_HPP_INCLUDED
-
-
-
-
+#endif // GITEAM_HPP_INCLUDED

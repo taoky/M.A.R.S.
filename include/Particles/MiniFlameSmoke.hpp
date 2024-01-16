@@ -15,29 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MINIFLAMESMOKE_HPP_INCLUDED
-# define MINIFLAMESMOKE_HPP_INCLUDED
+#ifndef MINIFLAMESMOKE_HPP_INCLUDED
+#define MINIFLAMESMOKE_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-class MiniFlameSmoke: public Particle<MiniFlameSmoke> {
-    public:
-        MiniFlameSmoke(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class MiniFlameSmoke : public Particle<MiniFlameSmoke>
+{
+  public:
+    MiniFlameSmoke(Vector2f const & location, Vector2f const & direction,
+                   Vector2f const & velocity, Color3f const & color,
+                   Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        static void shockWave(Vector2f const& location, float strength, float radius);
+    static void shockWave(Vector2f const & location, float strength,
+                          float radius);
 
-        friend class Particle<MiniFlameSmoke>;
+    friend class Particle<MiniFlameSmoke>;
 
-    private:
-        Color3f color_;
-        static std::list<MiniFlameSmoke*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<MiniFlameSmoke *> activeParticles_;
 };
 
-# endif // MINIFLAMESMOKE_HPP_INCLUDED
-
-
-
-
+#endif // MINIFLAMESMOKE_HPP_INCLUDED

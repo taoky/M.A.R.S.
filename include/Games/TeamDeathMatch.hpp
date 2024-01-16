@@ -15,33 +15,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TEAMDEATHMATCH_HPP_INCLUDED
-# define TEAMDEATHMATCH_HPP_INCLUDED
+#ifndef TEAMDEATHMATCH_HPP_INCLUDED
+#define TEAMDEATHMATCH_HPP_INCLUDED
 
-# include "Games/Game.hpp"
+#include "Games/Game.hpp"
 
 /// Game: TeamDeathMatch (TDM).
 /// Classic DeathMatch, but in teams: Smash as many opponents as possible.
 /// Be in the team which first reaches the frag limit.
 
-class TeamDeathMatch: public Game {
-    public:
-        /// Ctor starts a new game.
-        TeamDeathMatch();
+class TeamDeathMatch : public Game
+{
+  public:
+    /// Ctor starts a new game.
+    TeamDeathMatch();
 
-        /// Draws the game.
-        void draw() const;
+    /// Draws the game.
+    void draw() const;
 
-        /// Restarts the game.
-        void restart();
+    /// Restarts the game.
+    void restart();
 };
 
-# endif // TEAMDEATHMATCH_HPP_INCLUDED
-
-
-
-
-
-
-
-
+#endif // TEAMDEATHMATCH_HPP_INCLUDED

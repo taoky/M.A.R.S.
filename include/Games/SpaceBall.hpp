@@ -15,31 +15,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SPACEBALL_HPP_INCLUDED
-# define SPACEBALL_HPP_INCLUDED
+#ifndef SPACEBALL_HPP_INCLUDED
+#define SPACEBALL_HPP_INCLUDED
 
-# include "Games/Game.hpp"
+#include "Games/Game.hpp"
 
 /// Game: SpaceBall (SB).
-/// The original M.A.R.S. GameType. A little bit like soccer: Each team tries to destroy
-/// the opponents home planet by dropping a huge ball on it.
+/// The original M.A.R.S. GameType. A little bit like soccer: Each team tries to
+/// destroy the opponents home planet by dropping a huge ball on it.
 
-class SpaceBall: public Game {
-    public:
-        /// Ctor starts a new game.
-        SpaceBall();
+class SpaceBall : public Game
+{
+  public:
+    /// Ctor starts a new game.
+    SpaceBall();
 
-        /// Draws the game.
-        void draw() const;
+    /// Draws the game.
+    void draw() const;
 
-        /// Restarts the game.
-        void restart();
+    /// Restarts the game.
+    void restart();
 };
 
-# endif // SPACEBALL_HPP_INCLUDED
-
-
-
-
-
-
+#endif // SPACEBALL_HPP_INCLUDED

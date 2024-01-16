@@ -15,36 +15,34 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef NOWEAPON_HPP_INCLUDED
-# define NOWEAPON_HPP_INCLUDED
+#ifndef NOWEAPON_HPP_INCLUDED
+#define NOWEAPON_HPP_INCLUDED
 
-# include "Weapons/Weapon.hpp"
+#include "Weapons/Weapon.hpp"
 
 /// Weapon: NoWeapon.
 
-class NoWeapon: public Weapon {
-    public:
-        /// Ctor which constructs the weapon.
-        NoWeapon(Ship* parent):
-              Weapon(weapons::wNoWeapon, parent, sf::String("Nothing")) {};
+class NoWeapon : public Weapon
+{
+  public:
+    /// Ctor which constructs the weapon.
+    NoWeapon(Ship * parent)
+        : Weapon(weapons::wNoWeapon, parent, sf::String("Nothing")){};
 
-        /// Does nothing.
-        void fire() const {}
+    /// Does nothing.
+    void fire() const {}
 
-        /// Does nothing.
-        void draw(float alpha) const {}
+    /// Does nothing.
+    void draw(float alpha) const {}
 
-        /// Returns the maximum distance from which this weapon should be used.
-        float maxDistance() const { return .0F; }
+    /// Returns the maximum distance from which this weapon should be used.
+    float maxDistance() const { return .0F; }
 
-        /// Returns the minimum distance from which this weapon should be used.
-        float minDistance() const { return .0F; }
+    /// Returns the minimum distance from which this weapon should be used.
+    float minDistance() const { return .0F; }
 
-        /// Returns the maximum angle from which this weapon should be used.
-        float maxAngle() const { return .0F; }
+    /// Returns the maximum angle from which this weapon should be used.
+    float maxAngle() const { return .0F; }
 };
 
-# endif // NOWEAPON_HPP_INCLUDED
-
-
-
+#endif // NOWEAPON_HPP_INCLUDED

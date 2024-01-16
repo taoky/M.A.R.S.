@@ -15,26 +15,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef HUD_HPP_INCLUDED
-# define HUD_HPP_INCLUDED
+#ifndef HUD_HPP_INCLUDED
+#define HUD_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-namespace hud {
-    void init();
+namespace hud
+{
+void init();
 
-    void update();
-    void draw();
-    void drawMessages();
+void update();
+void draw();
+void drawMessages();
 
-    void displayPoints(bool show = true);
-    void displayStats(bool show = true);
-    bool statsVisible();
+void displayPoints(bool show = true);
+void displayStats(bool show = true);
+bool statsVisible();
 
-    void displayMessage(sf::String const& message, Color3f const& color = Color3f(1.0f, 1.0f, 0.55f));
-}
+void displayMessage(sf::String const & message,
+                    Color3f const & color = Color3f(1.0f, 1.0f, 0.55f));
+} // namespace hud
 
-# endif // HUD_HPP_INCLUDED
-
-
+#endif // HUD_HPP_INCLUDED

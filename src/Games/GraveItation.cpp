@@ -15,88 +15,102 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Games/GraveItation.hpp"
+#include "Games/GraveItation.hpp"
 
-# include "Teams/GITeam.hpp"
-# include "System/settings.hpp"
-# include "Media/music.hpp"
-# include "Players/players.hpp"
-# include "SpaceObjects/spaceObjects.hpp"
-# include "Teams/teams.hpp"
+#include "Media/music.hpp"
+#include "Players/players.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/settings.hpp"
+#include "Teams/GITeam.hpp"
+#include "Teams/teams.hpp"
 
-GraveItation::GraveItation():
-    Game(games::gGraveItation) {
+GraveItation::GraveItation() : Game(games::gGraveItation)
+{
 
-    settings::C_EnabledWeapons  = weapons::wInsta;
+    settings::C_EnabledWeapons = weapons::wInsta;
     settings::C_EnabledSpecials = specials::sNoSpecial;
 
     music::play();
 
-    Team* myTeamL = NULL;
-    Team* myTeamR = NULL;
+    Team * myTeamL = NULL;
+    Team * myTeamR = NULL;
 
-    if (settings::C_playerIteamL) {
+    if (settings::C_playerIteamL)
+    {
         myTeamL = new GITeam(settings::C_playerITeamColor);
         players::addPlayer(myTeamL, controllers::cPlayer1);
     }
-    else if (settings::C_playerIteamR) {
+    else if (settings::C_playerIteamR)
+    {
         myTeamR = new GITeam(settings::C_playerITeamColor);
         players::addPlayer(myTeamR, controllers::cPlayer1);
     }
 
-    if (settings::C_playerIIteamL) {
-        if (!myTeamL) myTeamL = new GITeam(settings::C_playerIITeamColor);
+    if (settings::C_playerIIteamL)
+    {
+        if (!myTeamL)
+            myTeamL = new GITeam(settings::C_playerIITeamColor);
         players::addPlayer(myTeamL, controllers::cPlayer2);
     }
-    else if (settings::C_playerIIteamR) {
-        if (!myTeamR) myTeamR = new GITeam(settings::C_playerIITeamColor);
+    else if (settings::C_playerIIteamR)
+    {
+        if (!myTeamR)
+            myTeamR = new GITeam(settings::C_playerIITeamColor);
         players::addPlayer(myTeamR, controllers::cPlayer2);
     }
 
-    if (!myTeamR && !myTeamL) {
+    if (!myTeamR && !myTeamL)
+    {
         Color3f rand = Color3f::random();
         myTeamL = new GITeam(rand.inverted());
         myTeamR = new GITeam(rand);
-
     }
-    else if (!myTeamL) {
+    else if (!myTeamL)
+    {
         myTeamL = new GITeam(myTeamR->color().inverted());
     }
-    else if (!myTeamR) {
+    else if (!myTeamR)
+    {
         myTeamR = new GITeam(myTeamL->color().inverted());
     }
 
     teams::addTeam(myTeamL);
     teams::addTeam(myTeamR);
 
-    for (int i=0; i<settings::C_botsLeft;  ++i)     players::addPlayer(myTeamL, controllers::cBot);
-    for (int i=0; i<settings::C_botsRight; ++i)     players::addPlayer(myTeamR, controllers::cBot);
+    for (int i = 0; i < settings::C_botsLeft; ++i)
+        players::addPlayer(myTeamL, controllers::cBot);
+    for (int i = 0; i < settings::C_botsRight; ++i)
+        players::addPlayer(myTeamR, controllers::cBot);
 
-    Home* homeL = spaceObjects::addHome(HOME_LEFT,  100, myTeamL->color());
-    Home* homeR = spaceObjects::addHome(HOME_RIGHT, 100, myTeamR->color());
+    Home * homeL = spaceObjects::addHome(HOME_LEFT, 100, myTeamL->color());
+    Home * homeR = spaceObjects::addHome(HOME_RIGHT, 100, myTeamR->color());
 
     teams::assignHomes(homeL, homeR);
     players::createShips();
 
     spaceObjects::populateSpace(25.f, 5.f, 2);
-    zones::createRaster(4,3);
+    zones::createRaster(4, 3);
 }
 
-void GraveItation::draw() const {
-    if (settings::C_drawZones) zones::draw();
+void GraveItation::draw() const
+{
+    if (settings::C_drawZones)
+        zones::draw();
     Game::draw();
 }
 
-void GraveItation::restart() {
+void GraveItation::restart()
+{
     Game::restart();
 
-    Home* homeL = spaceObjects::addHome(HOME_LEFT, 100, teams::getTeamL()->color());
-    Home* homeR = spaceObjects::addHome(HOME_RIGHT, 100, teams::getTeamR()->color());
+    Home * homeL =
+        spaceObjects::addHome(HOME_LEFT, 100, teams::getTeamL()->color());
+    Home * homeR =
+        spaceObjects::addHome(HOME_RIGHT, 100, teams::getTeamR()->color());
 
     teams::assignHomes(homeL, homeR);
     players::createShips();
 
     spaceObjects::populateSpace(25.f, 5.f, 2);
-    zones::createRaster(4,3);
+    zones::createRaster(4, 3);
 }
-

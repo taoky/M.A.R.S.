@@ -15,30 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef AMMOH2OMG_HPP_INCLUDED
-# define AMMOH2OMG_HPP_INCLUDED
+#ifndef AMMOH2OMG_HPP_INCLUDED
+#define AMMOH2OMG_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class AmmoH2OMG: public Particle<AmmoH2OMG> {
-    public:
-        AmmoH2OMG(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class AmmoH2OMG : public Particle<AmmoH2OMG>
+{
+  public:
+    AmmoH2OMG(Vector2f const & location, Vector2f const & direction,
+              Vector2f const & velocity, Color3f const & color,
+              Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-        friend class Particle<AmmoH2OMG>;
+    friend class Particle<AmmoH2OMG>;
 
-    private:
-        Color3f color_;
-        static std::list<AmmoH2OMG*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<AmmoH2OMG *> activeParticles_;
 };
 
-# endif // AMMOH2OMG_HPP_INCLUDED
-
-
+#endif // AMMOH2OMG_HPP_INCLUDED

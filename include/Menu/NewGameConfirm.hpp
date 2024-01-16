@@ -15,30 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef NEWGAMECONFIRM_HPP_INCLUDED
-# define NEWGAMECONFIRM_HPP_INCLUDED
+#ifndef NEWGAMECONFIRM_HPP_INCLUDED
+#define NEWGAMECONFIRM_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class NewGameConfirm: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class NewGameConfirm : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        NewGameConfirm(int width, int height): UiWindow(width, height) {}
-        NewGameConfirm(NewGameConfirm const& copy);
+  private:
+    NewGameConfirm(int width, int height) : UiWindow(width, height) {}
+    NewGameConfirm(NewGameConfirm const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_, kCancel_;
+    static bool kOk_, kCancel_;
 };
 
-# endif // NEWGAMECONFIRM_HPP_INCLUDED
-
-
-
-
+#endif // NEWGAMECONFIRM_HPP_INCLUDED

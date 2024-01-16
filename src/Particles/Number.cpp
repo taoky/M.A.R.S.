@@ -15,25 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Particles/Number.hpp"
+#include "Particles/Number.hpp"
 
-# include "System/timer.hpp"
-# include "Media/text.hpp"
+#include "Media/text.hpp"
+#include "System/timer.hpp"
 
-# include <sstream>
+#include <sstream>
 
-std::list<Number*> Number::activeParticles_;
+std::list<Number *> Number::activeParticles_;
 
-Number::Number(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource):
-           Particle<Number>(spaceObjects::oNumber, location, 4, 0, 1.f),
-           alpha_(1.f) {
+Number::Number(Vector2f const & location, Vector2f const & direction,
+               Vector2f const & velocity, Color3f const & color,
+               Player * damageSource)
+    : Particle<Number>(spaceObjects::oNumber, location, 4, 0, 1.f), alpha_(1.f)
+{
 
     velocity_ = velocity;
 
     value_ = direction.x_;
 
     radius_ = direction.y_;
-    if (radius_>50.f) radius_ = 50.f;
+    if (radius_ > 50.f)
+        radius_ = 50.f;
 
     if (value_ > 0)
         color_ = Color3f(0.4f, 1.0f, 0.4f);
@@ -41,21 +44,22 @@ Number::Number(Vector2f const& location, Vector2f const& direction, Vector2f con
         color_ = Color3f(1.0f, 0.4f, 0.4f);
 }
 
-void Number::update() {
+void Number::update()
+{
     float time = timer::frameTime();
 
-    alpha_ = 1.f-1.f/totalLifeTime_*lifeTime_;
+    alpha_ = 1.f - 1.f / totalLifeTime_ * lifeTime_;
 
-    location_ = location_ + velocity_*time;
-    velocity_ = velocity_ + velocity_*(-5.f)*time;
+    location_ = location_ + velocity_ * time;
+    velocity_ = velocity_ + velocity_ * (-5.f) * time;
 
     lifeTime_ += time;
 }
 
-void Number::draw() const {
+void Number::draw() const
+{
     std::stringstream sstr;
     sstr << value_;
-    text::drawMobileSpaceText(sf::String(sstr.str()), location_, radius_, TEXT_ALIGN_CENTER, color_, alpha_);
+    text::drawMobileSpaceText(sf::String(sstr.str()), location_, radius_,
+                              TEXT_ALIGN_CENTER, color_, alpha_);
 }
-
-

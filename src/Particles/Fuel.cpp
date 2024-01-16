@@ -15,49 +15,58 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Particles/Fuel.hpp"
+#include "Particles/Fuel.hpp"
 
-# include "System/timer.hpp"
-# include "System/randomizer.hpp"
+#include "System/randomizer.hpp"
+#include "System/timer.hpp"
 
-std::list<Fuel*> Fuel::activeParticles_;
+std::list<Fuel *> Fuel::activeParticles_;
 
-Fuel::Fuel(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource):
-           Particle<Fuel>(spaceObjects::oFuel, location, 1.f, 0.f, randomizer::random(0.2f, 0.4f)) {
+Fuel::Fuel(Vector2f const & location, Vector2f const & direction,
+           Vector2f const & velocity, Color3f const & color,
+           Player * damageSource)
+    : Particle<Fuel>(spaceObjects::oFuel, location, 1.f, 0.f,
+                     randomizer::random(0.2f, 0.4f))
+{
 
     Vector2f distortion(Vector2f::randDirLen());
     location_ = location + distortion;
-    velocity_ = velocity + direction*(-90.f) + distortion*30.f;
+    velocity_ = velocity + direction * (-90.f) + distortion * 30.f;
 
     color_.h(50.f);
     color_.v(0.6f);
     color_.s(0.8f);
 }
 
-void Fuel::update() {
+void Fuel::update()
+{
     float time = timer::frameTime();
     physics::collide(this, STATICS);
     // update Color
-    color_.h((-1.f/totalLifeTime_*lifeTime_+1.f)*60.f+350.f);
-    color_.v(-0.6f/totalLifeTime_*lifeTime_+0.6f);
-    color_.s(lifeTime_/100.f + 0.8f);
+    color_.h((-1.f / totalLifeTime_ * lifeTime_ + 1.f) * 60.f + 350.f);
+    color_.v(-0.6f / totalLifeTime_ * lifeTime_ + 0.6f);
+    color_.s(lifeTime_ / 100.f + 0.8f);
 
     // update Size
-    radius_ = lifeTime_*40 + 1;
+    radius_ = lifeTime_ * 40 + 1;
 
-    location_ += velocity_*time;
-    velocity_ += velocity_*(-1.f)*time;
+    location_ += velocity_ * time;
+    velocity_ += velocity_ * (-1.f) * time;
 
     lifeTime_ += time;
 }
 
-void Fuel::draw() const {
+void Fuel::draw() const
+{
     color_.gl3f();
     const int posX = 0;
     const int posY = 0;
-    glTexCoord2f(posX*0.125f,     posY*0.125f);     glVertex2f(location_.x_-radius_, location_.y_-radius_);
-    glTexCoord2f(posX*0.125f,     (posY+1)*0.125f); glVertex2f(location_.x_-radius_, location_.y_+radius_);
-    glTexCoord2f((posX+1)*0.125f, (posY+1)*0.125f); glVertex2f(location_.x_+radius_, location_.y_+radius_);
-    glTexCoord2f((posX+1)*0.125f, posY*0.125f);     glVertex2f(location_.x_+radius_, location_.y_-radius_);
+    glTexCoord2f(posX * 0.125f, posY * 0.125f);
+    glVertex2f(location_.x_ - radius_, location_.y_ - radius_);
+    glTexCoord2f(posX * 0.125f, (posY + 1) * 0.125f);
+    glVertex2f(location_.x_ - radius_, location_.y_ + radius_);
+    glTexCoord2f((posX + 1) * 0.125f, (posY + 1) * 0.125f);
+    glVertex2f(location_.x_ + radius_, location_.y_ + radius_);
+    glTexCoord2f((posX + 1) * 0.125f, posY * 0.125f);
+    glVertex2f(location_.x_ + radius_, location_.y_ - radius_);
 }
-

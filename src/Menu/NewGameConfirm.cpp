@@ -15,46 +15,56 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Menu/NewGameConfirm.hpp"
+#include "Menu/NewGameConfirm.hpp"
 
-# include "Interface/UiWindow.hpp"
-# include "Interface/Button.hpp"
-# include "System/window.hpp"
-# include "Menu/menus.hpp"
-# include "Games/games.hpp"
-# include "Media/text.hpp"
-# include "Locales/locales.hpp"
+#include "Games/games.hpp"
+#include "Interface/Button.hpp"
+#include "Interface/UiWindow.hpp"
+#include "Locales/locales.hpp"
+#include "Media/text.hpp"
+#include "Menu/menus.hpp"
+#include "System/window.hpp"
 
-UiWindow* NewGameConfirm::instance_(NULL);
+UiWindow * NewGameConfirm::instance_(NULL);
 bool NewGameConfirm::kOk_(false);
 bool NewGameConfirm::kCancel_(false);
 
-UiWindow* NewGameConfirm::get() {
-    if (instance_ == NULL) {
+UiWindow * NewGameConfirm::get()
+{
+    if (instance_ == NULL)
+    {
         instance_ = new NewGameConfirm(280, 80);
-        instance_->addWidget(new Button(locales::getLocale(locales::Ok), NULL, &kOk_, Vector2f(180,50), 90, 20));
-        instance_->addWidget(new Button(locales::getLocale(locales::Cancel), NULL, &kCancel_, Vector2f(80,50), 90, 20));
-        instance_->addWidget(new Label(locales::getLocale(locales::QuitCurrentGameText), TEXT_ALIGN_LEFT, Vector2f(10, 8), 12.f, Color3f(0.7f, 0.7f, 0.7f), false));
+        instance_->addWidget(new Button(locales::getLocale(locales::Ok), NULL,
+                                        &kOk_, Vector2f(180, 50), 90, 20));
+        instance_->addWidget(new Button(locales::getLocale(locales::Cancel),
+                                        NULL, &kCancel_, Vector2f(80, 50), 90,
+                                        20));
+        instance_->addWidget(new Label(
+            locales::getLocale(locales::QuitCurrentGameText), TEXT_ALIGN_LEFT,
+            Vector2f(10, 8), 12.f, Color3f(0.7f, 0.7f, 0.7f), false));
     }
     return instance_;
 }
 
-void NewGameConfirm::checkWidgets() {
-    if (kOk_) {
+void NewGameConfirm::checkWidgets()
+{
+    if (kOk_)
+    {
         kOk_ = false;
         menus::hideWindow();
         menus::hideWindow();
         games::restart();
     }
-    else if (kCancel_) {
+    else if (kCancel_)
+    {
         kCancel_ = false;
         menus::hideWindow();
     }
 }
 
-void NewGameConfirm::reset() {
+void NewGameConfirm::reset()
+{
     if (instance_)
         delete instance_;
     instance_ = NULL;
 }
-

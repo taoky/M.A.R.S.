@@ -15,32 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SHADERERROR_HPP_INCLUDED
-# define SHADERERROR_HPP_INCLUDED
+#ifndef SHADERERROR_HPP_INCLUDED
+#define SHADERERROR_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class ShaderError: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class ShaderError : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        ShaderError(int width, int height): UiWindow(width, height) {}
-        ShaderError(ShaderError const& copy);
+  private:
+    ShaderError(int width, int height) : UiWindow(width, height) {}
+    ShaderError(ShaderError const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_;
+    static bool kOk_;
 };
 
-# endif // SHADERERROR_HPP_INCLUDED
-
-
-
-
-
-
+#endif // SHADERERROR_HPP_INCLUDED

@@ -15,26 +15,23 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef DMTEAM_HPP_INCLUDED
-# define DMTEAM_HPP_INCLUDED
+#ifndef DMTEAM_HPP_INCLUDED
+#define DMTEAM_HPP_INCLUDED
 
-# include "Teams/Team.hpp"
+#include "Teams/Team.hpp"
 
-class DMTeam: public Team {
-    public:
-        DMTeam(Color3f const& color = Color3f::random()):
-            Team(color) {}
+class DMTeam : public Team
+{
+  public:
+    DMTeam(Color3f const & color = Color3f::random()) : Team(color) {}
 
-    private:
-        void createJobs();
+  private:
+    void createJobs();
 
-        void checkEnemies();
-        void checkPowerUps();
+    void checkEnemies();
+    void checkPowerUps();
 
-        std::vector<Vector2f> powerUpLocations_;
+    std::vector<Vector2f> powerUpLocations_;
 };
 
-# endif // DMTEAM_HPP_INCLUDED
-
-
-
+#endif // DMTEAM_HPP_INCLUDED

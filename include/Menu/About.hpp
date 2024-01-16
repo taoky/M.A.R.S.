@@ -15,34 +15,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef ABOUT_HPP_INCLUDED
-# define ABOUT_HPP_INCLUDED
+#ifndef ABOUT_HPP_INCLUDED
+#define ABOUT_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
 class TextBox;
 
-class About: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow();
+class About : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow();
 
-        static void reset();
+    static void reset();
 
-    private:
-        About(int width, int height): UiWindow(width, height) {}
-        About(About const& copy);
+  private:
+    About(int width, int height) : UiWindow(width, height) {}
+    About(About const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kClose_;
-        static sf::String marsName_;
+    static bool kClose_;
+    static sf::String marsName_;
 };
 
-# endif // ABOUT_HPP_INCLUDED
-
-
-
-
-
+#endif // ABOUT_HPP_INCLUDED

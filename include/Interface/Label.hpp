@@ -15,33 +15,36 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef LABEL_HPP_INCLUDED
-# define LABEL_HPP_INCLUDED
+#ifndef LABEL_HPP_INCLUDED
+#define LABEL_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "System/Color3f.hpp"
-# include "Hud/hud.hpp"
+#include "Hud/hud.hpp"
+#include "Interface/UiElement.hpp"
+#include "System/Color3f.hpp"
 
-class Label: public UiElement {
-    public:
-        Label (sf::String* text, int textAlign, Vector2f const& topLeft, float fontSize = 12.f, Color3f color = Color3f(0.7f,0.7f,0.7f), bool interactive = true, sf::Font* font = NULL);
+class Label : public UiElement
+{
+  public:
+    Label(sf::String * text, int textAlign, Vector2f const & topLeft,
+          float fontSize = 12.f, Color3f color = Color3f(0.7f, 0.7f, 0.7f),
+          bool interactive = true, sf::Font * font = NULL);
 
-        void mouseMoved(Vector2f const& position);
+    void mouseMoved(Vector2f const & position);
 
-        void draw() const;
+    void draw() const;
 
-        bool isTabable() const {return false;}
+    bool isTabable() const { return false; }
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-    private:
-        sf::String* text_;
-        sf::Font*   font_;
-        int textAlign_;
-        float fontSize_;
-        Color3f color_;
-        bool interactive_;
+  private:
+    sf::String * text_;
+    sf::Font * font_;
+    int textAlign_;
+    float fontSize_;
+    Color3f color_;
+    bool interactive_;
 };
 
-# endif
+#endif

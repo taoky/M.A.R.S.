@@ -15,29 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef VERTICALSLIDER_HPP_INCLUDED
-# define VERTICALSLIDER_HPP_INCLUDED
+#ifndef VERTICALSLIDER_HPP_INCLUDED
+#define VERTICALSLIDER_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
-# include "Interface/Label.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiElement.hpp"
 
-# include <vector>
+#include <vector>
 
-class VerticalSlider: public UiElement {
-    public:
-        VerticalSlider (float* value, float min, float max, Vector2f const& topLeft, int height);
+class VerticalSlider : public UiElement
+{
+  public:
+    VerticalSlider(float * value, float min, float max,
+                   Vector2f const & topLeft, int height);
 
-        void mouseLeft(bool down);
-        void mouseMoved(Vector2f const& position);
-        void keyEvent(bool down, Key const& key);
+    void mouseLeft(bool down);
+    void mouseMoved(Vector2f const & position);
+    void keyEvent(bool down, Key const & key);
 
-        void draw() const;
+    void draw() const;
 
-    private:
-        float* value_;
-        float minValue_, maxValue_;
+  private:
+    float * value_;
+    float minValue_, maxValue_;
 };
 
-# endif //VERTICALSLIDER_HPP_INCLUDED
-
-
+#endif // VERTICALSLIDER_HPP_INCLUDED

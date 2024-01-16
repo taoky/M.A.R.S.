@@ -15,27 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TRAILEFFECTS_HPP_INCLUDED
-# define TRAILEFFECTS_HPP_INCLUDED
+#ifndef TRAILEFFECTS_HPP_INCLUDED
+#define TRAILEFFECTS_HPP_INCLUDED
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
 class SpaceObject;
 class Trail;
 
-namespace trailEffects {
-    void update();
+namespace trailEffects
+{
+void update();
 
-    void draw();
+void draw();
 
-    Trail* attach(SpaceObject* target, float timeStep, float duration, float width, Color3f const& color, bool persistant);
+Trail * attach(SpaceObject * target, float timeStep, float duration,
+               float width, Color3f const & color, bool persistant);
 
-    void detach(SpaceObject* target);
+void detach(SpaceObject * target);
 
-    int  count();
+int count();
 
-    void clear();
-}
+void clear();
+} // namespace trailEffects
 
-# endif // TRAILEFFECTS_HPP_INCLUDED
-
+#endif // TRAILEFFECTS_HPP_INCLUDED

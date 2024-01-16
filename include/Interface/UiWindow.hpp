@@ -15,49 +15,50 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef UIWINDOW_HPP_INCLUDED
-# define UIWINDOW_HPP_INCLUDED
+#ifndef UIWINDOW_HPP_INCLUDED
+#define UIWINDOW_HPP_INCLUDED
 
-# include "Interface/UiElement.hpp"
+#include "Interface/UiElement.hpp"
 
-# include <vector>
+#include <vector>
 
-class UiWindow: public UiElement {
-    public:
-        UiWindow (int width, int height, Vector2f const& position = Vector2f());
-        ~UiWindow();
+class UiWindow : public UiElement
+{
+  public:
+    UiWindow(int width, int height, Vector2f const & position = Vector2f());
+    ~UiWindow();
 
-        void mouseMoved(Vector2f const& position);
-        void mouseWheelMoved(Vector2f const& position, int delta);
-        void mouseLeft(bool down);
-        void keyEvent(bool down, Key const& key);
-        void textEntered(sf::Uint32 keyCode);
+    void mouseMoved(Vector2f const & position);
+    void mouseWheelMoved(Vector2f const & position, int delta);
+    void mouseLeft(bool down);
+    void keyEvent(bool down, Key const & key);
+    void textEntered(sf::Uint32 keyCode);
 
-        bool tabNext();
-        bool tabPrevious();
+    bool tabNext();
+    bool tabPrevious();
 
-        virtual void draw () const;
+    virtual void draw() const;
 
-        void setFocus  (UiElement* toBeFocused, bool isPrevious);
-        void clearFocus();
+    void setFocus(UiElement * toBeFocused, bool isPrevious);
+    void clearFocus();
 
-        virtual void checkWidgets() = 0;
-        virtual void onShow() = 0;
+    virtual void checkWidgets() = 0;
+    virtual void onShow() = 0;
 
-        void addWidget (UiElement* toBeAdded);
+    void addWidget(UiElement * toBeAdded);
 
-        void setTopMost(bool);
-        bool isTopMost() const {return topMost_;}
-        bool isTabable() const {return false;}
+    void setTopMost(bool);
+    bool isTopMost() const { return topMost_; }
+    bool isTabable() const { return false; }
 
-        virtual Vector2f getTopLeft() const;
+    virtual Vector2f getTopLeft() const;
 
-    protected:
-        std::vector<UiElement*> widgets_;
-        UiElement* focusedWidget_;
+  protected:
+    std::vector<UiElement *> widgets_;
+    UiElement * focusedWidget_;
 
-    private:
-        bool topMost_;
+  private:
+    bool topMost_;
 };
 
-# endif
+#endif

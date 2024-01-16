@@ -15,51 +15,51 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef BALL_HPP_INCLUDED
-# define BALL_HPP_INCLUDED
+#ifndef BALL_HPP_INCLUDED
+#define BALL_HPP_INCLUDED
 
-# include "SpaceObjects/MobileSpaceObject.hpp"
-# include "Players/Player.hpp"
+#include "Players/Player.hpp"
+#include "SpaceObjects/MobileSpaceObject.hpp"
 
-class Ball: public MobileSpaceObject {
-    public:
-        Ball(Vector2f const& location);
+class Ball : public MobileSpaceObject
+{
+  public:
+    Ball(Vector2f const & location);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-        void onShockWave(Player* source, float intensity);
+    void onShockWave(Player * source, float intensity);
 
-        bool atStart() const     {return sticky_;}
-        bool isVisible() const      {return visible_;}
-        float heatAmount() const {return heatTimer_*5.f;}
+    bool atStart() const { return sticky_; }
+    bool isVisible() const { return visible_; }
+    float heatAmount() const { return heatTimer_ * 5.f; }
 
-        Player* lastShooter() const {return lastShooter_;}
-        void resetShooter() {lastShooter_ = NULL;}
+    Player * lastShooter() const { return lastShooter_; }
+    void resetShooter() { lastShooter_ = NULL; }
 
-        friend class BotController;
-        friend class Freezer;
-        friend class Shocker;
-        template <typename Object> friend class Ice;
+    friend class BotController;
+    friend class Freezer;
+    friend class Shocker;
+    template <typename Object> friend class Ice;
 
-    private:
-        void explode();
-        void respawn();
-        float rotation_;
-        float rotateSpeed_;
-        float frozen_;
-        bool  sticky_, visible_;
+  private:
+    void explode();
+    void respawn();
+    float rotation_;
+    float rotateSpeed_;
+    float frozen_;
+    bool sticky_, visible_;
 
-        Vector2f respawnLocation_;
-        float respawnRotation_;
+    Vector2f respawnLocation_;
+    float respawnRotation_;
 
-        float heatTimer_, smokeTimer_, respawnTimer_;
+    float heatTimer_, smokeTimer_, respawnTimer_;
 
-        Player* lastShooter_;
+    Player * lastShooter_;
 };
 
-# endif // BALL_HPP_INCLUDED
-
+#endif // BALL_HPP_INCLUDED

@@ -15,32 +15,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef DEATHMATCH_HPP_INCLUDED
-# define DEATHMATCH_HPP_INCLUDED
+#ifndef DEATHMATCH_HPP_INCLUDED
+#define DEATHMATCH_HPP_INCLUDED
 
-# include "Games/Game.hpp"
+#include "Games/Game.hpp"
 
 /// Game: DeathMatch (DM).
 /// Classic Deathmatch. Smash as many opponents as possible.
 /// Be the first to reach the frag limit.
 
-class DeathMatch: public Game {
-    public:
-        /// Ctor starts a new game.
-        DeathMatch();
+class DeathMatch : public Game
+{
+  public:
+    /// Ctor starts a new game.
+    DeathMatch();
 
-        /// Draws the game.
-        void draw() const;
+    /// Draws the game.
+    void draw() const;
 
-        /// Restarts the game.
-        void restart();
+    /// Restarts the game.
+    void restart();
 };
 
-# endif // DEATHMATCH_HPP_INCLUDED
-
-
-
-
-
-
-
+#endif // DEATHMATCH_HPP_INCLUDED

@@ -15,21 +15,24 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MOBLIESPACEOBJECT_HPP_INCLUDED
-# define MOBLIESPACEOBJECT_HPP_INCLUDED
+#ifndef MOBLIESPACEOBJECT_HPP_INCLUDED
+#define MOBLIESPACEOBJECT_HPP_INCLUDED
 
-# include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 
-class MobileSpaceObject: public SpaceObject {
-    public:
-        MobileSpaceObject(spaceObjects::ObjectType type, Vector2f location, float radius, float mass):
-                          SpaceObject(type, location, radius, mass),
-                          velocity_(0.f, 0.f) {}
+class MobileSpaceObject : public SpaceObject
+{
+  public:
+    MobileSpaceObject(spaceObjects::ObjectType type, Vector2f location,
+                      float radius, float mass)
+        : SpaceObject(type, location, radius, mass), velocity_(0.f, 0.f)
+    {
+    }
 
-        Vector2f& velocity() {return velocity_;}
+    Vector2f & velocity() { return velocity_; }
 
-    protected:
-        Vector2f velocity_;
+  protected:
+    Vector2f velocity_;
 };
 
-# endif // MOBLIESPACEOBJECT_HPP_INCLUDED
+#endif // MOBLIESPACEOBJECT_HPP_INCLUDED

@@ -15,30 +15,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef NUMBER_HPP_INCLUDED
-# define NUMBER_HPP_INCLUDED
+#ifndef NUMBER_HPP_INCLUDED
+#define NUMBER_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class Number: public Particle<Number> {
-    public:
-        Number(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class Number : public Particle<Number>
+{
+  public:
+    Number(Vector2f const & location, Vector2f const & direction,
+           Vector2f const & velocity, Color3f const & color,
+           Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<Number>;
+    friend class Particle<Number>;
 
-    private:
-        Color3f color_;
-        int     value_;
-        float   alpha_;
-        static std::list<Number*> activeParticles_;
+  private:
+    Color3f color_;
+    int value_;
+    float alpha_;
+    static std::list<Number *> activeParticles_;
 };
 
-# endif // NUMBER_HPP_INCLUDED
-
-
-
+#endif // NUMBER_HPP_INCLUDED

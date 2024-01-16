@@ -15,47 +15,55 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Items/PUReverse.hpp"
+#include "Items/PUReverse.hpp"
 
-# include "SpaceObjects/Ship.hpp"
-# include "Players/Player.hpp"
-# include "Particles/particles.hpp"
+#include "Particles/particles.hpp"
+#include "Players/Player.hpp"
+#include "SpaceObjects/Ship.hpp"
 
-void PUReverse::draw() const {
-    if (!collected_) {
+void PUReverse::draw() const
+{
+    if (!collected_)
+    {
         PowerUp::draw();
         return;
     }
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    for (std::list<Ship*>::const_iterator it = ships_.begin(); it != ships_.end(); ++it) {
+    for (std::list<Ship *>::const_iterator it = ships_.begin();
+         it != ships_.end(); ++it)
+    {
 
         glPushMatrix();
         glLoadIdentity();
         glTranslatef((*it)->location().x_, (*it)->location().y_ - 40.f, 0.f);
         glScalef(0.7f, 0.7f, 0.f);
-        glRotatef(fmod(timer::totalTime()*(-180.f), 360.f), 0.f, 0.f, 1.f);
+        glRotatef(fmod(timer::totalTime() * (-180.f), 360.f), 0.f, 0.f, 1.f);
 
         // reverse
         glColor3f(1.f, 0.7f, 0.9f);
         glBegin(GL_QUADS);
-                const int posX = 1;
-                const int posY = 1;
-                glTexCoord2f(posX*0.15625f,     posY*0.15625f);     glVertex2f(-35, -35);
-                glTexCoord2f(posX*0.15625f,     (posY+1)*0.15625f); glVertex2f(-35, +35);
-                glTexCoord2f((posX+1)*0.15625f, (posY+1)*0.15625f); glVertex2f(+35, +35);
-                glTexCoord2f((posX+1)*0.15625f, posY*0.15625f);     glVertex2f(+35, -35);
+        const int posX = 1;
+        const int posY = 1;
+        glTexCoord2f(posX * 0.15625f, posY * 0.15625f);
+        glVertex2f(-35, -35);
+        glTexCoord2f(posX * 0.15625f, (posY + 1) * 0.15625f);
+        glVertex2f(-35, +35);
+        glTexCoord2f((posX + 1) * 0.15625f, (posY + 1) * 0.15625f);
+        glVertex2f(+35, +35);
+        glTexCoord2f((posX + 1) * 0.15625f, posY * 0.15625f);
+        glVertex2f(+35, -35);
         glEnd();
 
         glPopMatrix();
     }
 }
 
-void PUReverse::refreshLifeTime() {
+void PUReverse::refreshLifeTime()
+{
     lifeTime_ = 0.f;
     totalLifeTime_ = 10.f;
     // direction is abused for texture coords
-    particles::spawnMultiple(5, particles::pPowerUpCollect, location_, Vector2f(3,0));
+    particles::spawnMultiple(5, particles::pPowerUpCollect, location_,
+                             Vector2f(3, 0));
 }
-
-

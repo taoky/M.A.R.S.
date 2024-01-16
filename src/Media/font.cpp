@@ -15,30 +15,36 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Media/font.hpp"
+#include "Media/font.hpp"
 
-# include "System/settings.hpp"
-# include "Locales/locales.hpp"
+#include "Locales/locales.hpp"
+#include "System/settings.hpp"
 
-# include <iostream>
+#include <iostream>
 
-namespace font {
-    namespace {
-        std::map<int, sf::Font*> fonts_;
+namespace font
+{
+namespace
+{
+std::map<int, sf::Font *> fonts_;
+}
+
+sf::Font * getFont(int languageID)
+{
+    std::map<int, sf::Font *>::iterator it = fonts_.find(languageID);
+    if (it == fonts_.end())
+    {
+        // load it from file and...
+        sf::Font * font = new sf::Font();
+        font->loadFromFile(settings::C_dataPath + "fonts/" +
+                           locales::getLocales()[languageID].font_);
+        fonts_.insert(std::make_pair(languageID, font));
+        // ... return it afterwards
+        return font;
     }
-
-    sf::Font* getFont(int languageID) {
-        std::map<int, sf::Font*>::iterator it = fonts_.find(languageID);
-        if (it == fonts_.end()) {
-            // load it from file and...
-            sf::Font* font = new sf::Font();
-            font->loadFromFile(settings::C_dataPath + "fonts/" + locales::getLocales()[languageID].font_);
-            fonts_.insert(std::make_pair(languageID, font));
-            // ... return it afterwards
-            return font;
-        }
-        else {
-            return it->second;
-        }
+    else
+    {
+        return it->second;
     }
 }
+} // namespace font

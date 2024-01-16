@@ -15,26 +15,23 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# include "Weapons/Weapon.hpp"
+#include "Weapons/Weapon.hpp"
 
-# include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/Ship.hpp"
 
-Weapon::Weapon(weapons::WeaponType type, Ship* parent, sf::String name):
-    parent_(parent),
-    timer_(0),
-    name_(name),
-    type_(type) {}
+Weapon::Weapon(weapons::WeaponType type, Ship * parent, sf::String name)
+    : parent_(parent), timer_(0), name_(name), type_(type)
+{
+}
 
-void Weapon::next() {
+void Weapon::next()
+{
     parent_->currentWeapon_ = weapons::createNext(type_, parent_);
     delete this;
 }
 
-void Weapon::previous() {
+void Weapon::previous()
+{
     parent_->currentWeapon_ = weapons::createPrev(type_, parent_);
     delete this;
 }
-
-
-
-

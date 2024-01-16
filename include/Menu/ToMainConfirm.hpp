@@ -15,29 +15,27 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TOMAINCONFIRM_HPP_INCLUDED
-# define TOMAINCONFIRM_HPP_INCLUDED
+#ifndef TOMAINCONFIRM_HPP_INCLUDED
+#define TOMAINCONFIRM_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
-class ToMainConfirm: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow() {}
+class ToMainConfirm : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow() {}
 
-        static void reset();
+    static void reset();
 
-    private:
-        ToMainConfirm(int width, int height): UiWindow(width, height) {}
-        ToMainConfirm(ToMainConfirm const& copy);
+  private:
+    ToMainConfirm(int width, int height) : UiWindow(width, height) {}
+    ToMainConfirm(ToMainConfirm const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kOk_, kCancel_;
+    static bool kOk_, kCancel_;
 };
 
-# endif // TOMAINCONFIRM_HPP_INCLUDED
-
-
-
+#endif // TOMAINCONFIRM_HPP_INCLUDED

@@ -15,27 +15,28 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef EXPLODE_HPP_INCLUDED
-# define EXPLODE_HPP_INCLUDED
+#ifndef EXPLODE_HPP_INCLUDED
+#define EXPLODE_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class Explode: public Particle<Explode> {
-    public:
-        Explode(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class Explode : public Particle<Explode>
+{
+  public:
+    Explode(Vector2f const & location, Vector2f const & direction,
+            Vector2f const & velocity, Color3f const & color,
+            Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<Explode>;
+    friend class Particle<Explode>;
 
-    private:
-        Color3f color_;
-        static std::list<Explode*> activeParticles_;
+  private:
+    Color3f color_;
+    static std::list<Explode *> activeParticles_;
 };
 
-# endif // EXPLODE_HPP_INCLUDED
-
-
+#endif // EXPLODE_HPP_INCLUDED

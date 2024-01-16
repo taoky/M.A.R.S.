@@ -15,38 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef RALLY_HPP_INCLUDED
-# define RALLY_HPP_INCLUDED
+#ifndef RALLY_HPP_INCLUDED
+#define RALLY_HPP_INCLUDED
 
-# include "Games/Game.hpp"
+#include "Games/Game.hpp"
 
 /// Game: Rally (RLY).
 /// Be the first to reach a goal.
 
 class Track;
 
-class Rally: public Game {
-    public:
-        /// Ctor starts a new game.
-        Rally();
-        ~Rally();
+class Rally : public Game
+{
+  public:
+    /// Ctor starts a new game.
+    Rally();
+    ~Rally();
 
-        /// Draws the game.
-        void draw() const;
+    /// Draws the game.
+    void draw() const;
 
-        /// Restarts the game.
-        void restart();
+    /// Restarts the game.
+    void restart();
 
-    private:
-        Track* track_;
+  private:
+    Track * track_;
 };
 
-# endif // RALLY_HPP_INCLUDED
-
-
-
-
-
-
-
-
+#endif // RALLY_HPP_INCLUDED

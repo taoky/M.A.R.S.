@@ -15,32 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef INFOTDM_HPP_INCLUDED
-# define INFOTDM_HPP_INCLUDED
+#ifndef INFOTDM_HPP_INCLUDED
+#define INFOTDM_HPP_INCLUDED
 
-# include "Interface/UiWindow.hpp"
+#include "Interface/UiWindow.hpp"
 
 class TextBox;
 
-class InfoTDM: public UiWindow {
-    public:
-        static UiWindow* get();
-        void checkWidgets();
-        void onShow();
+class InfoTDM : public UiWindow
+{
+  public:
+    static UiWindow * get();
+    void checkWidgets();
+    void onShow();
 
-        static void reset();
+    static void reset();
 
-    private:
-        InfoTDM(int width, int height): UiWindow(width, height) {}
-        InfoTDM(InfoTDM const& copy);
+  private:
+    InfoTDM(int width, int height) : UiWindow(width, height) {}
+    InfoTDM(InfoTDM const & copy);
 
-        static UiWindow* instance_;
+    static UiWindow * instance_;
 
-        static bool kClose_;
+    static bool kClose_;
 };
 
-# endif // INFOTDM_HPP_INCLUDED
-
-
-
-
+#endif // INFOTDM_HPP_INCLUDED

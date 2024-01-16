@@ -15,30 +15,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SUNHEAT_HPP_INCLUDED
-# define SUNHEAT_HPP_INCLUDED
+#ifndef SUNHEAT_HPP_INCLUDED
+#define SUNHEAT_HPP_INCLUDED
 
-# include "DecoObjects/DecoObject.hpp"
+#include "DecoObjects/DecoObject.hpp"
 
-# include "Media/texture.hpp"
+#include "Media/texture.hpp"
 
 class Sun;
 
 /// A heat texture on a Sun.
 /// Very decorative.
 
-class SunHeat: public DecoObject {
-    public:
-        /// Creates a heat texture on the target Sun.
-        SunHeat(Sun* sun);
+class SunHeat : public DecoObject
+{
+  public:
+    /// Creates a heat texture on the target Sun.
+    SunHeat(Sun * sun);
 
-        /// Draws the texture.
-        void draw() const;
+    /// Draws the texture.
+    void draw() const;
 
-    private:
-        Vector2f location_;
-        float radius_;
+  private:
+    Vector2f location_;
+    float radius_;
 };
 
-# endif // SUNHEAT_HPP_INCLUDED
-
+#endif // SUNHEAT_HPP_INCLUDED

@@ -15,29 +15,24 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef CKTEAM_HPP_INCLUDED
-# define CKTEAM_HPP_INCLUDED
+#ifndef CKTEAM_HPP_INCLUDED
+#define CKTEAM_HPP_INCLUDED
 
-# include "Teams/Team.hpp"
+#include "Teams/Team.hpp"
 
-class CKTeam: public Team {
-    public:
-        CKTeam(Color3f const& color = Color3f::random()):
-            Team(color) {}
+class CKTeam : public Team
+{
+  public:
+    CKTeam(Color3f const & color = Color3f::random()) : Team(color) {}
 
-    private:
-        void createJobs();
+  private:
+    void createJobs();
 
-        void checkEnemies();
-        void checkPowerUps();
-        void checkControl();
+    void checkEnemies();
+    void checkPowerUps();
+    void checkControl();
 
-        std::vector<Vector2f> powerUpLocations_;
+    std::vector<Vector2f> powerUpLocations_;
 };
 
-# endif // CKTEAM_HPP_INCLUDED
-
-
-
-
-
+#endif // CKTEAM_HPP_INCLUDED

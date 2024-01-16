@@ -15,21 +15,21 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef TOOLTIP_HPP_INCLUDED
-# define TOOLTIP_HPP_INCLUDED
+#ifndef TOOLTIP_HPP_INCLUDED
+#define TOOLTIP_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
+#include "System/Vector2f.hpp"
 
-# include <SFML/System.hpp>
+#include <SFML/System.hpp>
 
-namespace toolTip {
+namespace toolTip
+{
 
-    void draw();
+void draw();
 
-    void mouseMoved(Vector2f const& position);
+void mouseMoved(Vector2f const & position);
 
-    void show(sf::String* text);
-}
+void show(sf::String * text);
+} // namespace toolTip
 
-# endif // TOOLTIP_HPP_INCLUDED
-
+#endif // TOOLTIP_HPP_INCLUDED

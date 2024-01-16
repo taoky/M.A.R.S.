@@ -15,35 +15,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef CANNONCONTROL_HPP_INCLUDED
-# define CANNONCONTROL_HPP_INCLUDED
+#ifndef CANNONCONTROL_HPP_INCLUDED
+#define CANNONCONTROL_HPP_INCLUDED
 
-# include "System/Vector2f.hpp"
+#include "System/Vector2f.hpp"
 
 class Player;
 class Ship;
 
-class CannonControl{
-    public:
-        CannonControl(Vector2f const& location);
+class CannonControl
+{
+  public:
+    CannonControl(Vector2f const & location);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        Player* getCarrier() const;
-        Vector2f const& location() const;
+    Player * getCarrier() const;
+    Vector2f const & location() const;
 
-    private:
-        Vector2f respawnLocation_;
-        Vector2f location_;
-        Ship* ship_;
-        bool collected_;
+  private:
+    Vector2f respawnLocation_;
+    Vector2f location_;
+    Ship * ship_;
+    bool collected_;
 };
 
-# endif // CANNONCONTROL_HPP_INCLUDED
-
-
-
-
-
-
+#endif // CANNONCONTROL_HPP_INCLUDED

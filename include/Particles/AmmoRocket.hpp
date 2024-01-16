@@ -15,42 +15,45 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef AMMOROCKET_HPP_INCLUDED
-# define AMMOROCKET_HPP_INCLUDED
+#ifndef AMMOROCKET_HPP_INCLUDED
+#define AMMOROCKET_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
 class Ship;
 class Ball;
 
-class AmmoRocket: public Particle<AmmoRocket> {
-    public:
-        AmmoRocket(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
-        ~AmmoRocket();
+class AmmoRocket : public Particle<AmmoRocket>
+{
+  public:
+    AmmoRocket(Vector2f const & location, Vector2f const & direction,
+               Vector2f const & velocity, Color3f const & color,
+               Player * damageSource);
+    ~AmmoRocket();
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        void onCollision(SpaceObject* with, Vector2f const& location,
-                         Vector2f const& direction, Vector2f const& velocity);
+    void onCollision(SpaceObject * with, Vector2f const & location,
+                     Vector2f const & direction, Vector2f const & velocity);
 
-        friend class Particle<AmmoRocket>;
-        template <typename Object> friend class Ice;
-        friend class Freezer;
+    friend class Particle<AmmoRocket>;
+    template <typename Object> friend class Ice;
+    friend class Freezer;
 
-    private:
-        Color3f color_;
-        float timer_;
-        Ship* shipTarget_;
-        Ball* ballTarget_;
-        Player* parent_;
-        float rotation_;
-        float life_;
-        float frozen_;
-        bool visible_;
-        static std::list<AmmoRocket*> activeParticles_;
+  private:
+    Color3f color_;
+    float timer_;
+    Ship * shipTarget_;
+    Ball * ballTarget_;
+    Player * parent_;
+    float rotation_;
+    float life_;
+    float frozen_;
+    bool visible_;
+    static std::list<AmmoRocket *> activeParticles_;
 };
 
-# endif // AMMOROCKET_HPP_INCLUDED
+#endif // AMMOROCKET_HPP_INCLUDED

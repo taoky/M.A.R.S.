@@ -15,12 +15,13 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef STARS_HPP_INCLUDED
-# define STARS_HPP_INCLUDED
+#ifndef STARS_HPP_INCLUDED
+#define STARS_HPP_INCLUDED
 
-namespace stars {
-    void init();
-    void draw();
-}
+namespace stars
+{
+void init();
+void draw();
+} // namespace stars
 
-# endif // STARS_HPP_INCLUDED
+#endif // STARS_HPP_INCLUDED

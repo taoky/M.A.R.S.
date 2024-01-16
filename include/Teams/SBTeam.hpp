@@ -15,25 +15,23 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef SBTEAM_HPP_INCLUDED
-# define SBTEAM_HPP_INCLUDED
+#ifndef SBTEAM_HPP_INCLUDED
+#define SBTEAM_HPP_INCLUDED
 
-# include "Teams/Team.hpp"
+#include "Teams/Team.hpp"
 
-class SBTeam: public Team {
-    public:
-        SBTeam(Color3f const& color = Color3f::random()):
-            Team(color) {}
+class SBTeam : public Team
+{
+  public:
+    SBTeam(Color3f const & color = Color3f::random()) : Team(color) {}
 
-    private:
-        void createJobs();
-        void checkPowerUps();
-        void checkEnemies();
-        void checkBall();
+  private:
+    void createJobs();
+    void checkPowerUps();
+    void checkEnemies();
+    void checkBall();
 
-        std::vector<Vector2f> powerUpLocations_;
+    std::vector<Vector2f> powerUpLocations_;
 };
 
-# endif // SBTEAM_HPP_INCLUDED
-
-
+#endif // SBTEAM_HPP_INCLUDED

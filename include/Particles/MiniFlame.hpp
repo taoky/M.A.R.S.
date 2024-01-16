@@ -15,28 +15,29 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef MINIFLAME_HPP_INCLUDED
-# define MINIFLAME_HPP_INCLUDED
+#ifndef MINIFLAME_HPP_INCLUDED
+#define MINIFLAME_HPP_INCLUDED
 
-# include "Particles/Particle.hpp"
+#include "Particles/Particle.hpp"
 
-# include "System/Color3f.hpp"
+#include "System/Color3f.hpp"
 
-class MiniFlame: public Particle<MiniFlame> {
-    public:
-        MiniFlame(Vector2f const& location, Vector2f const& direction, Vector2f const& velocity, Color3f const& color, Player* damageSource);
+class MiniFlame : public Particle<MiniFlame>
+{
+  public:
+    MiniFlame(Vector2f const & location, Vector2f const & direction,
+              Vector2f const & velocity, Color3f const & color,
+              Player * damageSource);
 
-        void update();
-        void draw() const;
+    void update();
+    void draw() const;
 
-        friend class Particle<MiniFlame>;
+    friend class Particle<MiniFlame>;
 
-    private:
-        Color3f color_;
-        float flickerSpeed_, timer_;
-        static std::list<MiniFlame*> activeParticles_;
+  private:
+    Color3f color_;
+    float flickerSpeed_, timer_;
+    static std::list<MiniFlame *> activeParticles_;
 };
 
-# endif // MINIFLAME_HPP_INCLUDED
-
-
+#endif // MINIFLAME_HPP_INCLUDED

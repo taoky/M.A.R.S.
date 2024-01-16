@@ -15,38 +15,35 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-# ifndef ROCKETLAUNCHER_HPP_INCLUDED
-# define ROCKETLAUNCHER_HPP_INCLUDED
+#ifndef ROCKETLAUNCHER_HPP_INCLUDED
+#define ROCKETLAUNCHER_HPP_INCLUDED
 
-# include "Weapons/Weapon.hpp"
+#include "Weapons/Weapon.hpp"
 
 /// Weapon: ROCK'n'LOL.
 /// A rocket launcher which aims at nearby enemies.
 
-class RocketLauncher: public Weapon {
-    public:
-        /// Ctor which constructs the weapon.
-        RocketLauncher(Ship* parent):
-              Weapon(weapons::wRocketLauncher, parent, "ROCK'n'LOL") {};
+class RocketLauncher : public Weapon
+{
+  public:
+    /// Ctor which constructs the weapon.
+    RocketLauncher(Ship * parent)
+        : Weapon(weapons::wRocketLauncher, parent, "ROCK'n'LOL"){};
 
-        /// Spawns some particles.
-        void fire() const;
+    /// Spawns some particles.
+    void fire() const;
 
-        /// Draws the weapon.
-        void draw(float alpha) const;
+    /// Draws the weapon.
+    void draw(float alpha) const;
 
-        /// Returns the maximum distance from which this weapon should be used.
-        float maxDistance() const;
+    /// Returns the maximum distance from which this weapon should be used.
+    float maxDistance() const;
 
-        /// Returns the minimum distance from which this weapon should be used.
-        float minDistance() const;
+    /// Returns the minimum distance from which this weapon should be used.
+    float minDistance() const;
 
-        /// Returns the maximum angle from which this weapon should be used.
-        float maxAngle()   const;
+    /// Returns the maximum angle from which this weapon should be used.
+    float maxAngle() const;
 };
 
-# endif // ROCKETLAUNCHER_HPP_INCLUDED
-
-
-
-
+#endif // ROCKETLAUNCHER_HPP_INCLUDED
