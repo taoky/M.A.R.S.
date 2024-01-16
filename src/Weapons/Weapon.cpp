@@ -18,6 +18,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Weapons/Weapon.hpp"
 
 #include "SpaceObjects/Ship.hpp"
+#include <memory>
 
 Weapon::Weapon(weapons::WeaponType type, Ship * parent, sf::String name)
     : parent_(parent), timer_(0), name_(name), type_(type)
@@ -26,12 +27,12 @@ Weapon::Weapon(weapons::WeaponType type, Ship * parent, sf::String name)
 
 void Weapon::next()
 {
-    parent_->currentWeapon_ = weapons::createNext(type_, parent_);
-    delete this;
+    parent_->currentWeapon_ = std::unique_ptr<Weapon>(weapons::createNext(type_, parent_));
+    // delete this;
 }
 
 void Weapon::previous()
 {
-    parent_->currentWeapon_ = weapons::createPrev(type_, parent_);
-    delete this;
+    parent_->currentWeapon_ = std::unique_ptr<Weapon>(weapons::createPrev(type_, parent_));
+    // delete this;
 }

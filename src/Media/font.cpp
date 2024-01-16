@@ -21,17 +21,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/settings.hpp"
 
 #include <iostream>
+#include <memory>
 
 namespace font
 {
 namespace
 {
-std::map<int, sf::Font *> fonts_;
+std::map<int, std::unique_ptr<sf::Font>> fonts_;
 }
 
 sf::Font * getFont(int languageID)
 {
-    std::map<int, sf::Font *>::iterator it = fonts_.find(languageID);
+    auto it = fonts_.find(languageID);
     if (it == fonts_.end())
     {
         // load it from file and...
@@ -44,7 +45,7 @@ sf::Font * getFont(int languageID)
     }
     else
     {
-        return it->second;
+        return it->second.get();
     }
 }
 } // namespace font

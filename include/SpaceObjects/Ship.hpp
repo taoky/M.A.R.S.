@@ -22,6 +22,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "SpaceObjects/MobileSpaceObject.hpp"
 #include "Specials/Special.hpp"
 #include "Weapons/Weapon.hpp"
+#include <memory>
 
 #define ITEM_CANNON_CONTROL 0
 
@@ -102,8 +103,8 @@ class Ship : public MobileSpaceObject
     Vector2f respawnLocation_;
     float respawnRotation_;
 
-    Weapon * currentWeapon_;
-    Special * currentSpecial_;
+    std::unique_ptr<Weapon> currentWeapon_;
+    std::unique_ptr<Special> currentSpecial_;
 
     float life_, maxLife_;
     float fuel_, maxFuel_;

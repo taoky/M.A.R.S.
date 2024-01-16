@@ -31,6 +31,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Shaders/postFX.hpp"
 #include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/Home.hpp"
+#include "Specials/Special.hpp"
 #include "Specials/specials.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
@@ -40,6 +41,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "defines.hpp"
 
 #include <cmath>
+#include <memory>
 #include <sstream>
 
 Ship::Ship(Vector2f const & location, float rotation, Player * owner)
@@ -48,8 +50,10 @@ Ship::Ship(Vector2f const & location, float rotation, Player * owner)
       right_(0), docked_(true), weaponChange_(false), specialChange_(false),
       visible_(true), ghostTimer_(1.f), frozen_(0.f), respawnTimer_(0.f),
       damageSourceResetTimer_(0.f), respawnLocation_(location),
-      respawnRotation_(rotation), currentWeapon_(NULL), currentSpecial_(NULL),
-      life_(200.f), maxLife_(life_), fuel_(100.f), maxFuel_(fuel_),
+      respawnRotation_(rotation),
+      currentWeapon_(std::unique_ptr<Weapon>(nullptr)),
+      currentSpecial_(std::unique_ptr<Special>(nullptr)), life_(200.f),
+      maxLife_(life_), fuel_(100.f), maxFuel_(fuel_),
       collectedPowerUps_(items::COUNT, NULL), fragStars_(0),
       damageByLocalPlayer_(0.f), damageCheckTimer_(0.f),
       damageDirection_(0.f, 0.f), collisionCount_(0)
@@ -60,19 +64,25 @@ Ship::Ship(Vector2f const & location, float rotation, Player * owner)
     if (owner_->controlType_ == controllers::cPlayer1)
     {
         decoObjects::addHighlight(this);
-        currentWeapon_ = weapons::create(settings::C_playerIWeapon, this);
-        currentSpecial_ = specials::create(settings::C_playerISpecial, this);
+        currentWeapon_ = std::unique_ptr<Weapon>(
+            weapons::create(settings::C_playerIWeapon, this));
+        currentSpecial_ = std::unique_ptr<Special>(
+            specials::create(settings::C_playerISpecial, this));
     }
     else if (owner_->controlType_ == controllers::cPlayer2)
     {
         decoObjects::addHighlight(this);
-        currentWeapon_ = weapons::create(settings::C_playerIIWeapon, this);
-        currentSpecial_ = specials::create(settings::C_playerIISpecial, this);
+        currentWeapon_ = std::unique_ptr<Weapon>(
+            weapons::create(settings::C_playerIIWeapon, this));
+        currentSpecial_ = std::unique_ptr<Special>(
+            specials::create(settings::C_playerIISpecial, this));
     }
     else
     {
-        currentWeapon_ = weapons::create(weapons::wAFK47, this);
-        currentSpecial_ = specials::create(specials::sHeal, this);
+        currentWeapon_ =
+            std::unique_ptr<Weapon>(weapons::create(weapons::wAFK47, this));
+        currentSpecial_ =
+            std::unique_ptr<Special>(specials::create(specials::sHeal, this));
     }
 
     owner->ship_ = this;
