@@ -182,7 +182,7 @@ namespace spaceObjects {
                     // hacky... should check for distańce to impactlocation, but does not...
                     float distance = (start - ball->location()).lengthSquare();
                     if (distance < closestDistance) {
-                        closestDistance = distance;
+                        // closestDistance = distance;
                         closest = ball;
                     }
                 }

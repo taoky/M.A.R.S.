@@ -106,7 +106,7 @@ void GameStats::draw() const {
             std::stringstream sstr;
             sstr << "Latency: " << particles::count();
             text::drawScreenText(sf::String(sstr.str()), Vector2f(10.f,top), 12.f, TEXT_ALIGN_LEFT, Color3f(0.5f, 0.5f, 0.5f));
-            top += 20.f;
+            // top += 20.f;
         }
     }
 }

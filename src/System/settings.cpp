@@ -20,6 +20,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 # include "Media/file.hpp"
 # include "Shaders/postFX.hpp"
 # include "defines.hpp"
+# include "Vendor/xdg.hpp"
 
 # include <sys/stat.h>
 
@@ -229,9 +230,10 @@ namespace settings {
     bool load() {
         // check whether application directory in the home diretory exists, if not create it
         # ifdef __linux__
-            std::string home(getenv("HOME"));
+            auto config_dirs = xdg::ConfigHomeDir();
+            std::string home(config_dirs);
             if (*home.rbegin() != '/') home += '/';
-            mkdir((home + ".marsshooter/").c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+            mkdir((home + "marsshooter/").c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
         # endif
 
         # if defined(__WIN32__) || defined(_WIN32)
@@ -254,17 +256,17 @@ namespace settings {
             C_configPath = "./";
 
             # ifdef __linux__
-                std::string home(getenv("HOME"));
+                std::string home(config_dirs);
                 if (*home.rbegin() != '/') home += '/';
 
                 if (std::ifstream((C_configPath + "mars.cfg").c_str()))
                     success = true;
-                else if (std::ifstream((home + ".marsshooter/mars.cfg").c_str())) {
-                    C_configPath =      home + ".marsshooter/";
+                else if (std::ifstream((home + "marsshooter/mars.cfg").c_str())) {
+                    C_configPath =      home + "marsshooter/";
                     success = true;
                 }
                 else
-                    C_configPath =      home + ".marsshooter/";
+                    C_configPath =      home + "marsshooter/";
             # endif
 
             # if defined(__WIN32__) || defined(_WIN32)

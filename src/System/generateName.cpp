@@ -27,6 +27,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 # include <iostream>
 # include <ctime>
 # include <sstream>
+# include <random>
+# include <chrono>
 
 namespace generateName {
 
@@ -98,8 +100,9 @@ namespace generateName {
 
 
         void init_() {
-            // init rand()
-            srand(time(NULL));
+            // init random engine
+            auto rng = std::default_random_engine {};
+            rng.seed(std::chrono::system_clock::now().time_since_epoch().count());
 
             // load list of bot names from file
             loadBotNames();
@@ -121,7 +124,7 @@ namespace generateName {
             std::vector<std::pair<sf::String, int> > temp;
             for (unsigned int i=0; i<botNames_.size(); ++i) {
                 for (std::list<std::pair<sf::String, int> >::iterator it = botNames_[i].begin(); it != botNames_[i].end(); ++it) temp.push_back(*it);
-                std::random_shuffle(temp.begin(), temp.end());
+                std::shuffle(temp.begin(), temp.end(), rng);
                 botNames_[i].clear();
                 for (std::vector<std::pair<sf::String, int> >::iterator it = temp.begin(); it != temp.end(); ++it) botNames_[i].push_back(*it);
                 temp.clear();
@@ -129,7 +132,7 @@ namespace generateName {
 
             std::vector<sf::String> temp2;
             for (std::list<sf::String>::iterator it = gameNames_.begin(); it != gameNames_.end(); ++it) temp2.push_back(*it);
-            std::random_shuffle(temp2.begin(), temp2.end());
+            std::shuffle(temp2.begin(), temp2.end(), rng);
             gameNames_.clear();
             for (std::vector<sf::String>::iterator it = temp2.begin(); it != temp2.end(); ++it) gameNames_.push_back(*it);
 

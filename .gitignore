@@ -378,3 +378,6 @@ FodyWeavers.xsd
 
 # Binary
 marsshooter
+
+# clang-tidy
+tidy-results.txt

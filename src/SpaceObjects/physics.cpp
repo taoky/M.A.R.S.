@@ -113,7 +113,7 @@ namespace physics {
 
                                         // add to orthongonal speed component of initial velocity
                                         // special case: Collision with rofle bullets is not physically correct, for improved gameplay
-                                        if ((source->type() == spaceObjects::oAmmoROFLE) | (target->type() == spaceObjects::oAmmoROFLE))
+                                        if ((source->type() == spaceObjects::oAmmoROFLE) || (target->type() == spaceObjects::oAmmoROFLE))
                                             target-> velocity() += (0.05f*source->velocity()*source->mass_ + (velocityTargetAfter - velocityTargetBefore) * 0.6);
                                         else {
                                             source->velocity() += (velocitySourceAfter - velocitySourceBefore) * 0.8;
