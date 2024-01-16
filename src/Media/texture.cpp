@@ -23,23 +23,24 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include <SFML/System.hpp>
 #include <iostream>
 #include <vector>
+#include <memory>
 
 namespace texture
 {
 
 namespace
 {
-std::vector<GLuint *> textures_(COUNT);
+std::vector<std::unique_ptr<GLuint>> textures_(COUNT);
 
 void loadTexture_(TextureType type, std::string fileName)
 {
-    textures_[type] = new GLuint;
+    textures_[type] = std::make_unique<GLuint>();
     sf::Image img;
     img.loadFromFile(fileName);
 
     // convert sf::Image to GLuint
     const sf::Uint8 * ptr = img.getPixelsPtr();
-    glGenTextures(1, textures_[type]);
+    glGenTextures(1, textures_[type].get());
     glBindTexture(GL_TEXTURE_2D, *textures_[type]);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.getSize().x, img.getSize().y, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, ptr);
@@ -61,7 +62,7 @@ void loadTexture_(TextureType type, std::string fileName)
 GLuint const & getTexture(TextureType type)
 {
     // check if texture is already loaded
-    if (textures_[type] != NULL)
+    if (textures_[type] != nullptr)
     {
         return *textures_[type];
     }

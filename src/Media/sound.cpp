@@ -20,6 +20,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Games/games.hpp"
 #include "System/settings.hpp"
 
+#include <memory>
+
 #define CHANNELCOUNT 64
 
 namespace sound
@@ -27,13 +29,13 @@ namespace sound
 
 namespace
 {
-std::vector<sf::SoundBuffer *> sounds_(COUNT);
+std::vector<std::unique_ptr<sf::SoundBuffer>> sounds_(COUNT);
 sf::Sound soundChannel_[CHANNELCOUNT];
 bool initialized_(false);
 
 void loadSound_(SoundType sound, std::string fileName)
 {
-    sounds_[sound] = new sf::SoundBuffer;
+    sounds_[sound] = std::make_unique<sf::SoundBuffer>();
     if (!sounds_[sound]->loadFromFile(fileName))
         std::cout << "Failed to load Soundfile \"" << fileName << "\"!"
                   << std::endl;

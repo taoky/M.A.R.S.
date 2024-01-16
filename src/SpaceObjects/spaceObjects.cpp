@@ -269,9 +269,10 @@ bool isOnLine(Vector2f const & source, Vector2f const & direction,
 
 void clear()
 {
-    for (std::vector<SpaceObject *>::iterator it = objectList_.begin();
-         it != objectList_.end(); ++it)
+    for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
         delete *it;
+    // for (auto it = homeList_.begin(); it != homeList_.end(); ++it)
+    //     delete *it;
     objectList_.clear();
     homeList_.clear();
 }

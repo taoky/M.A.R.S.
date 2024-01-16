@@ -28,6 +28,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <SFML/System.hpp>
 #include <list>
+#include <memory>
 #include <vector>
 
 namespace decoObjects
@@ -36,11 +37,11 @@ namespace decoObjects
 namespace
 {
 Cannon * cannon_(NULL);
-std::vector<DecoObject *> decos_;
-std::vector<DecoObject *> heats_;
-std::vector<DecoObject *> names_;
-std::list<DecoObject *> ices_;
-std::list<DecoObject *> bolts_;
+std::vector<std::unique_ptr<DecoObject>> decos_;
+std::vector<std::unique_ptr<DecoObject>> heats_;
+std::vector<std::unique_ptr<DecoObject>> names_;
+std::list<std::unique_ptr<DecoObject>> ices_;
+std::list<std::unique_ptr<DecoObject>> bolts_;
 } // namespace
 
 void update()
@@ -53,12 +54,10 @@ void draw()
 {
     if (cannon_)
         cannon_->draw();
-    for (std::vector<DecoObject *>::iterator it = decos_.begin();
-         it != decos_.end(); ++it)
+    for (auto it = decos_.begin(); it != decos_.end(); ++it)
         (*it)->draw();
 
-    for (std::list<DecoObject *>::iterator it = ices_.begin();
-         it != ices_.end(); ++it)
+    for (auto it = ices_.begin(); it != ices_.end(); ++it)
     {
         if ((*it) != NULL)
             (*it)->draw();
@@ -68,8 +67,7 @@ void draw()
         }
     }
 
-    for (std::list<DecoObject *>::iterator it = bolts_.begin();
-         it != bolts_.end(); ++it)
+    for (auto it = bolts_.begin(); it != bolts_.end(); ++it)
     {
         if ((*it) != NULL)
             (*it)->draw();
@@ -82,16 +80,14 @@ void draw()
 
 void drawHeat()
 {
-    for (std::vector<DecoObject *>::iterator it = heats_.begin();
-         it != heats_.end(); ++it)
+    for (auto it = heats_.begin(); it != heats_.end(); ++it)
         (*it)->draw();
 }
 
 void drawNames()
 {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    for (std::vector<DecoObject *>::iterator it = names_.begin();
-         it != names_.end(); ++it)
+    for (auto it = names_.begin(); it != names_.end(); ++it)
         (*it)->draw();
 }
 
@@ -122,57 +118,59 @@ void drawArrow(Vector2f const & from, Vector2f const & to,
 void addCannon()
 {
     cannon_ = new Cannon();
-    decos_.push_back(new Evil());
+    decos_.push_back(std::make_unique<Evil>());
 }
 
 void addPlanetSign(Planet * planet)
 {
-    decos_.push_back(new PlanetSign(planet));
+    decos_.push_back(std::make_unique<PlanetSign>(planet));
 }
 
-void addSunHeat(Sun * sun) { heats_.push_back(new SunHeat(sun)); }
+void addSunHeat(Sun * sun) { heats_.push_back(std::make_unique<SunHeat>(sun)); }
 
-void addIce(Ship * ship) { ices_.push_back(new Ice<Ship>(ship)); }
+void addIce(Ship * ship) { ices_.push_back(std::make_unique<Ice<Ship>>(ship)); }
 
-void addIce(Ball * ball) { ices_.push_back(new Ice<Ball>(ball)); }
+void addIce(Ball * ball) { ices_.push_back(std::make_unique<Ice<Ball>>(ball)); }
 
 void addIce(AmmoRocket * rocket)
 {
-    ices_.push_back(new Ice<AmmoRocket>(rocket));
+    ices_.push_back(std::make_unique<Ice<AmmoRocket>>(rocket));
 }
 
 void removeIce(DecoObject const * toBeRemoved)
 {
-    for (std::list<DecoObject *>::iterator it = ices_.begin();
-         it != ices_.end(); ++it)
-        if (*it == toBeRemoved)
+    for (auto it = ices_.begin(); it != ices_.end(); ++it)
+        if (it->get() == toBeRemoved)
         {
-            delete *it;
-            *it = NULL;
+            it->reset();
             break;
         }
 }
 
 void addBolt(SpaceObject * from, SpaceObject * to, float intensity)
 {
-    bolts_.push_back(new Bolt(from, to, intensity));
+    bolts_.push_back(std::make_unique<Bolt>(from, to, intensity));
 }
 
 void removeBolt(DecoObject const * toBeRemoved)
 {
-    for (std::list<DecoObject *>::iterator it = bolts_.begin();
-         it != bolts_.end(); ++it)
-        if (*it == toBeRemoved)
+    for (auto it = bolts_.begin(); it != bolts_.end(); ++it)
+        if (it->get() == toBeRemoved)
         {
-            delete *it;
-            *it = NULL;
+            it->reset();
             break;
         }
 }
 
-void addName(Ship * ship) { names_.push_back(new ShipName(ship)); }
+void addName(Ship * ship)
+{
+    names_.push_back(std::make_unique<ShipName>(ship));
+}
 
-void addHighlight(Ship * ship) { decos_.push_back(new ShipHighlight(ship)); }
+void addHighlight(Ship * ship)
+{
+    decos_.push_back(std::make_unique<ShipHighlight>(ship));
+}
 
 void clear()
 {
@@ -181,15 +179,6 @@ void clear()
         delete cannon_;
         cannon_ = NULL;
     }
-    for (std::vector<DecoObject *>::iterator it = decos_.begin();
-         it != decos_.end(); ++it)
-        delete *it;
-    for (std::vector<DecoObject *>::iterator it = heats_.begin();
-         it != heats_.end(); ++it)
-        delete *it;
-    for (std::vector<DecoObject *>::iterator it = names_.begin();
-         it != names_.end(); ++it)
-        delete *it;
     decos_.clear();
     heats_.clear();
     names_.clear();
