@@ -18,16 +18,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "System/randomizer.hpp"
 
-#include <cstdlib>
-#include <ctime>
+#include <chrono>
+#include <random>
 
 namespace
 {
+auto r = std::default_random_engine{};
 
 unsigned int InitializeSeed()
 {
-    unsigned int seed = static_cast<unsigned int>(std::time(NULL));
-    std::srand(seed);
+    auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+    randomizer::setSeed(seed);
     return seed;
 }
 
@@ -36,7 +37,7 @@ unsigned int globalSeed = InitializeSeed();
 
 void randomizer::setSeed(unsigned int seed)
 {
-    std::srand(seed);
+    r.seed(seed);
     globalSeed = seed;
 }
 
@@ -44,10 +45,10 @@ unsigned int randomizer::getSeed() { return globalSeed; }
 
 float randomizer::random(float begin, float end)
 {
-    return static_cast<float>(std::rand()) / RAND_MAX * (end - begin) + begin;
+    return std::uniform_real_distribution<float>(begin, end)(r);
 }
 
 int randomizer::random(int begin, int end)
 {
-    return std::rand() % (end - begin + 1) + begin;
+    return std::uniform_int_distribution<>(begin, end)(r);
 }
