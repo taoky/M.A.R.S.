@@ -21,7 +21,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 
-std::list<Smoke *> Smoke::activeParticles_;
+std::list<std::unique_ptr<Smoke>> Smoke::activeParticles_;
 
 Smoke::Smoke(Vector2f const & location, Vector2f const & direction,
              Vector2f const & velocity, Color3f const & color,
@@ -67,7 +67,7 @@ void Smoke::draw() const
 
 void Smoke::shockWave(Vector2f const & location, float strength, float radius)
 {
-    for (std::list<Smoke *>::iterator it = activeParticles_.begin();
+    for (auto it = activeParticles_.begin();
          it != activeParticles_.end(); ++it)
     {
         Vector2f direction((*it)->location_ - location);

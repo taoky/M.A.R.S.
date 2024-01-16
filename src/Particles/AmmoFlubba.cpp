@@ -23,7 +23,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 
-std::list<AmmoFlubba *> AmmoFlubba::activeParticles_;
+std::list<std::unique_ptr<AmmoFlubba>> AmmoFlubba::activeParticles_;
 
 AmmoFlubba::AmmoFlubba(Vector2f const & location, Vector2f const & direction,
                        Vector2f const & velocity, Color3f const & color,
@@ -102,7 +102,7 @@ void AmmoFlubba::onCollision(SpaceObject * with, Vector2f const & location,
 void AmmoFlubba::shockWave(Vector2f const & location, float strength,
                            float radius)
 {
-    for (std::list<AmmoFlubba *>::iterator it = activeParticles_.begin();
+    for (auto it = activeParticles_.begin();
          it != activeParticles_.end(); ++it)
     {
         Vector2f direction((*it)->location_ - location);

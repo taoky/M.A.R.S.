@@ -39,7 +39,7 @@ class AmmoH2OMG : public Particle<AmmoH2OMG>
 
   private:
     Color3f color_;
-    static std::list<AmmoH2OMG *> activeParticles_;
+    static std::list<std::unique_ptr<AmmoH2OMG>> activeParticles_;
 };
 
 #endif // AMMOH2OMG_HPP_INCLUDED

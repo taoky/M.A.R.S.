@@ -39,7 +39,7 @@ class Dust : public Particle<Dust>
 
   private:
     Color3f color_;
-    static std::list<Dust *> activeParticles_;
+    static std::list<std::unique_ptr<Dust>> activeParticles_;
 };
 
 #endif // DUST_HPP_INCLUDED

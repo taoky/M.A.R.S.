@@ -23,7 +23,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/timer.hpp"
 #include "TrailEffects/trailEffects.hpp"
 
-std::list<BurningFragment *> BurningFragment::activeParticles_;
+std::list<std::unique_ptr<BurningFragment>> BurningFragment::activeParticles_;
 
 BurningFragment::BurningFragment(Vector2f const & location,
                                  Vector2f const & direction,

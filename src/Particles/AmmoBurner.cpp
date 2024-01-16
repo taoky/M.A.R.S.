@@ -24,7 +24,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
 
-std::list<AmmoBurner *> AmmoBurner::activeParticles_;
+std::list<std::unique_ptr<AmmoBurner>> AmmoBurner::activeParticles_;
 
 AmmoBurner::AmmoBurner(Vector2f const & location, Vector2f const & direction,
                        Vector2f const & velocity, Color3f const & color,

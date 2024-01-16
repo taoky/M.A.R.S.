@@ -38,7 +38,7 @@ class AmmoFist : public Particle<AmmoFist>
     friend class Particle<AmmoFist>;
 
   private:
-    static std::list<AmmoFist *> activeParticles_;
+    static std::list<std::unique_ptr<AmmoFist>> activeParticles_;
 };
 
 #endif // AMMOFIST_HPP_INCLUDED

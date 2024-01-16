@@ -23,6 +23,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <atomic>
 #include <list>
+#include <memory>
 
 extern std::atomic_bool exiting;
 
@@ -53,23 +54,19 @@ template <typename Derived> class Particle : public MobileSpaceObject
     {
         if (!exiting)
         {
-            for (auto it = Derived::activeParticles_.begin();
-                 it != Derived::activeParticles_.end(); ++it)
-                delete *it;
             Derived::activeParticles_.clear();
         }
     }
 
     static void updateAll()
     {
-        typename std::list<Derived *>::iterator it =
-            Derived::activeParticles_.begin();
+        auto it = Derived::activeParticles_.begin();
         while (it != Derived::activeParticles_.end())
         {
             (*it)->update();
             if ((*it)->isDead())
             {
-                delete *it;
+                it->reset();
                 it = Derived::activeParticles_.erase(it);
             }
             else
@@ -79,8 +76,7 @@ template <typename Derived> class Particle : public MobileSpaceObject
 
     static void drawAll()
     {
-        for (typename std::list<Derived *>::iterator it =
-                 Derived::activeParticles_.begin();
+        for (auto it = Derived::activeParticles_.begin();
              it != Derived::activeParticles_.end(); ++it)
             (*it)->draw();
     }
@@ -89,30 +85,29 @@ template <typename Derived> class Particle : public MobileSpaceObject
                       Vector2f const & sourceVelocity, Color3f const & color,
                       Player * damageSource)
     {
-        Derived::activeParticles_.push_back(new Derived(
+        Derived::activeParticles_.push_back(std::make_unique<Derived>(
             location, direction, sourceVelocity, color, damageSource));
     }
 
     static void collideWith(MobileSpaceObject * object)
     {
         // check for collision with each mobile object
-        for (typename std::list<Derived *>::iterator it =
-                 Derived::activeParticles_.begin();
+        for (auto it = Derived::activeParticles_.begin();
              it != Derived::activeParticles_.end(); ++it)
         {
             // don't check for self collision
-            if (*it != object)
+            if (it->get() != object)
             {
                 // get faster object
                 MobileSpaceObject *source, *target;
                 if (object->velocity() > (*it)->velocity())
                 {
                     source = object;
-                    target = *it;
+                    target = it->get();
                 }
                 else
                 {
-                    source = *it;
+                    source = it->get();
                     target = object;
                 }
 

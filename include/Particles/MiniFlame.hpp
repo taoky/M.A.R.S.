@@ -37,7 +37,7 @@ class MiniFlame : public Particle<MiniFlame>
   private:
     Color3f color_;
     float flickerSpeed_, timer_;
-    static std::list<MiniFlame *> activeParticles_;
+    static std::list<std::unique_ptr<MiniFlame>> activeParticles_;
 };
 
 #endif // MINIFLAME_HPP_INCLUDED

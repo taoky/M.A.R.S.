@@ -21,7 +21,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 
-std::list<CrushedIce *> CrushedIce::activeParticles_;
+std::list<std::unique_ptr<CrushedIce>> CrushedIce::activeParticles_;
 
 CrushedIce::CrushedIce(Vector2f const & location, Vector2f const & direction,
                        Vector2f const & velocity, Color3f const & color,
@@ -70,7 +70,7 @@ void CrushedIce::draw() const
 void CrushedIce::shockWave(Vector2f const & location, float strength,
                            float radius)
 {
-    for (std::list<CrushedIce *>::iterator it = activeParticles_.begin();
+    for (auto it = activeParticles_.begin();
          it != activeParticles_.end(); ++it)
     {
         Vector2f direction((*it)->location_ - location);

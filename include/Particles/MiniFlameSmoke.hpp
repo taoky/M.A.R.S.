@@ -37,7 +37,7 @@ class MiniFlameSmoke : public Particle<MiniFlameSmoke>
 
   private:
     Color3f color_;
-    static std::list<MiniFlameSmoke *> activeParticles_;
+    static std::list<std::unique_ptr<MiniFlameSmoke>> activeParticles_;
 };
 
 #endif // MINIFLAMESMOKE_HPP_INCLUDED

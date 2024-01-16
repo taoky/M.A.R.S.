@@ -40,7 +40,7 @@ class AmmoFlubba : public Particle<AmmoFlubba>
 
   private:
     Color3f color_;
-    static std::list<AmmoFlubba *> activeParticles_;
+    static std::list<std::unique_ptr<AmmoFlubba>> activeParticles_;
 };
 
 #endif // AMMOFLUBBA_HPP_INCLUDED

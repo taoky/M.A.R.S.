@@ -43,7 +43,7 @@ class AmmoInsta : public Particle<AmmoInsta>
     friend class Particle<AmmoInsta>;
 
   private:
-    static std::list<AmmoInsta *> activeParticles_;
+    static std::list<std::unique_ptr<AmmoInsta>> activeParticles_;
     Trail * trail_;
     Color3f color_;
 };

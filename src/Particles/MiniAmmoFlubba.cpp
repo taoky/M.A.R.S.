@@ -23,7 +23,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 
-std::list<MiniAmmoFlubba *> MiniAmmoFlubba::activeParticles_;
+std::list<std::unique_ptr<MiniAmmoFlubba>> MiniAmmoFlubba::activeParticles_;
 
 MiniAmmoFlubba::MiniAmmoFlubba(Vector2f const & location,
                                Vector2f const & direction,
@@ -99,7 +99,7 @@ void MiniAmmoFlubba::onCollision(SpaceObject * with, Vector2f const & location,
 void MiniAmmoFlubba::shockWave(Vector2f const & location, float strength,
                                float radius)
 {
-    for (std::list<MiniAmmoFlubba *>::iterator it = activeParticles_.begin();
+    for (auto it = activeParticles_.begin();
          it != activeParticles_.end(); ++it)
     {
         Vector2f direction((*it)->location_ - location);

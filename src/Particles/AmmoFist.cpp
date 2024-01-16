@@ -21,7 +21,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Players/Player.hpp"
 #include "System/timer.hpp"
 
-std::list<AmmoFist *> AmmoFist::activeParticles_;
+std::list<std::unique_ptr<AmmoFist>> AmmoFist::activeParticles_;
 
 AmmoFist::AmmoFist(Vector2f const & location, Vector2f const & direction,
                    Vector2f const & velocity, Color3f const & color,

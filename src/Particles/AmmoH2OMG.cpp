@@ -23,7 +23,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 
-std::list<AmmoH2OMG *> AmmoH2OMG::activeParticles_;
+std::list<std::unique_ptr<AmmoH2OMG>> AmmoH2OMG::activeParticles_;
 
 AmmoH2OMG::AmmoH2OMG(Vector2f const & location, Vector2f const & direction,
                      Vector2f const & velocity, Color3f const & color,

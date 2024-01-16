@@ -33,7 +33,7 @@ class HeatJet : public Particle<HeatJet>
     friend class Particle<HeatJet>;
 
   private:
-    static std::list<HeatJet *> activeParticles_;
+    static std::list<std::unique_ptr<HeatJet>> activeParticles_;
 };
 
 #endif // HEATJET_HPP_INCLUDED

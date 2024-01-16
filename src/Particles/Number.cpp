@@ -22,7 +22,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <sstream>
 
-std::list<Number *> Number::activeParticles_;
+std::list<std::unique_ptr<Number>> Number::activeParticles_;
 
 Number::Number(Vector2f const & location, Vector2f const & direction,
                Vector2f const & velocity, Color3f const & color,

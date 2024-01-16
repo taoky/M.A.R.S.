@@ -21,7 +21,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 
-std::list<MiniFlameSmoke *> MiniFlameSmoke::activeParticles_;
+std::list<std::unique_ptr<MiniFlameSmoke>> MiniFlameSmoke::activeParticles_;
 
 MiniFlameSmoke::MiniFlameSmoke(Vector2f const & location,
                                Vector2f const & direction,
@@ -68,7 +68,7 @@ void MiniFlameSmoke::draw() const
 void MiniFlameSmoke::shockWave(Vector2f const & location, float strength,
                                float radius)
 {
-    for (std::list<MiniFlameSmoke *>::iterator it = activeParticles_.begin();
+    for (auto it = activeParticles_.begin();
          it != activeParticles_.end(); ++it)
     {
         Vector2f direction((*it)->location_ - location);

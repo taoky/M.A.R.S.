@@ -39,7 +39,7 @@ class CrushedIce : public Particle<CrushedIce>
 
   private:
     Color3f color_;
-    static std::list<CrushedIce *> activeParticles_;
+    static std::list<std::unique_ptr<CrushedIce>> activeParticles_;
 };
 
 #endif // CRUSHEDICE_HPP_INCLUDED

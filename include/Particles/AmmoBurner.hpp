@@ -39,7 +39,7 @@ class AmmoBurner : public Particle<AmmoBurner>
 
   private:
     Color3f color_;
-    static std::list<AmmoBurner *> activeParticles_;
+    static std::list<std::unique_ptr<AmmoBurner>> activeParticles_;
 };
 
 #endif // AMMOBURNER_HPP_INCLUDED

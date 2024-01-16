@@ -53,7 +53,7 @@ class AmmoRocket : public Particle<AmmoRocket>
     float life_;
     float frozen_;
     bool visible_;
-    static std::list<AmmoRocket *> activeParticles_;
+    static std::list<std::unique_ptr<AmmoRocket>> activeParticles_;
 };
 
 #endif // AMMOROCKET_HPP_INCLUDED

@@ -127,8 +127,7 @@ void Freezer::activate() const
             }
         }
 
-        for (std::list<AmmoRocket *>::iterator it =
-                 AmmoRocket::activeParticles_.begin();
+        for (auto it = AmmoRocket::activeParticles_.begin();
              it != AmmoRocket::activeParticles_.end(); ++it)
         {
             float distance(((*it)->location() - parent_->location()).length());
@@ -137,7 +136,7 @@ void Freezer::activate() const
                 (*it)->velocity_ = (*it)->velocity_ * 0.00001f;
                 (*it)->mass_ = 9999999999.f;
                 if ((*it)->frozen_ <= 0)
-                    decoObjects::addIce(*it);
+                    decoObjects::addIce(it->get());
                 (*it)->frozen_ = strength;
             }
         }

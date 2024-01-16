@@ -36,7 +36,7 @@ class Fuel : public Particle<Fuel>
 
   private:
     Color3f color_;
-    static std::list<Fuel *> activeParticles_;
+    static std::list<std::unique_ptr<Fuel>> activeParticles_;
 };
 
 #endif // FUEL_HPP_INCLUDED
