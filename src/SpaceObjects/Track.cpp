@@ -115,8 +115,7 @@ void Track::addAnchor(Vector2f const & point)
         if ((*it - point).lengthSquare() < 90000.f)
             return;
 
-    for (auto it =
-             spaceObjects::getObjects().begin();
+    for (auto it = spaceObjects::getObjects().begin();
          it != spaceObjects::getObjects().end(); ++it)
         if (((*it)->location() - point).lengthSquare() <
             std::pow((*it)->radius() + 200.f, 2))

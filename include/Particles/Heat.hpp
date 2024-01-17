@@ -33,7 +33,7 @@ class Heat : public Particle<Heat>
     friend class Particle<Heat>;
 
   private:
-    static std::list<std::unique_ptr<Heat>> activeParticles_;
+    static std::list<std::shared_ptr<Heat>> activeParticles_;
 };
 
 #endif // HEAT_HPP_INCLUDED

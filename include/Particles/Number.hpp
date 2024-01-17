@@ -38,7 +38,7 @@ class Number : public Particle<Number>
     Color3f color_;
     int value_;
     float alpha_;
-    static std::list<std::unique_ptr<Number>> activeParticles_;
+    static std::list<std::shared_ptr<Number>> activeParticles_;
 };
 
 #endif // NUMBER_HPP_INCLUDED

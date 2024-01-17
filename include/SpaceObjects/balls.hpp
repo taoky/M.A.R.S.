@@ -30,7 +30,7 @@ void addBall(Vector2f const & location = Vector2f(0, 0));
 void update();
 void draw();
 
-Ball * getBall();
+std::shared_ptr<Ball> getBall();
 
 void clear();
 } // namespace balls

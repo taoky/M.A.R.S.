@@ -21,7 +21,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 
-std::list<std::unique_ptr<Explode>> Explode::activeParticles_;
+std::list<std::shared_ptr<Explode>> Explode::activeParticles_;
 
 Explode::Explode(Vector2f const & location, Vector2f const & direction,
                  Vector2f const & velocity, Color3f const & color,

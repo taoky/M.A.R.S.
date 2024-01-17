@@ -99,8 +99,7 @@ Player const * getPlayerII() { return playerII_.get(); }
 
 void resetPlayerPoints()
 {
-    for (auto it = allPlayers_.begin();
-         it != allPlayers_.end(); ++it)
+    for (auto it = allPlayers_.begin(); it != allPlayers_.end(); ++it)
         (*it)->resetPoints();
 }
 

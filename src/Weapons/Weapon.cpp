@@ -27,12 +27,14 @@ Weapon::Weapon(weapons::WeaponType type, Ship * parent, sf::String name)
 
 void Weapon::next()
 {
-    parent_->currentWeapon_ = std::unique_ptr<Weapon>(weapons::createNext(type_, parent_));
+    parent_->currentWeapon_ =
+        std::unique_ptr<Weapon>(weapons::createNext(type_, parent_));
     // delete this;
 }
 
 void Weapon::previous()
 {
-    parent_->currentWeapon_ = std::unique_ptr<Weapon>(weapons::createPrev(type_, parent_));
+    parent_->currentWeapon_ =
+        std::unique_ptr<Weapon>(weapons::createPrev(type_, parent_));
     // delete this;
 }

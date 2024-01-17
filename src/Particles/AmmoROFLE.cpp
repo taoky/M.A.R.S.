@@ -22,7 +22,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "TrailEffects/trailEffects.hpp"
 #include "defines.hpp"
 
-std::list<std::unique_ptr<AmmoROFLE>> AmmoROFLE::activeParticles_;
+std::list<std::shared_ptr<AmmoROFLE>> AmmoROFLE::activeParticles_;
 
 AmmoROFLE::AmmoROFLE(Vector2f const & location, Vector2f const & direction,
                      Vector2f const & velocity, Color3f const & color,

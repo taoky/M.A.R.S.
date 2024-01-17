@@ -37,7 +37,7 @@ class AmmoROFLE : public Particle<AmmoROFLE>
     friend class Particle<AmmoROFLE>;
 
   private:
-    static std::list<std::unique_ptr<AmmoROFLE>> activeParticles_;
+    static std::list<std::shared_ptr<AmmoROFLE>> activeParticles_;
 };
 
 #endif // AMMOROFLE_HPP_INCLUDED

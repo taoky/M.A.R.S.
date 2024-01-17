@@ -80,8 +80,7 @@ Vector2f RasterZone::getRandomPoint() const
             Vector2f(randomizer::random(bottomLeft_.x_, topRight_.x_),
                      randomizer::random(bottomLeft_.y_, topRight_.y_));
         bool fits = true;
-        for (auto it =
-                 spaceObjects::getObjects().begin();
+        for (auto it = spaceObjects::getObjects().begin();
              it != spaceObjects::getObjects().end(); ++it)
         {
             if ((randomPoint - (*it)->location()).lengthSquare() <

@@ -30,7 +30,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 template <typename Object> class Ice : public DecoObject
 {
   public:
-    Ice(Object * object) : object_(object) {}
+    Ice(std::shared_ptr<Object> object) : object_(object) {}
 
     void draw() const
     {
@@ -101,7 +101,7 @@ template <typename Object> class Ice : public DecoObject
     }
 
   private:
-    Object * object_;
+    std::shared_ptr<Object> object_;
 };
 
 #endif // ICE_HPP_INCLUDED

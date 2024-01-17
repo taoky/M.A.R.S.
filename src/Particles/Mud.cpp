@@ -20,7 +20,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
 
-std::list<std::unique_ptr<Mud>> Mud::activeParticles_;
+std::list<std::shared_ptr<Mud>> Mud::activeParticles_;
 
 Mud::Mud(Vector2f const & location, Vector2f const & direction,
          Vector2f const & velocity, Color3f const & color,

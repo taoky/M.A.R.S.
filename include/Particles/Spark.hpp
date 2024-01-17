@@ -36,7 +36,7 @@ class Spark : public Particle<Spark>
 
   private:
     Color3f color_;
-    static std::list<std::unique_ptr<Spark>> activeParticles_;
+    static std::list<std::shared_ptr<Spark>> activeParticles_;
 };
 
 #endif // SPARK_HPP_INCLUDED

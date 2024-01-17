@@ -27,13 +27,15 @@ Special::Special(specials::SpecialType type, Ship * parent, sf::String name)
 
 void Special::next()
 {
-    parent_->currentSpecial_ = std::unique_ptr<Special>(specials::createNext(type_, parent_));
+    parent_->currentSpecial_ =
+        std::unique_ptr<Special>(specials::createNext(type_, parent_));
     // delete this;
 }
 
 void Special::previous()
 {
-    parent_->currentSpecial_ = std::unique_ptr<Special>(specials::createPrev(type_, parent_));
+    parent_->currentSpecial_ =
+        std::unique_ptr<Special>(specials::createPrev(type_, parent_));
     // delete this;
 }
 

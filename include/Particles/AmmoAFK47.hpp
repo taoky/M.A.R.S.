@@ -36,7 +36,7 @@ class AmmoAFK47 : public Particle<AmmoAFK47>
     friend class Particle<AmmoAFK47>;
 
   private:
-    static std::list<std::unique_ptr<AmmoAFK47>> activeParticles_;
+    static std::list<std::shared_ptr<AmmoAFK47>> activeParticles_;
 };
 
 #endif // AMMOAFK47_HPP_INCLUDED

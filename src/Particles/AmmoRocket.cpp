@@ -31,7 +31,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <cfloat>
 
-std::list<std::unique_ptr<AmmoRocket>> AmmoRocket::activeParticles_;
+std::list<std::shared_ptr<AmmoRocket>> AmmoRocket::activeParticles_;
 
 AmmoRocket::AmmoRocket(Vector2f const & location, Vector2f const & direction,
                        Vector2f const & velocity, Color3f const & color,
@@ -131,13 +131,13 @@ void AmmoRocket::update()
                 }
             }
 
-            Ball * ball(balls::getBall());
+            auto ball(balls::getBall());
             if (ball)
             {
                 float distance((location_ - ball->location()).lengthSquare());
                 if (distance < closest && ball->isVisible())
                 {
-                    ballTarget_ = ball;
+                    ballTarget_ = ball.get();
                     shipTarget_ = NULL;
                 }
             }

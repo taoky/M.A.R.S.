@@ -81,8 +81,7 @@ void BotController::kickBallToEnemy()
                 5000.f)
             {
                 bool ballIsCloseToPlanet(false);
-                for (auto it =
-                         spaceObjects::getObjects().begin();
+                for (auto it = spaceObjects::getObjects().begin();
                      it != spaceObjects::getObjects().end(); ++it)
                     if ((*it)->type() != spaceObjects::oBlackHole &&
                         ((*it)->location() - aimPosition).lengthSquare() <

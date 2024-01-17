@@ -96,7 +96,7 @@ void Shocker::activate() const
             }
         }
 
-        Ball * ball(balls::getBall());
+        auto ball(balls::getBall());
 
         if (ball)
         {
@@ -104,7 +104,7 @@ void Shocker::activate() const
             float distance(direction.lengthSquare());
             if (distance <= radius() * radius())
             {
-                ballTarget_ = ball;
+                ballTarget_ = ball.get();
             }
         }
 
@@ -130,7 +130,7 @@ void Shocker::activate() const
 
             Vector2f direction(ballTarget_->location() - parent_->location());
 
-            decoObjects::addBolt(parent_, ball, 100.f / targetCount);
+            decoObjects::addBolt(parent_, ball.get(), 100.f / targetCount);
             ball->velocity_ += direction.normalize() * damage * 5.f;
         }
 

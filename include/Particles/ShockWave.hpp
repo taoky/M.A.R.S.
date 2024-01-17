@@ -33,7 +33,7 @@ class ShockWave : public Particle<ShockWave>
     friend class Particle<ShockWave>;
 
   private:
-    static std::list<std::unique_ptr<ShockWave>> activeParticles_;
+    static std::list<std::shared_ptr<ShockWave>> activeParticles_;
 };
 
 #endif // SHOCKWAVE_HPP_INCLUDED

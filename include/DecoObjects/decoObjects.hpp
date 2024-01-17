@@ -20,6 +20,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "System/Color3f.hpp"
 #include "System/Vector2f.hpp"
+#include <memory>
 
 class Planet;
 class Ship;
@@ -64,15 +65,15 @@ void addSunHeat(Sun * sun);
 
 /// Adds an ice block at the ship's position.
 /// \param ship The ship to be frozen.
-void addIce(Ship * ship);
+void addIce(std::shared_ptr<Ship> ship);
 
 /// Adds an ice block at the ball's position.
 /// \param ball The ball to be frozen.
-void addIce(Ball * ball);
+void addIce(std::shared_ptr<Ball> ball);
 
 /// Adds an ice block on the rocket's position.
 /// \param rocket The rocket to be frozen.
-void addIce(AmmoRocket * rocket);
+void addIce(std::shared_ptr<AmmoRocket> rocket);
 
 /// Removes an ice block from the list.
 /// \param toBeRemoved The ice block to be removed.

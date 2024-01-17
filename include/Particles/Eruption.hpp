@@ -36,7 +36,7 @@ class Eruption : public Particle<Eruption>
 
   private:
     Color3f color_;
-    static std::list<std::unique_ptr<Eruption>> activeParticles_;
+    static std::list<std::shared_ptr<Eruption>> activeParticles_;
 };
 
 #endif // ERUPTION_HPP_INCLUDED

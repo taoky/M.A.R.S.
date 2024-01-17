@@ -20,7 +20,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
 
-std::list<std::unique_ptr<PowerUpCollect>> PowerUpCollect::activeParticles_;
+std::list<std::shared_ptr<PowerUpCollect>> PowerUpCollect::activeParticles_;
 
 PowerUpCollect::PowerUpCollect(Vector2f const & location,
                                Vector2f const & direction,

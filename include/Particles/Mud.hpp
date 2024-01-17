@@ -36,7 +36,7 @@ class Mud : public Particle<Mud>
 
   private:
     Color3f color_;
-    static std::list<std::unique_ptr<Mud>> activeParticles_;
+    static std::list<std::shared_ptr<Mud>> activeParticles_;
 };
 
 #endif // MUD_HPP_INCLUDED

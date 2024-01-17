@@ -38,7 +38,7 @@ class PowerUpCollect : public Particle<PowerUpCollect>
     Color3f color_;
     int const texX_;
     int const texY_;
-    static std::list<std::unique_ptr<PowerUpCollect>> activeParticles_;
+    static std::list<std::shared_ptr<PowerUpCollect>> activeParticles_;
 };
 
 #endif // POWERUPCOLLECT_HPP_INCLUDED

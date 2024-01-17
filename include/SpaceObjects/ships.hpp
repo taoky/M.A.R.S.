@@ -32,7 +32,7 @@ void addShip(Vector2f const & location, float rotation, Player * owner);
 void update();
 void draw();
 
-std::vector<std::unique_ptr<Ship>> const & getShips();
+std::vector<std::shared_ptr<Ship>> const & getShips();
 
 void clear();
 } // namespace ships

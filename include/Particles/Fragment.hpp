@@ -36,7 +36,7 @@ class Fragment : public Particle<Fragment>
 
   private:
     Color3f color_;
-    static std::list<std::unique_ptr<Fragment>> activeParticles_;
+    static std::list<std::shared_ptr<Fragment>> activeParticles_;
 };
 
 #endif // FRAGMENT_HPP_INCLUDED

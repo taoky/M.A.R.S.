@@ -22,10 +22,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "SpaceObjects/SpaceObject.hpp"
 #include "System/timer.hpp"
 
-#include <cmath>
-#include <vector>
-#include <memory>
 #include <atomic>
+#include <cmath>
+#include <memory>
+#include <vector>
 
 extern std::atomic_bool exiting;
 
@@ -343,7 +343,8 @@ std::vector<SpaceObject *> const & getGravitySources()
 
 void clear()
 {
-    if (!exiting) {
+    if (!exiting)
+    {
         staticObjects_.clear();
         mobileObjects_.clear();
         gravitySources_.clear();

@@ -415,7 +415,7 @@ void draw()
 std::map<float, TacticalZone *> const toProtect(Team * checker)
 {
     std::map<float, TacticalZone *> sortedZones;
-    Ball * ball = balls::getBall();
+    auto ball = balls::getBall();
     if (ball)
     {
         Vector2f ballLocation(ball->location());
@@ -496,7 +496,8 @@ void clear()
         delete teamR_;
         teamR_ = NULL;
     }
-    if (!exiting) {
+    if (!exiting)
+    {
         tacticalZonesL_.clear();
         tacticalZonesR_.clear();
         rasterZones_.clear();

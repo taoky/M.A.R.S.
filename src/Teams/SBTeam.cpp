@@ -45,8 +45,7 @@ void SBTeam::checkEnemies()
     auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (auto it = ships.begin();
-         it != ships.end(); ++it)
+    for (auto it = ships.begin(); it != ships.end(); ++it)
         if ((*it)->getOwner()->team() != this && (*it)->attackable())
         {
             existAny = true;
@@ -63,8 +62,7 @@ void SBTeam::checkPowerUps()
     auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (auto it = ships.begin();
-         it != ships.end(); ++it)
+    for (auto it = ships.begin(); it != ships.end(); ++it)
         if ((*it)->getOwner()->team() != this && (*it)->attackable())
         {
             existAny = true;
@@ -73,8 +71,7 @@ void SBTeam::checkPowerUps()
 
     powerUpLocations_.clear();
     auto const & powerUps = items::getPowerUps();
-    for (auto it = powerUps.begin();
-         it != powerUps.end(); ++it)
+    for (auto it = powerUps.begin(); it != powerUps.end(); ++it)
     {
         if (!(*it)->isCollected())
         {
@@ -107,7 +104,7 @@ void SBTeam::checkPowerUps()
 
 void SBTeam::checkBall()
 {
-    Ball * ball = balls::getBall();
+    auto ball = balls::getBall();
     if (ball)
     {
         if (!ball->isVisible())
@@ -115,7 +112,7 @@ void SBTeam::checkBall()
             int waitCount(settings::C_iDumb * (botControllers_.size() + 1) /
                           200);
             for (int i = 0; i < waitCount; ++i)
-                addJob(Job(Job::jWaitForBall, 5, ball));
+                addJob(Job(Job::jWaitForBall, 5, ball.get()));
         }
         else
         {
@@ -124,7 +121,7 @@ void SBTeam::checkBall()
             {
             case OWN_HOME:
                 for (int i = 0; i < botControllers_.size(); ++i)
-                    addJob(Job(Job::jKickOutHome, 90, ball));
+                    addJob(Job(Job::jKickOutHome, 90, ball.get()));
                 break;
 
             case OWN_TEAM:
@@ -143,9 +140,9 @@ void SBTeam::checkBall()
                 }
                 for (int i = botControllers_.size() * 0.5f;
                      i < botControllers_.size(); ++i)
-                    addJob(Job(Job::jKickToEnemy, 60, ball));
+                    addJob(Job(Job::jKickToEnemy, 60, ball.get()));
                 for (int i = 0; i < botControllers_.size() * 0.5; ++i)
-                    addJob(Job(Job::jKickOutHome, 40, ball));
+                    addJob(Job(Job::jKickOutHome, 40, ball.get()));
 
                 break;
             }
@@ -164,7 +161,7 @@ void SBTeam::checkBall()
                         currentZone = zones.begin();
                 }
                 for (int i = 0; i < botControllers_.size() * 0.6f; ++i)
-                    addJob(Job(Job::jKickToEnemy, 60, ball));
+                    addJob(Job(Job::jKickToEnemy, 60, ball.get()));
             }
             }
         }

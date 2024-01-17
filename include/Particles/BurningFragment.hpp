@@ -39,7 +39,7 @@ class BurningFragment : public Particle<BurningFragment>
   private:
     Color3f color_;
     float timer1_, timer2_;
-    static std::list<std::unique_ptr<BurningFragment>> activeParticles_;
+    static std::list<std::shared_ptr<BurningFragment>> activeParticles_;
 };
 
 #endif // BURNINGFRAGMENT_HPP_INCLUDED

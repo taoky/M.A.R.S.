@@ -19,9 +19,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/Ship.hpp"
 
+#include <atomic>
 #include <memory>
 #include <vector>
-#include <atomic>
 
 extern std::atomic_bool exiting;
 
@@ -29,7 +29,7 @@ namespace ships
 {
 namespace
 {
-std::vector<std::unique_ptr<Ship>> shipList_;
+std::vector<std::shared_ptr<Ship>> shipList_;
 }
 
 void addShip(Vector2f const & location, float rotation, Player * owner)
@@ -60,7 +60,7 @@ void draw()
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-std::vector<std::unique_ptr<Ship>> const & getShips() { return shipList_; }
+std::vector<std::shared_ptr<Ship>> const & getShips() { return shipList_; }
 
 void clear()
 {

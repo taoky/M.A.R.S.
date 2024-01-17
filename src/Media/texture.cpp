@@ -22,8 +22,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <SFML/System.hpp>
 #include <iostream>
-#include <vector>
 #include <memory>
+#include <vector>
 
 namespace texture
 {

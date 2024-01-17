@@ -41,7 +41,7 @@ struct Job
         jGetControl
     };
 
-    Job(JobType type, short priority, void * object = NULL)
+    Job(JobType type, short priority, void * object = nullptr)
         : type_(type), priority_(priority), object_(object)
     {
     }

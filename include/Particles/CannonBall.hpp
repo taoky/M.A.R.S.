@@ -34,7 +34,7 @@ class CannonBall : public Particle<CannonBall>
 
   private:
     float timer1_, timer2_;
-    static std::list<std::unique_ptr<CannonBall>> activeParticles_;
+    static std::list<std::shared_ptr<CannonBall>> activeParticles_;
 };
 
 #endif // CANNONBALL_HPP_INCLUDED

@@ -22,7 +22,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/timer.hpp"
 #include "defines.hpp"
 
-std::list<std::unique_ptr<Star>> Star::activeParticles_;
+std::list<std::shared_ptr<Star>> Star::activeParticles_;
 
 Star::Star(Vector2f const & location, Vector2f const & direction,
            Vector2f const & velocity, Color3f const & color,
@@ -81,8 +81,7 @@ void Star::draw() const
 
 void Star::init()
 {
-    for (auto it = activeParticles_.begin();
-         it != activeParticles_.end(); ++it)
+    for (auto it = activeParticles_.begin(); it != activeParticles_.end(); ++it)
         it->reset();
     activeParticles_.clear();
 
@@ -90,7 +89,6 @@ void Star::init()
         spawn(Vector2f(SPACE_X_RESOLUTION * 0.5f, SPACE_Y_RESOLUTION * 0.5f),
               Vector2f(), Vector2f(), Color3f(), NULL);
 
-    for (auto it = activeParticles_.begin();
-         it != activeParticles_.end(); ++it)
+    for (auto it = activeParticles_.begin(); it != activeParticles_.end(); ++it)
         (*it)->update(randomizer::random(0.f, 100.f));
 }

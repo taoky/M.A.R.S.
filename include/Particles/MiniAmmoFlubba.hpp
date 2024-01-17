@@ -40,7 +40,7 @@ class MiniAmmoFlubba : public Particle<MiniAmmoFlubba>
 
   private:
     Color3f color_;
-    static std::list<std::unique_ptr<MiniAmmoFlubba>> activeParticles_;
+    static std::list<std::shared_ptr<MiniAmmoFlubba>> activeParticles_;
 };
 
 #endif // MINIAMMOFLUBBA_HPP_INCLUDED

@@ -25,6 +25,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "DecoObjects/ShipHighlight.hpp"
 #include "DecoObjects/ShipName.hpp"
 #include "DecoObjects/SunHeat.hpp"
+#include "Particles/AmmoRocket.hpp"
 
 #include <SFML/System.hpp>
 #include <list>
@@ -130,11 +131,17 @@ void addPlanetSign(Planet * planet)
 
 void addSunHeat(Sun * sun) { heats_.push_back(std::make_unique<SunHeat>(sun)); }
 
-void addIce(Ship * ship) { ices_.push_back(std::make_unique<Ice<Ship>>(ship)); }
+void addIce(std::shared_ptr<Ship> ship)
+{
+    ices_.push_back(std::make_unique<Ice<Ship>>(ship));
+}
 
-void addIce(Ball * ball) { ices_.push_back(std::make_unique<Ice<Ball>>(ball)); }
+void addIce(std::shared_ptr<Ball> ball)
+{
+    ices_.push_back(std::make_unique<Ice<Ball>>(ball));
+}
 
-void addIce(AmmoRocket * rocket)
+void addIce(std::shared_ptr<AmmoRocket> rocket)
 {
     ices_.push_back(std::make_unique<Ice<AmmoRocket>>(rocket));
 }

@@ -107,12 +107,12 @@ void Freezer::activate() const
                     (*it)->velocity_ = Vector2f();
                     (*it)->mass_ = 9999999999.f;
                     if ((*it)->frozen_ <= 0)
-                        decoObjects::addIce(it->get());
+                        decoObjects::addIce(*it);
                     (*it)->frozen_ = strength;
                 }
             }
         }
-        Ball * ball = balls::getBall();
+        auto ball = balls::getBall();
 
         if (ball && ball->visible_)
         {
@@ -136,7 +136,7 @@ void Freezer::activate() const
                 (*it)->velocity_ = (*it)->velocity_ * 0.00001f;
                 (*it)->mass_ = 9999999999.f;
                 if ((*it)->frozen_ <= 0)
-                    decoObjects::addIce(it->get());
+                    decoObjects::addIce(*it);
                 (*it)->frozen_ = strength;
             }
         }

@@ -37,7 +37,7 @@ class Smoke : public Particle<Smoke>
 
   private:
     Color3f color_;
-    static std::list<std::unique_ptr<Smoke>> activeParticles_;
+    static std::list<std::shared_ptr<Smoke>> activeParticles_;
 };
 
 #endif // SMOKE_HPP_INCLUDED

@@ -24,8 +24,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/window.hpp"
 #include "defines.hpp"
 
-#include <sstream>
 #include <atomic>
+#include <sstream>
 
 // A hack for this project's destructor on static objects
 std::atomic_bool exiting(false);

@@ -33,7 +33,7 @@ class HeatBurner : public Particle<HeatBurner>
     friend class Particle<HeatBurner>;
 
   private:
-    static std::list<std::unique_ptr<HeatBurner>> activeParticles_;
+    static std::list<std::shared_ptr<HeatBurner>> activeParticles_;
 };
 
 #endif // HEATBURNER_HPP_INCLUDED

@@ -18,12 +18,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "SpaceObjects/balls.hpp"
 
 #include "SpaceObjects/Home.hpp"
+#include <memory>
 
 namespace balls
 {
 namespace
 {
-Ball * ball_(NULL);
+std::shared_ptr<Ball> ball_(nullptr);
 }
 
 void addBall(Vector2f const & location)
@@ -38,10 +39,10 @@ void addBall(Vector2f const & location)
              it != homes.end(); ++it)
             midPoint += (*it)->location();
         midPoint /= homes.size();
-        ball_ = new Ball(midPoint);
+        ball_ = std::make_shared<Ball>(midPoint);
     }
     else
-        ball_ = new Ball(location);
+        ball_ = std::make_shared<Ball>(location);
 }
 
 void update()
@@ -56,14 +57,13 @@ void draw()
         ball_->draw();
 }
 
-Ball * getBall() { return ball_; }
+std::shared_ptr<Ball> getBall() { return ball_; }
 
 void clear()
 {
     if (ball_)
     {
-        delete ball_;
-        ball_ = NULL;
+        ball_.reset();
     }
 }
 } // namespace balls

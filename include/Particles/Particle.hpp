@@ -85,7 +85,7 @@ template <typename Derived> class Particle : public MobileSpaceObject
                       Vector2f const & sourceVelocity, Color3f const & color,
                       Player * damageSource)
     {
-        Derived::activeParticles_.push_back(std::make_unique<Derived>(
+        Derived::activeParticles_.push_back(std::make_shared<Derived>(
             location, direction, sourceVelocity, color, damageSource));
     }
 

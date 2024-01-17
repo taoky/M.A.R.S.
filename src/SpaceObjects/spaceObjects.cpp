@@ -65,7 +65,7 @@ Vector2f possiblePlanetLocation(int radius, float minDistance)
                 std::pow((*it)->radius() + radius + SPACEOBJECT_MIN_GAP, 2))
                 newPlanetFits = false;
         // check for collisions with balls
-        Ball * ball = balls::getBall();
+        auto ball = balls::getBall();
         if (ball)
         {
             if ((ball->location() - position).lengthSquare() <
@@ -137,7 +137,8 @@ void addBlackHole()
                   SPACEOBJECT_MIN_RADIUS);
     Vector2f position = possiblePlanetLocation(radius, 200);
     if (position != Vector2f(0, 0))
-        objectList_.push_back(std::unique_ptr<SpaceObject>(new BlackHole(position, radius)));
+        objectList_.push_back(
+            std::unique_ptr<SpaceObject>(new BlackHole(position, radius)));
 }
 
 Home * addHome(int where, int life, Color3f const & color)
@@ -177,7 +178,10 @@ Home * addHome(Vector2f const & location, int life, Color3f const & color,
 
 std::vector<Home *> const & getHomes() { return homeList_; }
 
-std::vector<std::unique_ptr<SpaceObject>> const & getObjects() { return objectList_; }
+std::vector<std::unique_ptr<SpaceObject>> const & getObjects()
+{
+    return objectList_;
+}
 
 SpaceObject const * getObstacle(Vector2f const & start, Vector2f const & end,
                                 bool avoidBall, float minDistance)
@@ -223,7 +227,7 @@ SpaceObject const * getObstacle(Vector2f const & start, Vector2f const & end,
         }
     }
 
-    Ball * ball = balls::getBall();
+    auto ball = balls::getBall();
     if (avoidBall && ball)
     {
         float checkRadius = ball->radius();
@@ -251,7 +255,7 @@ SpaceObject const * getObstacle(Vector2f const & start, Vector2f const & end,
                 if (distance < closestDistance)
                 {
                     // closestDistance = distance;
-                    closest = ball;
+                    closest = ball.get();
                 }
             }
         }
@@ -269,7 +273,8 @@ bool isOnLine(Vector2f const & source, Vector2f const & direction,
 
 void clear()
 {
-    if (!exiting) {
+    if (!exiting)
+    {
         objectList_.clear();
         homeList_.clear();
     }

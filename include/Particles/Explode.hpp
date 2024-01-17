@@ -36,7 +36,7 @@ class Explode : public Particle<Explode>
 
   private:
     Color3f color_;
-    static std::list<std::unique_ptr<Explode>> activeParticles_;
+    static std::list<std::shared_ptr<Explode>> activeParticles_;
 };
 
 #endif // EXPLODE_HPP_INCLUDED

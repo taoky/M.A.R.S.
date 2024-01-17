@@ -43,7 +43,7 @@ class Star : public Particle<Star>
     float depth_;
     float alpha_;
     Vector2f acceleration_;
-    static std::list<std::unique_ptr<Star>> activeParticles_;
+    static std::list<std::shared_ptr<Star>> activeParticles_;
 };
 
 #endif // STAR_HPP_INCLUDED

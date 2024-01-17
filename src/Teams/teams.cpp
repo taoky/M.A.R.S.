@@ -41,8 +41,7 @@ Team * addTeam(Team * newTeam)
 void assignHomes(Home * home)
 {
     if (allTeams_.size() > 0)
-        for (auto it = allTeams_.begin();
-             it != allTeams_.end(); ++it)
+        for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
             (*it)->setHome(home);
     else
         std::cout << "Cant assign Home Planet! No Teams are specified!\n";
@@ -62,8 +61,7 @@ void assignHomes(Home * homeL, Home * homeR)
 
 void update()
 {
-    for (auto it = allTeams_.begin();
-         it != allTeams_.end(); ++it)
+    for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
         (*it)->update();
 }
 
@@ -75,14 +73,14 @@ std::vector<std::unique_ptr<Team>> const & getAllTeams() { return allTeams_; }
 
 Team const * getEnemy(Team const * checker)
 {
-    return checker == allTeams_[0].get() ? allTeams_[1].get() : allTeams_[0].get();
+    return checker == allTeams_[0].get() ? allTeams_[1].get()
+                                         : allTeams_[0].get();
 }
 
 int getFirstPoints()
 {
     int highest(INT_MIN);
-    for (auto it = allTeams_.begin();
-         it != allTeams_.end(); ++it)
+    for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
         if ((*it)->points() > highest)
             highest = (*it)->points();
     return highest;
@@ -92,8 +90,7 @@ int getSecondPoints()
 {
     int first(INT_MIN);
     int second(INT_MIN);
-    for (auto it = allTeams_.begin();
-         it != allTeams_.end(); ++it)
+    for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
         if ((*it)->points() >= first)
         {
             second = first;
@@ -110,8 +107,7 @@ int getSecondPoints()
 
 void resetTeamPoints()
 {
-    for (auto it = allTeams_.begin();
-         it != allTeams_.end(); ++it)
+    for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
         (*it)->resetPoints();
 }
 
