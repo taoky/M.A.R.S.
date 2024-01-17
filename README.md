@@ -1,6 +1,17 @@
 M.A.R.S
 ======
 
+The code in this repository is a modified fork:
+
+- Fixed compile warnings
+- Added ASAN support
+- Processed through clang-tidy and clang-format
+- Modified some raw pointers to smart pointers, to avoid memory leaks
+
+Bugs might still exist -- build with ASAN and play to find them.
+
+---
+
 **M.A.R.S. - a ridiculous shooter** is a 2D space shooter with awesome visual effects and attractive physics. Players can battle each other or computer controlled enemies in exciting game modes. 
 
 Feel free to visit its **homepage** at http://mars-game.sourceforge.net/
