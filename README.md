@@ -8,6 +8,7 @@ The code in this repository is a modified fork:
 - Processed through clang-tidy and clang-format
 - Added xdg support -- config files are now stored in `~/.config/marsshooter/`
 - Modified some raw pointers to smart pointers, to avoid memory leaks
+- Provided files to run with docker-compose on Linux desktop (X11)
 
 Bugs might still exist -- build with ASAN and play to find them.
 
