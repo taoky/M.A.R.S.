@@ -17,8 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Menu/EnterName.hpp"
 
+#include <SFML/System/String.hpp>
+
 #include "Interface/Button.hpp"
-#include "Interface/Checkbox.hpp"
+#include "Interface/Label.hpp"
 #include "Interface/Line.hpp"
 #include "Interface/TextBox.hpp"
 #include "Interface/TextEdit.hpp"
@@ -26,21 +28,24 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 
-UiWindow * EnterName::instance_(NULL);
+UiWindow * EnterName::instance_(nullptr);
 bool EnterName::kOk_(false);
 
-UiWindow * EnterName::get()
+auto EnterName::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new EnterName(320, 160);
-        instance_->addWidget(new TextEdit(NULL, &settings::C_playerIName,
+        instance_->addWidget(new TextEdit(nullptr, &settings::C_playerIName,
                                           "PlayerI", Vector2f(10, 85), 300, 0,
                                           TEXT_EDIT, 12));
-        instance_->addWidget(new Button(locales::getLocale(locales::Ok), NULL,
-                                        &kOk_, Vector2f(220, 130), 90, 20));
+        instance_->addWidget(new Button(locales::getLocale(locales::Ok),
+                                        nullptr, &kOk_, Vector2f(220, 130), 90,
+                                        20));
         instance_->addWidget(new Label(
             locales::getLocale(locales::PleaseEnterName), TEXT_ALIGN_LEFT,
             Vector2f(10, 10), 20.f, Color3f(1.f, 0.5f, 0.9f), false));
@@ -73,5 +78,5 @@ void EnterName::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

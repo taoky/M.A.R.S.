@@ -18,9 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef CHOOSELANGUAGE_HPP_INCLUDED
 #define CHOOSELANGUAGE_HPP_INCLUDED
 
+#include <map>
+
 #include "Interface/UiWindow.hpp"
 
-#include <map>
+namespace sf
+{
+class String;
+} // namespace sf
 
 class ChooseLanguage : public UiWindow
 {

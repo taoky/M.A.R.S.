@@ -17,25 +17,31 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/Tab.hpp"
 
+#include <GL/gl.h>
+#include <SFML/Window/Mouse.hpp>
+#include <algorithm>
+
+#include "Interface/Label.hpp"
 #include "Interface/TabList.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Menu/menus.hpp"
-#include "System/settings.hpp"
-#include "System/window.hpp"
 
-#include <SFML/OpenGL.hpp>
+namespace sf
+{
+class String;
+} // namespace sf
 
 Tab::Tab(sf::String * name, int width, bool * activated)
-    : UiElement(Vector2f(), width, 20), focusedWidget_(NULL), name_(name),
+    : UiElement(Vector2f(), width, 20), focusedWidget_(nullptr), name_(name),
       activated_(activated), active_(false)
 {
 }
 
 Tab::~Tab()
 {
-    for (std::vector<UiElement *>::iterator i = widgets_.begin();
-         i != widgets_.end(); ++i)
-        delete *i;
+    for (auto & widget : widgets_)
+        delete widget;
 }
 
 void Tab::mouseMoved(Vector2f const & position)
@@ -64,17 +70,15 @@ void Tab::mouseMoved(Vector2f const & position)
     }
 
     if (active_)
-        for (std::vector<UiElement *>::iterator i = widgets_.begin();
-             i != widgets_.end(); ++i)
-            (*i)->mouseMoved(position);
+        for (auto & widget : widgets_)
+            widget->mouseMoved(position);
 }
 
 void Tab::mouseWheelMoved(Vector2f const & position, int delta)
 {
     if (active_)
-        for (std::vector<UiElement *>::iterator i = widgets_.begin();
-             i != widgets_.end(); ++i)
-            (*i)->mouseWheelMoved(position, delta);
+        for (auto & widget : widgets_)
+            widget->mouseWheelMoved(position, delta);
 }
 
 void Tab::mouseLeft(bool down)
@@ -83,14 +87,13 @@ void Tab::mouseLeft(bool down)
 
     if (!pressed_ && hovered_)
     {
-        TabList * parent(dynamic_cast<TabList *>(parent_));
+        auto * parent(dynamic_cast<TabList *>(parent_));
         if (parent)
             parent->activate(this);
     }
     if (active_)
-        for (std::vector<UiElement *>::iterator i = widgets_.begin();
-             i != widgets_.end(); ++i)
-            (*i)->mouseLeft(down);
+        for (auto & widget : widgets_)
+            widget->mouseLeft(down);
 }
 
 void Tab::keyEvent(bool down, Key const & key)
@@ -99,7 +102,7 @@ void Tab::keyEvent(bool down, Key const & key)
         focusedWidget_->keyEvent(down, key);
 }
 
-bool Tab::tabNext()
+auto Tab::tabNext() -> bool
 {
     if (!focusedWidget_ && widgets_.size() > 0)
     {
@@ -134,14 +137,14 @@ bool Tab::tabNext()
         }
         else
         {
-            focusedWidget_ = NULL;
+            focusedWidget_ = nullptr;
             return true;
         }
     }
     return false;
 }
 
-bool Tab::tabPrevious()
+auto Tab::tabPrevious() -> bool
 {
     if (!focusedWidget_ && widgets_.size() > 0)
     {
@@ -176,7 +179,7 @@ bool Tab::tabPrevious()
         }
         else
         {
-            focusedWidget_ = NULL;
+            focusedWidget_ = nullptr;
             return true;
         }
     }
@@ -252,9 +255,8 @@ void Tab::draw() const
     label_->draw();
 
     if (active_)
-        for (std::vector<UiElement *>::const_iterator i = widgets_.begin();
-             i != widgets_.end(); ++i)
-            (*i)->draw();
+        for (auto widget : widgets_)
+            widget->draw();
 }
 
 void Tab::setFocus(UiElement * toBeFocused, bool isPrevious)
@@ -263,17 +265,16 @@ void Tab::setFocus(UiElement * toBeFocused, bool isPrevious)
     if (toBeFocused != this)
         focusedWidget_ = toBeFocused;
     else
-        focusedWidget_ = NULL;
+        focusedWidget_ = nullptr;
     label_->setFocus(this, isPrevious);
 }
 
 void Tab::clearFocus()
 {
     UiElement::clearFocus();
-    focusedWidget_ = NULL;
-    for (std::vector<UiElement *>::iterator i = widgets_.begin();
-         i != widgets_.end(); ++i)
-        (*i)->clearFocus();
+    focusedWidget_ = nullptr;
+    for (auto & widget : widgets_)
+        widget->clearFocus();
     label_->clearFocus();
 }
 
@@ -283,7 +284,7 @@ void Tab::addWidget(UiElement * toBeAdded)
     widgets_.push_back(toBeAdded);
 }
 
-Vector2f Tab::getTopLeft() const
+auto Tab::getTopLeft() const -> Vector2f
 {
     if (locales::getCurrentLocale().LTR_)
         return UiElement::getTopLeft() - topLeft_ + Vector2f(0.f, 10.f);

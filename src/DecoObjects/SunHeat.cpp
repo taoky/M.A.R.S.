@@ -17,6 +17,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "DecoObjects/SunHeat.hpp"
 
+#include <GL/gl.h>
+
+#include "Media/texture.hpp"
 #include "SpaceObjects/Sun.hpp"
 #include "System/timer.hpp"
 

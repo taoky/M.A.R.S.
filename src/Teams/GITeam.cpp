@@ -17,9 +17,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Teams/GITeam.hpp"
 
+#include <memory>
+#include <vector>
+
 #include "Players/Player.hpp"
+#include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/ships.hpp"
-#include "Teams/teams.hpp"
+#include "Teams/Job.hpp"
 
 void GITeam::createJobs()
 {
@@ -37,8 +41,8 @@ void GITeam::checkEnemies()
     auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (auto it = ships.begin(); it != ships.end(); ++it)
-        if ((*it)->getOwner()->team() != this && (*it)->attackable())
+    for (const auto & ship : ships)
+        if (ship->getOwner()->team() != this && ship->attackable())
         {
             existAny = true;
             break;

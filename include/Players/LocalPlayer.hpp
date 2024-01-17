@@ -18,10 +18,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef LOCALPLAYER_HPP_INCLUDED
 #define LOCALPLAYER_HPP_INCLUDED
 
+#include "Controllers/controllers.hpp"
 #include "Players/Player.hpp"
 
 class Team;
 class KeyController;
+namespace sf
+{
+class String;
+} // namespace sf
+struct Color3f;
 
 class LocalPlayer : public Player
 {

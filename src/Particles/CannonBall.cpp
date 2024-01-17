@@ -17,12 +17,23 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/CannonBall.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+#include <vector>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
 #include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/physics.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<CannonBall>> CannonBall::activeParticles_;
 
@@ -67,25 +78,24 @@ void CannonBall::update()
 
     // check for collisions with homes
     std::vector<Home *> const & homes = spaceObjects::getHomes();
-    for (std::vector<Home *>::const_iterator it = homes.begin();
-         it != homes.end(); ++it)
+    for (auto home : homes)
     {
-        if ((location_ - (*it)->location()).lengthSquare() <
-            std::pow(radius_ + (*it)->radius(), 2))
+        if ((location_ - home->location()).lengthSquare() <
+            std::pow(radius_ + home->radius(), 2))
         {
-            (*it)->onCollision(this, Vector2f(), Vector2f(), Vector2f());
+            home->onCollision(this, Vector2f(), Vector2f(), Vector2f());
             killMe();
         }
     }
 
     // check for collisions with ships
     auto const & shipsList = ships::getShips();
-    for (auto it = shipsList.begin(); it != shipsList.end(); ++it)
-        if ((location_ - (*it)->location()).lengthSquare() <
-                std::pow(radius_ + (*it)->radius(), 2) &&
-            (*it)->collidable())
+    for (const auto & it : shipsList)
+        if ((location_ - it->location()).lengthSquare() <
+                std::pow(radius_ + it->radius(), 2) &&
+            it->collidable())
         {
-            (*it)->onCollision(this, Vector2f(), Vector2f(), Vector2f());
+            it->onCollision(this, Vector2f(), Vector2f(), Vector2f());
             killMe();
         }
 

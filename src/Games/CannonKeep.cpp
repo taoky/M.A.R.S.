@@ -17,14 +17,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/CannonKeep.hpp"
 
+#include "Controllers/controllers.hpp"
 #include "DecoObjects/decoObjects.hpp"
+#include "Games/games.hpp"
 #include "Items/items.hpp"
 #include "Media/music.hpp"
 #include "Players/players.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
 #include "System/settings.hpp"
 #include "Teams/CKTeam.hpp"
+#include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
+#include "Zones/zones.hpp"
+
+class Home;
 
 CannonKeep::CannonKeep() : Game(games::gCannonKeep)
 {
@@ -34,8 +41,8 @@ CannonKeep::CannonKeep() : Game(games::gCannonKeep)
 
     music::play();
 
-    Team * myTeamL = NULL;
-    Team * myTeamR = NULL;
+    Team * myTeamL = nullptr;
+    Team * myTeamR = nullptr;
 
     if (settings::C_playerIteamL)
     {

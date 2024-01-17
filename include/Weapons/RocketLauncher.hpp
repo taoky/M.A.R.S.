@@ -18,7 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef ROCKETLAUNCHER_HPP_INCLUDED
 #define ROCKETLAUNCHER_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Weapons/Weapon.hpp"
+#include "Weapons/weapons.hpp"
+
+class Ship;
 
 /// Weapon: ROCK'n'LOL.
 /// A rocket launcher which aims at nearby enemies.

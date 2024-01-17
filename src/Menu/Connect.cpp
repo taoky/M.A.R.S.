@@ -17,25 +17,30 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Menu/Connect.hpp"
 
+#include <SFML/System/String.hpp>
+
 #include "Interface/Button.hpp"
+#include "Interface/Label.hpp"
 #include "Interface/Line.hpp"
 #include "Interface/TextBox.hpp"
 #include "Interface/UiWindow.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-UiWindow * Connect::instance_(NULL);
+UiWindow * Connect::instance_(nullptr);
 bool Connect::kClose_(false);
 
-UiWindow * Connect::get()
+auto Connect::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new Connect(320, 180);
         instance_->addWidget(new Button(locales::getLocale(locales::Close),
-                                        NULL, &kClose_, Vector2f(220, 150), 90,
-                                        20));
+                                        nullptr, &kClose_, Vector2f(220, 150),
+                                        90, 20));
         instance_->addWidget(new Label(
             locales::getLocale(locales::StartNetworkGame), TEXT_ALIGN_LEFT,
             Vector2f(10, 10), 20.f, Color3f(1.f, 0.5f, 0.9f), false));
@@ -63,5 +68,5 @@ void Connect::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

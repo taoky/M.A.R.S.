@@ -31,7 +31,7 @@ class SpaceObject
     SpaceObject(spaceObjects::ObjectType type, Vector2f location, float radius,
                 float mass)
         : location_(location), radius_(radius), mass_(mass),
-          damageSource_(NULL), type_(type)
+          damageSource_(nullptr), type_(type)
     {
     }
 

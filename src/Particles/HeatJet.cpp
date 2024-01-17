@@ -17,9 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/HeatJet.hpp"
 
+#include <GL/gl.h>
+
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
-#include "System/settings.hpp"
 #include "System/timer.hpp"
+
+class Player;
+struct Color3f;
 
 std::list<std::shared_ptr<HeatJet>> HeatJet::activeParticles_;
 

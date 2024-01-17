@@ -17,9 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/AmmoFist.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Media/sound.hpp"
 #include "Players/Player.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
+
+struct Color3f;
 
 std::list<std::shared_ptr<AmmoFist>> AmmoFist::activeParticles_;
 

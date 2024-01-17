@@ -18,6 +18,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TEAM_HPP_INCLUDED
 #define TEAM_HPP_INCLUDED
 
+#include <map>
+#include <vector>
+
 #include "Controllers/controllers.hpp"
 #include "System/Color3f.hpp"
 #include "Teams/Job.hpp"
@@ -27,6 +30,9 @@ class Player;
 class Home;
 class BotController;
 class KeyController;
+class SpaceObject;
+class TacticalZone;
+class Zone;
 
 class Team
 {

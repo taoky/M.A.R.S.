@@ -17,15 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/Fist.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Games/games.hpp"
 #include "Media/sound.hpp"
 #include "Menu/menus.hpp"
 #include "Particles/particles.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 #include "Teams/Team.hpp"
-
-#include <SFML/Graphics.hpp>
 
 void Fist::draw(float alpha) const
 {
@@ -94,8 +98,8 @@ void Fist::fire() const
     }
 }
 
-float Fist::maxDistance() const { return 75.f; }
+auto Fist::maxDistance() const -> float { return 75.f; }
 
-float Fist::minDistance() const { return 0.f; }
+auto Fist::minDistance() const -> float { return 0.f; }
 
-float Fist::maxAngle() const { return 10.f; }
+auto Fist::maxAngle() const -> float { return 10.f; }

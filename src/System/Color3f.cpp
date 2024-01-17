@@ -17,29 +17,30 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "System/Color3f.hpp"
 
-#include "System/randomizer.hpp"
+#include <GL/gl.h>
+#include <algorithm>
+#include <cmath>
 
-#include <SFML/OpenGL.hpp>
+#include "System/randomizer.hpp"
 
 Color3f::Color3f() : r_(1), g_(1), b_(1) {}
 
 Color3f::Color3f(Color3f const & color)
-    : r_(color.r_), g_(color.g_), b_(color.b_)
-{
-}
+
+    = default;
 
 Color3f::Color3f(float red, float green, float blue)
     : r_(red), g_(green), b_(blue)
 {
 }
 
-float Color3f::r() const { return r_; }
+auto Color3f::r() const -> float { return r_; }
 
-float Color3f::g() const { return g_; }
+auto Color3f::g() const -> float { return g_; }
 
-float Color3f::b() const { return b_; }
+auto Color3f::b() const -> float { return b_; }
 
-float Color3f::h() const
+auto Color3f::h() const -> float
 {
     if (s() > 0)
     {
@@ -57,7 +58,7 @@ float Color3f::h() const
         return 0;
 }
 
-float Color3f::s() const
+auto Color3f::s() const -> float
 {
     if (v() == 0)
         return 0;
@@ -65,7 +66,7 @@ float Color3f::s() const
         return ((v() - std::min(std::min(r_, g_), b_)) / v());
 }
 
-float Color3f::v() const { return std::max(std::max(r_, g_), b_); }
+auto Color3f::v() const -> float { return std::max(std::max(r_, g_), b_); }
 
 // setters
 
@@ -170,7 +171,7 @@ void Color3f::setHSV(float hue, float saturation, float value)
     }
 }
 
-Color3f const Color3f::inverted() const
+auto Color3f::inverted() const -> Color3f const
 {
     Color3f inverted(*this);
     inverted.h(inverted.h() + 180.f);
@@ -179,7 +180,7 @@ Color3f const Color3f::inverted() const
     return inverted;
 }
 
-Color3f const Color3f::brightened() const
+auto Color3f::brightened() const -> Color3f const
 {
     Color3f brightened(*this);
     if (brightened.v() < 0.5f)
@@ -193,12 +194,12 @@ void Color3f::gl3f() const { glColor3f(r_, g_, b_); }
 
 void Color3f::gl4f(float alpha) const { glColor4f(r_, g_, b_, alpha); }
 
-sf::Color const Color3f::sfColor() const
+auto Color3f::sfColor() const -> sf::Color const
 {
     return sf::Color(r_ * 255, g_ * 255, b_ * 255);
 }
 
-Color3f const Color3f::random()
+auto Color3f::random() -> Color3f const
 {
     Color3f result(randomizer::random(0.0f, 1.0f),
                    randomizer::random(0.0f, 1.0f),
@@ -208,19 +209,19 @@ Color3f const Color3f::random()
     return result;
 }
 
-Color3f operator*(float const & lhs, Color3f rhs)
+auto operator*(float const & lhs, Color3f rhs) -> Color3f
 {
-    return Color3f(rhs.r() * lhs, rhs.g() * lhs, rhs.b() * lhs);
+    return {rhs.r() * lhs, rhs.g() * lhs, rhs.b() * lhs};
 }
 
-Color3f operator*(Color3f const & lhs, float rhs) { return rhs * lhs; }
+auto operator*(Color3f const & lhs, float rhs) -> Color3f { return rhs * lhs; }
 
-Color3f operator/(Color3f const & lhs, float rhs)
+auto operator/(Color3f const & lhs, float rhs) -> Color3f
 {
-    return Color3f(lhs.r() / rhs, lhs.g() / rhs, lhs.b() / rhs);
+    return {lhs.r() / rhs, lhs.g() / rhs, lhs.b() / rhs};
 }
 
-Color3f operator+(Color3f const & lhs, Color3f const & rhs)
+auto operator+(Color3f const & lhs, Color3f const & rhs) -> Color3f
 {
     Color3f result;
     result.r(lhs.r() + rhs.r());
@@ -229,7 +230,7 @@ Color3f operator+(Color3f const & lhs, Color3f const & rhs)
     return result;
 }
 
-Color3f operator-(Color3f const & lhs, Color3f const & rhs)
+auto operator-(Color3f const & lhs, Color3f const & rhs) -> Color3f
 {
     Color3f result;
     result.r(lhs.r() - rhs.r());

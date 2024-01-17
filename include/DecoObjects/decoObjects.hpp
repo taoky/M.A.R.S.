@@ -18,9 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef DECOOBJECTS_HPP_INCLUDED
 #define DECOOBJECTS_HPP_INCLUDED
 
+#include <memory>
+
 #include "System/Color3f.hpp"
 #include "System/Vector2f.hpp"
-#include <memory>
 
 class Planet;
 class Ship;
@@ -30,6 +31,8 @@ class Sun;
 class Bolt;
 class DecoObject;
 class SpaceObject;
+struct Color3f;
+struct Vector2f;
 
 /// A namespace which handles objects in the space, which can't be interacted
 /// with.

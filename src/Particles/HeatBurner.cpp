@@ -17,11 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/HeatBurner.hpp"
 
-#include "SpaceObjects/Ship.hpp"
-#include "SpaceObjects/balls.hpp"
-#include "SpaceObjects/ships.hpp"
+#include <GL/gl.h>
+
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
+
+class Player;
+struct Color3f;
 
 std::list<std::shared_ptr<HeatBurner>> HeatBurner::activeParticles_;
 

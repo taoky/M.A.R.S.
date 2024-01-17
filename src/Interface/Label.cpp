@@ -17,9 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/Label.hpp"
 
-#include "Media/text.hpp"
+#include <GL/gl.h>
+#include <SFML/System/String.hpp>
+#include <algorithm>
 
-#include <SFML/OpenGL.hpp>
+#include "Media/text.hpp"
+#include "System/Vector2f.hpp"
+
+namespace sf
+{
+class Font;
+} // namespace sf
 
 Label::Label(sf::String * text, int textAlign, Vector2f const & topLeft,
              float fontSize, Color3f color, bool interactive, sf::Font * font)

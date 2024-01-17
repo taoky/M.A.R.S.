@@ -17,10 +17,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "TrailEffects/Trail.hpp"
 
-#include "SpaceObjects/SpaceObject.hpp"
-
 Trail::Trail(SpaceObject * target) : target_(target) {}
 
-void Trail::detach() { target_ = NULL; }
+void Trail::detach() { target_ = nullptr; }
 
-SpaceObject * Trail::target() const { return target_; }
+auto Trail::target() const -> SpaceObject * { return target_; }

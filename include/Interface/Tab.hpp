@@ -18,15 +18,24 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TAB_HPP_INCLUDED
 #define TAB_HPP_INCLUDED
 
+#include <SFML/Config.hpp>
+#include <vector>
+
 #include "Interface/Label.hpp"
 #include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
+#include "System/Vector2f.hpp"
 
-#include <vector>
+class Label;
+namespace sf
+{
+class String;
+} // namespace sf
 
 class Tab : public UiElement
 {
   public:
-    Tab(sf::String * text, int width, bool * activated = NULL);
+    Tab(sf::String * text, int width, bool * activated = nullptr);
     ~Tab();
 
     void mouseMoved(Vector2f const & position);

@@ -24,14 +24,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define ENEMY_HOME 3
 #define ENEMY_TEAM 4
 
+#include <map>
+
 #include "System/Vector2f.hpp"
 #include "Zones/Zone.hpp"
-
-#include <map>
 
 class Team;
 class TacticalZone;
 class RasterZone;
+class SpaceObject;
+class Zone;
+struct Vector2f;
 
 /// A namespace which handles several zones for AI calculations.
 /// A Zone is an area in space which is useful for tactical

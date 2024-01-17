@@ -17,6 +17,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "DecoObjects/PlanetSign.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "SpaceObjects/Planet.hpp"
 #include "System/randomizer.hpp"
 

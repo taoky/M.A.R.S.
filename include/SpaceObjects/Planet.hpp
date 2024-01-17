@@ -18,7 +18,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef PLANET_HPP_INCLUDED
 #define PLANET_HPP_INCLUDED
 
+#include "Media/texture.hpp"
 #include "SpaceObjects/SpaceObject.hpp"
+#include "System/Color3f.hpp"
+
+struct Vector2f;
 
 class Planet : public SpaceObject
 {

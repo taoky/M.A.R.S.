@@ -18,9 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef MINIFLAME_HPP_INCLUDED
 #define MINIFLAME_HPP_INCLUDED
 
-#include "Particles/Particle.hpp"
+#include <list>
+#include <memory>
 
+#include "Particles/Particle.hpp"
 #include "System/Color3f.hpp"
+
+class Player;
+struct Vector2f;
 
 class MiniFlame : public Particle<MiniFlame>
 {

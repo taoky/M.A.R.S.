@@ -17,24 +17,26 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/ComboBox.hpp"
 
-#include "Interface/Button.hpp"
+#include <GL/gl.h>
+#include <algorithm>
+
 #include "Interface/DropDownWindow.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiWindow.hpp"
 #include "Interface/toolTip.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
 #include "Media/texture.hpp"
 #include "Menu/menus.hpp"
-#include "System/settings.hpp"
-#include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
-#include <iostream>
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
 ComboBox::ComboBox(sf::String * text, sf::String * toolTip, sf::String * value,
                    std::vector<sf::String> const & values,
                    Vector2f const & topLeft, int width, int labelWidth)
-    : UiElement(topLeft, width, 16), dropBox_(NULL), currentValue_(value),
+    : UiElement(topLeft, width, 16), dropBox_(nullptr), currentValue_(value),
       values_(values), labelWidth_(labelWidth), opened_(false),
       toolTip_(toolTip)
 {

@@ -17,11 +17,23 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Media/text.hpp"
 
+#include <SFML/Graphics/BlendMode.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/Text.hpp>
+
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
+#include "Media/font.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/window.hpp"
 
-#include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
+namespace sf
+{
+class Font;
+} // namespace sf
 
 namespace text
 {
@@ -98,8 +110,8 @@ void drawFooText()
     // Color3f(0.f, 0.f, 0.f));
 }
 
-float getCharacterPos(sf::String const & text, int pos, float size, int align,
-                      sf::Font * font)
+auto getCharacterPos(sf::String const & text, int pos, float size, int align,
+                     sf::Font * font) -> float
 {
     sf::Text drawString(text, font ? *font : *font::getFont(), size);
     float result = drawString.findCharacterPos(pos).x;

@@ -19,6 +19,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define SPACEOBJECTS_HPP_INCLUDED
 
 #include <memory>
+#include <vector>
+
 #define HOME_LEFT 0
 #define HOME_RIGHT 1
 #define HOME_MIDDLE 2
@@ -29,6 +31,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 class Home;
 class SpaceObject;
+struct Color3f;
+struct Vector2f;
 
 namespace spaceObjects
 {

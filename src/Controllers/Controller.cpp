@@ -17,10 +17,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Controllers/Controller.hpp"
 
-#include "Controllers/BotController.hpp"
-#include "Controllers/KeyController.hpp"
+#include <memory>
+#include <vector>
+
 #include "Items/items.hpp"
 #include "Players/Player.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "Specials/Special.hpp"
+#include "Weapons/Weapon.hpp"
 
 Controller::Controller(Player * slave) : type_(slave->type()), slave_(slave) {}
 
@@ -124,6 +128,6 @@ void Controller::slaveSpecial() const
     }
 }
 
-Ship * Controller::ship() const { return slave_->ship_; }
+auto Controller::ship() const -> Ship * { return slave_->ship_; }
 
-controllers::ControlType Controller::type() const { return type_; }
+auto Controller::type() const -> controllers::ControlType { return type_; }

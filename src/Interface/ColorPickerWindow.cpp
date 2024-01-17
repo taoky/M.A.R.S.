@@ -17,18 +17,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/ColorPickerWindow.hpp"
 
+#include <GL/gl.h>
+#include <SFML/Window/Mouse.hpp>
+
 #include "Interface/Button.hpp"
-#include "Interface/ColorPicker.hpp"
 #include "Locales/locales.hpp"
 #include "Media/texture.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/window.hpp"
 
-#include <SFML/OpenGL.hpp>
-
 ColorPickerWindow::ColorPickerWindow(ColorPicker * parent, Color3f * color)
-    : UiWindow(190, 185), Ok_(new Button(locales::getLocale(locales::Ok), NULL,
-                                         &kOk_, Vector2f(110, 155), 70, 20)),
+    : UiWindow(190, 185),
+      Ok_(new Button(locales::getLocale(locales::Ok), nullptr, &kOk_,
+                     Vector2f(110, 155), 70, 20)),
       kOk_(false), parent_(parent), color_(color)
 {
 

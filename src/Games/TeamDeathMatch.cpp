@@ -17,12 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/TeamDeathMatch.hpp"
 
+#include "Controllers/controllers.hpp"
+#include "Games/games.hpp"
 #include "Media/music.hpp"
 #include "Players/players.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
 #include "System/settings.hpp"
 #include "Teams/TDMTeam.hpp"
+#include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
+#include "Zones/zones.hpp"
+
+class Home;
 
 TeamDeathMatch::TeamDeathMatch() : Game(games::gTeamDeathMatch)
 {
@@ -32,8 +39,8 @@ TeamDeathMatch::TeamDeathMatch() : Game(games::gTeamDeathMatch)
 
     music::play();
 
-    Team * myTeamL = NULL;
-    Team * myTeamR = NULL;
+    Team * myTeamL = nullptr;
+    Team * myTeamR = nullptr;
 
     if (settings::C_playerIteamL)
     {

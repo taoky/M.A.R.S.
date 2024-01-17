@@ -18,9 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef LOCALES_HPP_INCLUDED
 #define LOCALES_HPP_INCLUDED
 
+#include <vector>
+
 #include "Locales/Locale.hpp"
 
-#include <vector>
+namespace sf
+{
+class String;
+} // namespace sf
+struct Locale;
 
 /// A namespace which handles translations for MARS.
 

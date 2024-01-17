@@ -18,11 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SHIP_HPP_INCLUDED
 #define SHIP_HPP_INCLUDED
 
-#include "DecoObjects/Ice.hpp"
+#include <memory>
+#include <vector>
+
 #include "SpaceObjects/MobileSpaceObject.hpp"
 #include "Specials/Special.hpp"
+#include "System/Vector2f.hpp"
 #include "Weapons/Weapon.hpp"
-#include <memory>
+
+class SpaceObject;
 
 #define ITEM_CANNON_CONTROL 0
 

@@ -17,12 +17,22 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Media/sound.hpp"
 
+#include <SFML/Audio/Listener.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <iostream>
+#include <memory>
+#include <stdlib.h>
+#include <string>
+#include <vector>
+
 #include "Games/games.hpp"
 #include "System/settings.hpp"
 
-#include <memory>
-
-#define CHANNELCOUNT 64
+enum
+{
+    CHANNELCOUNT = 64
+};
 
 namespace sound
 {
@@ -57,7 +67,7 @@ void playSound(SoundType sound, Vector2f const & position, float volume)
         if (!initialized_)
             init_();
         // check if sound is already loaded
-        if (sounds_[sound] != NULL)
+        if (sounds_[sound] != nullptr)
         {
             // if its already loaded search for free soundChannel_
             int i = 0;
@@ -202,7 +212,7 @@ void playSound(SoundType sound, Vector2f const & position, float volume)
                 std::cout << "COUNT is not a valid Soundtype..." << std::endl;
             }
             // ... play it afterwards
-            if (sounds_[sound] != NULL)
+            if (sounds_[sound] != nullptr)
                 playSound(sound, position, volume);
         }
     }

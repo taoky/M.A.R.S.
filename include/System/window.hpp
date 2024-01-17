@@ -18,11 +18,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef WINDOW_HPP_INCLUDED
 #define WINDOW_HPP_INCLUDED
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+
 #include "Media/music.hpp"
 #include "System/Key.hpp"
 #include "System/Vector2f.hpp"
 
-#include <SFML/Graphics.hpp>
+namespace sf
+{
+class Drawable;
+class Shader;
+} // namespace sf
 
 /// A namespace handling the main window of the game.
 
@@ -57,7 +64,7 @@ void startDrawHUD();
 
 /// Draws a SFML drawable in the window.
 void draw(sf::Drawable const & toBeDrawn, sf::RenderStates const & states,
-          sf::Shader * shader = NULL);
+          sf::Shader * shader = nullptr);
 
 int isKeyDown(Key const & key);
 

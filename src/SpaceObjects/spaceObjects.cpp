@@ -17,20 +17,29 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/spaceObjects.hpp"
 
+#include <algorithm>
+#include <atomic>
+#include <cmath>
+#include <float.h>
+#include <memory>
+#include <stdlib.h>
+#include <vector>
+
 #include "DecoObjects/decoObjects.hpp"
 #include "Items/CannonControl.hpp"
 #include "Items/items.hpp"
+#include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/BlackHole.hpp"
 #include "SpaceObjects/Home.hpp"
 #include "SpaceObjects/Planet.hpp"
 #include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/Sun.hpp"
 #include "SpaceObjects/balls.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "defines.hpp"
 
-#include <memory>
-#include <vector>
+struct Color3f;
 
 extern std::atomic_bool exiting;
 
@@ -44,7 +53,7 @@ namespace
 std::vector<std::unique_ptr<SpaceObject>> objectList_;
 std::vector<Home *> homeList_;
 
-Vector2f possiblePlanetLocation(int radius, float minDistance)
+auto possiblePlanetLocation(int radius, float minDistance) -> Vector2f
 {
     int tries(0);
     bool newPlanetFits(false);
@@ -60,9 +69,9 @@ Vector2f possiblePlanetLocation(int radius, float minDistance)
 
         // check for collisions with other objects
         newPlanetFits = true;
-        for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
-            if (((*it)->location() - position).lengthSquare() <
-                std::pow((*it)->radius() + radius + SPACEOBJECT_MIN_GAP, 2))
+        for (auto & it : objectList_)
+            if ((it->location() - position).lengthSquare() <
+                std::pow(it->radius() + radius + SPACEOBJECT_MIN_GAP, 2))
                 newPlanetFits = false;
         // check for collisions with balls
         auto ball = balls::getBall();
@@ -84,23 +93,23 @@ Vector2f possiblePlanetLocation(int radius, float minDistance)
         if (newPlanetFits)
             return position;
     }
-    return Vector2f(0, 0);
+    return {0, 0};
 }
 } // namespace
 
 void update()
 {
-    for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
+    for (auto & it : objectList_)
     {
-        (*it)->update();
+        it->update();
     }
 }
 
 void draw()
 {
-    for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
+    for (auto & it : objectList_)
     {
-        (*it)->draw();
+        it->draw();
     }
 }
 
@@ -141,7 +150,7 @@ void addBlackHole()
             std::unique_ptr<SpaceObject>(new BlackHole(position, radius)));
 }
 
-Home * addHome(int where, int life, Color3f const & color)
+auto addHome(int where, int life, Color3f const & color) -> Home *
 {
     Vector2f position;
     float radius(100.f);
@@ -167,8 +176,8 @@ Home * addHome(int where, int life, Color3f const & color)
     return addHome(position, life, color, radius, mass);
 }
 
-Home * addHome(Vector2f const & location, int life, Color3f const & color,
-               float radius, float mass)
+auto addHome(Vector2f const & location, int life, Color3f const & color,
+             float radius, float mass) -> Home *
 {
     Home * home = new Home(location, life, radius, mass, color);
     objectList_.push_back(std::unique_ptr<SpaceObject>(home));
@@ -176,51 +185,51 @@ Home * addHome(Vector2f const & location, int life, Color3f const & color,
     return home;
 }
 
-std::vector<Home *> const & getHomes() { return homeList_; }
+auto getHomes() -> std::vector<Home *> const & { return homeList_; }
 
-std::vector<std::unique_ptr<SpaceObject>> const & getObjects()
+auto getObjects() -> std::vector<std::unique_ptr<SpaceObject>> const &
 {
     return objectList_;
 }
 
-SpaceObject const * getObstacle(Vector2f const & start, Vector2f const & end,
-                                bool avoidBall, float minDistance)
+auto getObstacle(Vector2f const & start, Vector2f const & end, bool avoidBall,
+                 float minDistance) -> SpaceObject const *
 {
-    SpaceObject const * closest(NULL);
+    SpaceObject const * closest(nullptr);
     float closestDistance = FLT_MAX;
 
-    for (auto it = objectList_.begin(); it != objectList_.end(); ++it)
+    for (auto & it : objectList_)
     {
-        if ((*it)->type() != oBlackHole)
+        if (it->type() != oBlackHole)
         {
-            float checkRadius = (*it)->radius();
+            float checkRadius = it->radius();
             // increase radius, when start and end aren't close to object
-            if ((start - (*it)->location()).lengthSquare() >
-                    std::pow((*it)->radius() + minDistance, 2) &&
-                (end - (*it)->location()).lengthSquare() >
-                    std::pow((*it)->radius() + minDistance, 2))
+            if ((start - it->location()).lengthSquare() >
+                    std::pow(it->radius() + minDistance, 2) &&
+                (end - it->location()).lengthSquare() >
+                    std::pow(it->radius() + minDistance, 2))
                 checkRadius += minDistance;
 
-            if (((end - start) * ((*it)->location() - start) > 0 &&
-                 (std::pow(((end - start) * ((*it)->location() - start)) /
+            if (((end - start) * (it->location() - start) > 0 &&
+                 (std::pow(((end - start) * (it->location() - start)) /
                                (end - start).lengthSquare(),
                            2) -
-                  (((*it)->location() - start).lengthSquare() -
+                  ((it->location() - start).lengthSquare() -
                    std::pow(checkRadius, 2)) /
                       (end - start).lengthSquare()) > 0))
             {
                 // check if object is in between or endpoint inside of obstacle
-                if ((end - start) * (end - (*it)->location()) >= 0.f ||
-                    (end - (*it)->location()).lengthSquare() <
-                        std::pow((*it)->radius(), 2))
+                if ((end - start) * (end - it->location()) >= 0.f ||
+                    (end - it->location()).lengthSquare() <
+                        std::pow(it->radius(), 2))
                 {
                     // hacky... should check for distańce to impactlocation, but
                     // does not...
-                    float distance = (start - (*it)->location()).lengthSquare();
+                    float distance = (start - it->location()).lengthSquare();
                     if (distance < closestDistance)
                     {
                         closestDistance = distance;
-                        closest = it->get();
+                        closest = it.get();
                     }
                 }
             }
@@ -264,8 +273,8 @@ SpaceObject const * getObstacle(Vector2f const & start, Vector2f const & end,
     return closest;
 }
 
-bool isOnLine(Vector2f const & source, Vector2f const & direction,
-              Vector2f const & target, float maxAngle)
+auto isOnLine(Vector2f const & source, Vector2f const & direction,
+              Vector2f const & target, float maxAngle) -> bool
 {
     return std::acos(direction.normalize() * (target - source).normalize()) <
            maxAngle * M_PI / 360;

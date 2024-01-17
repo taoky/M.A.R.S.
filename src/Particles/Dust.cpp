@@ -17,9 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/Dust.hpp"
 
+#include <GL/gl.h>
+
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<Dust>> Dust::activeParticles_;
 
@@ -69,16 +75,16 @@ void Dust::draw() const
 
 void Dust::shockWave(Vector2f const & location, float strength, float radius)
 {
-    for (auto it = activeParticles_.begin(); it != activeParticles_.end(); ++it)
+    for (auto & activeParticle : activeParticles_)
     {
-        Vector2f direction((*it)->location_ - location);
+        Vector2f direction(activeParticle->location_ - location);
         float distance = direction.length();
         if (distance < radius && direction != Vector2f())
         {
             float intensity = radius - distance;
             direction = direction.normalize();
             direction *= intensity;
-            (*it)->velocity_ += direction;
+            activeParticle->velocity_ += direction;
         }
     }
 }

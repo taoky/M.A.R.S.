@@ -17,21 +17,28 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/Ball.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Media/sound.hpp"
+#include "Media/texture.hpp"
 #include "Particles/particles.hpp"
 #include "Players/Player.hpp"
 #include "Shaders/postFX.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "defines.hpp"
-
-#include <cmath>
 
 Ball::Ball(Vector2f const & location)
     : MobileSpaceObject(spaceObjects::oBall, location, 15.f, 7.f), rotation_(0),
       rotateSpeed_(0.f), frozen_(0.f), sticky_(true), visible_(true),
       respawnLocation_(location), respawnRotation_(0), heatTimer_(0.f),
-      smokeTimer_(0.f), respawnTimer_(0.f), lastShooter_(NULL)
+      smokeTimer_(0.f), respawnTimer_(0.f), lastShooter_(nullptr)
 {
     physics::addMobileObject(this);
 }
@@ -202,7 +209,7 @@ void Ball::onCollision(SpaceObject * with, Vector2f const & location,
 
     setDamageSource(with->damageSource());
     // If it is a player that shot or hit the ball
-    if (damageSource() != NULL)
+    if (damageSource() != nullptr)
         lastShooter_ = damageSource();
 
     float unfreeze(0);

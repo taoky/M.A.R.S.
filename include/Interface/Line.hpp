@@ -19,6 +19,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define LINE_HPP_INCLUDED
 
 #include "Interface/UiElement.hpp"
+#include "System/Vector2f.hpp"
 
 class Line : public UiElement
 {

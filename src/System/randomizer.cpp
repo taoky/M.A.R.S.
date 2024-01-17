@@ -18,14 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "System/randomizer.hpp"
 
-#include <chrono>
+#include <bits/chrono.h>
 #include <random>
 
 namespace
 {
 auto r = std::default_random_engine{};
 
-unsigned int InitializeSeed()
+auto InitializeSeed() -> unsigned int
 {
     auto seed = std::chrono::system_clock::now().time_since_epoch().count();
     randomizer::setSeed(seed);
@@ -41,14 +41,14 @@ void randomizer::setSeed(unsigned int seed)
     globalSeed = seed;
 }
 
-unsigned int randomizer::getSeed() { return globalSeed; }
+auto randomizer::getSeed() -> unsigned int { return globalSeed; }
 
-float randomizer::random(float begin, float end)
+auto randomizer::random(float begin, float end) -> float
 {
     return std::uniform_real_distribution<float>(begin, end)(r);
 }
 
-int randomizer::random(int begin, int end)
+auto randomizer::random(int begin, int end) -> int
 {
     return std::uniform_int_distribution<>(begin, end)(r);
 }

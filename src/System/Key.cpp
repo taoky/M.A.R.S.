@@ -17,7 +17,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "System/Key.hpp"
 
-#include "System/window.hpp"
+#include <bits/std_abs.h>
+#include <istream>
+#include <stdlib.h>
 
 Key::Key(sf::Keyboard::Key code)
     : type_(kKeyBoard), navi_(nNone), strength_(100), joyID_(0)
@@ -104,8 +106,8 @@ Key::Key(unsigned int joyID, unsigned int joyButton)
         navi_ = nDown;
 }
 
-std::pair<Key::AxisType, int> Key::convertFromSFML(sf::Joystick::Axis joyAxis,
-                                                   int strength)
+auto Key::convertFromSFML(sf::Joystick::Axis joyAxis, int strength)
+    -> std::pair<Key::AxisType, int>
 {
     std::pair<AxisType, int> result;
     result.second = std::abs(strength);
@@ -185,7 +187,7 @@ std::pair<Key::AxisType, int> Key::convertFromSFML(sf::Joystick::Axis joyAxis,
     return result;
 }
 
-sf::Joystick::Axis Key::convertToSFML(AxisType joyAxis)
+auto Key::convertToSFML(AxisType joyAxis) -> sf::Joystick::Axis
 {
     if (joyAxis == aALleft || joyAxis == aALright)
         return sf::Joystick::X;
@@ -213,7 +215,7 @@ sf::Joystick::Axis Key::convertToSFML(AxisType joyAxis)
         return sf::Joystick::PovX;
 }
 
-bool operator==(Key const & lhs, Key const & rhs)
+auto operator==(Key const & lhs, Key const & rhs) -> bool
 {
     if (lhs.type_ == rhs.type_)
     {
@@ -232,7 +234,7 @@ bool operator==(Key const & lhs, Key const & rhs)
     return false;
 }
 
-std::ostream & operator<<(std::ostream & stream, Key const & input)
+auto operator<<(std::ostream & stream, Key const & input) -> std::ostream &
 {
     stream << input.type_ << " " << input.code_.joyButton_;
     if (input.type_ != Key::kKeyBoard)
@@ -240,7 +242,7 @@ std::ostream & operator<<(std::ostream & stream, Key const & input)
     return stream;
 }
 
-std::istream & operator>>(std::istream & stream, Key & output)
+auto operator>>(std::istream & stream, Key & output) -> std::istream &
 {
     int type(0), joyButton(0);
     stream >> type >> joyButton;

@@ -17,6 +17,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Media/music.hpp"
 
+#include <SFML/Audio/Listener.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <algorithm>
+#include <dirent.h>
+#include <iostream>
+#include <vector>
+
 #include "Games/games.hpp"
 #include "Hud/hud.hpp"
 #include "Hud/musicNotify.hpp"
@@ -26,9 +33,6 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/timer.hpp"
 #include "System/window.hpp"
 #include "defines.hpp"
-
-#include <dirent.h>
-#include <sys/types.h>
 
 namespace music
 {
@@ -49,13 +53,13 @@ void init()
     DIR * dp;
     struct dirent * dirp;
     if ((dp = opendir((settings::C_dataPath + "/audio/music/").c_str())) ==
-        NULL)
+        nullptr)
     {
         std::cout << "Error opening " << settings::C_dataPath << "/audio/music/"
                   << std::endl;
     }
 
-    while ((dirp = readdir(dp)) != NULL)
+    while ((dirp = readdir(dp)) != nullptr)
     {
         std::string file(dirp->d_name);
         if (file.size() > 0 && file[0] != '.')

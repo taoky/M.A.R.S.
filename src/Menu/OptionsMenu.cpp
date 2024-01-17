@@ -17,16 +17,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Menu/OptionsMenu.hpp"
 
+#include <SFML/System/String.hpp>
+#include <SFML/Window/VideoMode.hpp>
+#include <algorithm>
+#include <sstream>
+#include <string>
+#include <vector>
+
 #include "Interface/Button.hpp"
 #include "Interface/Checkbox.hpp"
 #include "Interface/ColorPicker.hpp"
 #include "Interface/ComboBox.hpp"
 #include "Interface/KeyEdit.hpp"
+#include "Interface/Label.hpp"
 #include "Interface/LabeledBox.hpp"
 #include "Interface/LanguageButton.hpp"
-#include "Interface/Line.hpp"
-#include "Interface/RadioButton.hpp"
-#include "Interface/RadioGroup.hpp"
 #include "Interface/ShipPreview.hpp"
 #include "Interface/Slider.hpp"
 #include "Interface/Tab.hpp"
@@ -35,29 +40,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Interface/UiWindow.hpp"
 #include "Locales/locales.hpp"
 #include "Media/music.hpp"
-#include "Media/sound.hpp"
 #include "Media/text.hpp"
-#include "Menu/About.hpp"
-#include "Menu/ChooseLanguage.hpp"
-#include "Menu/Connect.hpp"
-#include "Menu/InfoCK.hpp"
-#include "Menu/InfoDM.hpp"
-#include "Menu/InfoHide.hpp"
-#include "Menu/InfoSB.hpp"
-#include "Menu/InfoTDM.hpp"
 #include "Menu/ShaderError.hpp"
 #include "Menu/menus.hpp"
 #include "Particles/Star.hpp"
 #include "Shaders/postFX.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/generateName.hpp"
 #include "System/settings.hpp"
 #include "System/window.hpp"
 #include "defines.hpp"
 
-#include <SFML/Window.hpp>
-#include <sstream>
-
-UiWindow * OptionsMenu::instance_(NULL);
+UiWindow * OptionsMenu::instance_(nullptr);
 bool OptionsMenu::kOk_(false);
 bool OptionsMenu::fullscreen_(false);
 bool OptionsMenu::vsync_(false);
@@ -70,19 +65,20 @@ int OptionsMenu::soundVolume_(0);
 int OptionsMenu::musicVolume_(0);
 int OptionsMenu::announcerVolume_(0);
 
-UiWindow * OptionsMenu::get()
+auto OptionsMenu::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new OptionsMenu(600, 390);
 
-        instance_->addWidget(new Button(locales::getLocale(locales::Ok), NULL,
-                                        &kOk_, Vector2f(500, 360), 90, 20));
+        instance_->addWidget(new Button(locales::getLocale(locales::Ok),
+                                        nullptr, &kOk_, Vector2f(500, 360), 90,
+                                        20));
         instance_->addWidget(new Label(locales::getLocale(locales::Options),
                                        TEXT_ALIGN_LEFT, Vector2f(10, 10), 20.f,
                                        Color3f(1.f, 0.5f, 0.9f), false));
 
-        TabList * tabList = new TabList(Vector2f(10, 55), 580, 270);
+        auto * tabList = new TabList(Vector2f(10, 55), 580, 270);
         Tab * tabInterface =
             new Tab(locales::getLocale(locales::Interface), 90);
         Tab * tabGameplay = new Tab(locales::getLocale(locales::Gameplay), 90);
@@ -97,11 +93,11 @@ UiWindow * OptionsMenu::get()
         tabInterface->addWidget(new LanguageButton(
             locales::getLocale(locales::Language), Vector2f(20, 60), 540, 240));
         std::vector<sf::String> fileFormats;
-        fileFormats.push_back("BITMAP (*.bmp)");
-        fileFormats.push_back("GIF (*.gif)");
-        fileFormats.push_back("JPEG (*.jpg)");
-        fileFormats.push_back("PNG(*.png)");
-        fileFormats.push_back("TARGA (*.tga)");
+        fileFormats.emplace_back("BITMAP (*.bmp)");
+        fileFormats.emplace_back("GIF (*.gif)");
+        fileFormats.emplace_back("JPEG (*.jpg)");
+        fileFormats.emplace_back("PNG(*.png)");
+        fileFormats.emplace_back("TARGA (*.tga)");
         tabInterface->addWidget(
             new ComboBox(locales::getLocale(locales::ScreenShotFormat),
                          locales::getLocale(locales::ttScreenShotFormat),
@@ -148,29 +144,26 @@ UiWindow * OptionsMenu::get()
         std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
         std::vector<sf::String> resolutions;
         std::vector<sf::String> colorDepths;
-        for (std::vector<sf::VideoMode>::iterator it = modes.begin();
-             it != modes.end(); ++it)
+        for (auto & mode : modes)
         {
-            if (it->width >= 800 && it->bitsPerPixel >= 8)
+            if (mode.width >= 800 && mode.bitsPerPixel >= 8)
             {
                 std::stringstream res, depth;
-                res << it->width << " x " << it->height;
-                depth << it->bitsPerPixel;
+                res << mode.width << " x " << mode.height;
+                depth << mode.bitsPerPixel;
                 sf::String resString(res.str()), depthString(depth.str());
 
                 bool newDepth(true), newRes(true);
-                for (std::vector<sf::String>::iterator it = resolutions.begin();
-                     it != resolutions.end(); ++it)
-                    if (*it == resString)
+                for (auto & resolution : resolutions)
+                    if (resolution == resString)
                         newRes = false;
-                for (std::vector<sf::String>::iterator it = colorDepths.begin();
-                     it != colorDepths.end(); ++it)
-                    if (*it == depthString)
+                for (auto & colorDepth : colorDepths)
+                    if (colorDepth == depthString)
                         newDepth = false;
                 if (newRes)
-                    resolutions.push_back(res.str());
+                    resolutions.emplace_back(res.str());
                 if (newDepth)
-                    colorDepths.push_back(depth.str());
+                    colorDepths.emplace_back(depth.str());
             }
         }
         std::vector<sf::String> off;
@@ -264,19 +257,19 @@ UiWindow * OptionsMenu::get()
             locales::getLocale(locales::Name), &settings::C_playerIName,
             "PlayerI", Vector2f(20, 30), 540, 240, TEXT_EDIT, 12));
         tabPlayer1->addWidget(
-            new KeyEdit(locales::getLocale(locales::Accelerate), NULL,
+            new KeyEdit(locales::getLocale(locales::Accelerate), nullptr,
                         &settings::C_playerIup, Vector2f(20, 50), 540, 240));
         tabPlayer1->addWidget(new KeyEdit(locales::getLocale(locales::TurnLeft),
-                                          NULL, &settings::C_playerIleft,
+                                          nullptr, &settings::C_playerIleft,
                                           Vector2f(20, 70), 540, 240));
         tabPlayer1->addWidget(
-            new KeyEdit(locales::getLocale(locales::TurnRight), NULL,
+            new KeyEdit(locales::getLocale(locales::TurnRight), nullptr,
                         &settings::C_playerIright, Vector2f(20, 90), 540, 240));
         tabPlayer1->addWidget(new KeyEdit(locales::getLocale(locales::Fire),
-                                          NULL, &settings::C_playerIfire,
+                                          nullptr, &settings::C_playerIfire,
                                           Vector2f(20, 110), 540, 240));
         tabPlayer1->addWidget(new KeyEdit(
-            locales::getLocale(locales::SpecialKey), NULL,
+            locales::getLocale(locales::SpecialKey), nullptr,
             &settings::C_playerISpecialKey, Vector2f(20, 130), 540, 240));
         tabPlayer1->addWidget(
             new LabeledBox(locales::getLocale(locales::ShipSettings),
@@ -285,7 +278,7 @@ UiWindow * OptionsMenu::get()
             &settings::C_playerIColor, &settings::C_playerITeamColor,
             &settings::C_playerIShip, Vector2f(510, 210)));
         tabPlayer1->addWidget(new Slider(
-            locales::getLocale(locales::ShipName), NULL,
+            locales::getLocale(locales::ShipName), nullptr,
             &settings::C_playerIShip, 0, SHIP_GRAPHICS_COUNT, 1,
             Vector2f(20, 200), 410, 240, true, generateName::shipNames()));
         tabPlayer1->addWidget(new ColorPicker(
@@ -299,19 +292,19 @@ UiWindow * OptionsMenu::get()
             locales::getLocale(locales::Name), &settings::C_playerIIName,
             "PlayerII", Vector2f(20, 30), 540, 240, TEXT_EDIT, 12));
         tabPlayer2->addWidget(
-            new KeyEdit(locales::getLocale(locales::Accelerate), NULL,
+            new KeyEdit(locales::getLocale(locales::Accelerate), nullptr,
                         &settings::C_playerIIup, Vector2f(20, 50), 540, 240));
         tabPlayer2->addWidget(new KeyEdit(locales::getLocale(locales::TurnLeft),
-                                          NULL, &settings::C_playerIIleft,
+                                          nullptr, &settings::C_playerIIleft,
                                           Vector2f(20, 70), 540, 240));
         tabPlayer2->addWidget(new KeyEdit(
-            locales::getLocale(locales::TurnRight), NULL,
+            locales::getLocale(locales::TurnRight), nullptr,
             &settings::C_playerIIright, Vector2f(20, 90), 540, 240));
         tabPlayer2->addWidget(new KeyEdit(locales::getLocale(locales::Fire),
-                                          NULL, &settings::C_playerIIfire,
+                                          nullptr, &settings::C_playerIIfire,
                                           Vector2f(20, 110), 540, 240));
         tabPlayer2->addWidget(new KeyEdit(
-            locales::getLocale(locales::SpecialKey), NULL,
+            locales::getLocale(locales::SpecialKey), nullptr,
             &settings::C_playerIISpecialKey, Vector2f(20, 130), 540, 240));
         tabPlayer2->addWidget(
             new LabeledBox(locales::getLocale(locales::ShipSettings),
@@ -320,7 +313,7 @@ UiWindow * OptionsMenu::get()
             &settings::C_playerIIColor, &settings::C_playerIITeamColor,
             &settings::C_playerIIShip, Vector2f(510, 210)));
         tabPlayer2->addWidget(new Slider(
-            locales::getLocale(locales::ShipName), NULL,
+            locales::getLocale(locales::ShipName), nullptr,
             &settings::C_playerIIShip, 0, SHIP_GRAPHICS_COUNT, 1,
             Vector2f(20, 200), 410, 240, true, generateName::shipNames()));
         tabPlayer2->addWidget(new ColorPicker(
@@ -465,5 +458,5 @@ void OptionsMenu::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

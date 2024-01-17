@@ -18,7 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef H2OMG_HPP_INCLUDED
 #define H2OMG_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Weapons/Weapon.hpp"
+#include "Weapons/weapons.hpp"
+
+class Ship;
 
 /// Weapon: H2OMG.
 /// A long distance gun, which fires some icy cubes.

@@ -17,32 +17,37 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/Ship.hpp"
 
-#include "Controllers/Controller.hpp"
+#include <GL/gl.h>
+#include <algorithm>
+#include <bits/std_abs.h>
+#include <cmath>
+#include <memory>
+
+#include "Controllers/controllers.hpp"
 #include "DecoObjects/decoObjects.hpp"
 #include "Games/games.hpp"
-#include "Hud/hud.hpp"
 #include "Items/items.hpp"
 #include "Media/announcer.hpp"
 #include "Media/sound.hpp"
-#include "Media/text.hpp"
 #include "Particles/particles.hpp"
 #include "Players/LocalPlayer.hpp"
 #include "Players/Player.hpp"
+#include "Players/players.hpp"
 #include "Shaders/postFX.hpp"
 #include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
 #include "Specials/Special.hpp"
 #include "Specials/specials.hpp"
+#include "System/Color3f.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "Teams/Team.hpp"
 #include "Weapons/weapons.hpp"
 #include "defines.hpp"
-
-#include <cmath>
-#include <memory>
-#include <sstream>
 
 Ship::Ship(Vector2f const & location, float rotation, Player * owner)
     : MobileSpaceObject(spaceObjects::oShip, location, SHIP_RADIUS, 10.f),
@@ -54,7 +59,7 @@ Ship::Ship(Vector2f const & location, float rotation, Player * owner)
       currentWeapon_(std::unique_ptr<Weapon>(nullptr)),
       currentSpecial_(std::unique_ptr<Special>(nullptr)), life_(200.f),
       maxLife_(life_), fuel_(100.f), maxFuel_(fuel_),
-      collectedPowerUps_(items::COUNT, NULL), fragStars_(0),
+      collectedPowerUps_(items::COUNT, nullptr), fragStars_(0),
       damageByLocalPlayer_(0.f), damageCheckTimer_(0.f),
       damageDirection_(0.f, 0.f), collisionCount_(0)
 {
@@ -611,8 +616,7 @@ void Ship::onCollision(SpaceObject * with, Vector2f const & location,
 
             Vector2f direction;
 
-            MobileSpaceObject * target =
-                dynamic_cast<MobileSpaceObject *>(with);
+            auto * target = dynamic_cast<MobileSpaceObject *>(with);
             if (target)
                 direction = target->velocity();
 
@@ -662,8 +666,8 @@ void Ship::setDamageSource(Player * evilOne)
 void Ship::drainLife(Player * source, float amount, Vector2f const & direction,
                      float waitForOtherDamage)
 {
-    if (dynamic_cast<LocalPlayer *>(source) != NULL ||
-        dynamic_cast<LocalPlayer *>(owner_) != NULL)
+    if (dynamic_cast<LocalPlayer *>(source) != nullptr ||
+        dynamic_cast<LocalPlayer *>(owner_) != nullptr)
     {
         if (damageCheckTimer_ <= 0.f)
             damageCheckTimer_ = waitForOtherDamage;
@@ -703,19 +707,19 @@ void Ship::refuel(Player * source, int amount)
     (fuel_ + fuelAmount) > maxFuel_ ? fuel_ = maxFuel_ : fuel_ += fuelAmount;
 }
 
-float Ship::getLife() const
+auto Ship::getLife() const -> float
 {
     return life_ < 0.f ? 0.f : life_ / maxLife_ * 100.f;
 }
 
-float Ship::getFuel() const
+auto Ship::getFuel() const -> float
 {
     return fuel_ < 0.f ? 0.f : fuel_ / maxFuel_ * 100.f;
 }
 
-Player * Ship::getOwner() const { return owner_; }
+auto Ship::getOwner() const -> Player * { return owner_; }
 
-std::vector<PowerUp *> const & Ship::getCollectedPowerUps() const
+auto Ship::getCollectedPowerUps() const -> std::vector<PowerUp *> const &
 {
     return collectedPowerUps_;
 }
@@ -807,11 +811,11 @@ void Ship::respawn()
     sound::playSound(sound::ShipRespawn, location_, 100.f);
 }
 
-float Ship::rotation() const { return rotation_; }
+auto Ship::rotation() const -> float { return rotation_; }
 
-bool Ship::collidable() const { return visible_ && ghostTimer_ <= 0.f; }
+auto Ship::collidable() const -> bool { return visible_ && ghostTimer_ <= 0.f; }
 
-bool Ship::attackable() const
+auto Ship::attackable() const -> bool
 {
     return collidable() && frozen_ <= 0 && !collectedPowerUps_[items::puShield];
 }

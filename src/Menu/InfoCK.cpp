@@ -17,27 +17,32 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Menu/InfoCK.hpp"
 
+#include <SFML/System/String.hpp>
+
 #include "Interface/Button.hpp"
 #include "Interface/Checkbox.hpp"
+#include "Interface/Label.hpp"
 #include "Interface/Line.hpp"
 #include "Interface/TextBox.hpp"
 #include "Interface/UiWindow.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 
-UiWindow * InfoCK::instance_(NULL);
+UiWindow * InfoCK::instance_(nullptr);
 bool InfoCK::kClose_(false);
 
-UiWindow * InfoCK::get()
+auto InfoCK::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new InfoCK(320, 300);
         instance_->addWidget(new Button(locales::getLocale(locales::Close),
-                                        NULL, &kClose_, Vector2f(220, 270), 90,
-                                        20));
+                                        nullptr, &kClose_, Vector2f(220, 270),
+                                        90, 20));
         instance_->addWidget(new Label(new sf::String("CannonKeep"),
                                        TEXT_ALIGN_LEFT, Vector2f(10, 10), 20.f,
                                        Color3f(1.f, 0.5f, 0.9f), false));
@@ -51,7 +56,7 @@ UiWindow * InfoCK::get()
         instance_->addWidget(new TextBox(locales::getLocale(locales::InfoCK),
                                          Vector2f(10, 80), 300, 160));
         instance_->addWidget(
-            new Checkbox(locales::getLocale(locales::ShowAgainButton), NULL,
+            new Checkbox(locales::getLocale(locales::ShowAgainButton), nullptr,
                          &settings::C_showInfoCK, Vector2f(10, 270), 170));
     }
     return instance_;
@@ -73,5 +78,5 @@ void InfoCK::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

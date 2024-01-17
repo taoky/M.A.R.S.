@@ -18,10 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef KEYCONTROLLER_HPP_INCLUDED
 #define KEYCONTROLLER_HPP_INCLUDED
 
+#include <SFML/Window.hpp>
+
 #include "Controllers/Controller.hpp"
 #include "System/Key.hpp"
 
-#include <SFML/Window.hpp>
+class Player;
 
 /// A Controller which updates it's associated Ship based on keyboard events.
 /// Used for local players.

@@ -17,11 +17,38 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "System/window.hpp"
 
+#include <GL/gl.h>
+#include <SFML/Graphics/BlendMode.hpp>
+#include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Shader.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/View.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/String.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Joystick.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/VideoMode.hpp>
+#include <SFML/Window/WindowStyle.hpp>
+#include <ctime>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <sys/stat.h>
+#include <utility>
+
 #include "Controllers/controllers.hpp"
 #include "Games/games.hpp"
 #include "Hud/hud.hpp"
 #include "Locales/locales.hpp"
-#include "Media/texture.hpp"
+#include "Media/music.hpp"
 #include "Menu/menus.hpp"
 #include "Shaders/postFX.hpp"
 #include "SpaceObjects/stars.hpp"
@@ -30,11 +57,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/timer.hpp"
 #include "defines.hpp"
 
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/OpenGL.hpp>
-#include <sstream>
-#include <sys/stat.h>
-#include <time.h>
+namespace sf
+{
+class Drawable;
+} // namespace sf
 
 #if defined(__WIN32__) || defined(_WIN32)
 #include <windows.h>
@@ -213,7 +239,7 @@ void display()
 
 // "public" methodes /////////////////////////////////////////////////
 
-bool open()
+auto open() -> bool
 {
     if (settings::load() && locales::load())
     {
@@ -376,7 +402,7 @@ void draw(sf::Drawable const & toBeDrawn, sf::RenderStates const & states,
 
     if (shader)
     {
-        sf::Shader::bind(NULL);
+        sf::Shader::bind(nullptr);
     }
 
     window_.popGLStates();
@@ -384,7 +410,7 @@ void draw(sf::Drawable const & toBeDrawn, sf::RenderStates const & states,
     glPopAttrib();
 }
 
-int isKeyDown(Key const & key)
+auto isKeyDown(Key const & key) -> int
 {
     switch (key.type_)
     {
@@ -409,7 +435,7 @@ int isKeyDown(Key const & key)
     return 0;
 }
 
-Vector2f const getMousePosition()
+auto getMousePosition() -> Vector2f const
 {
     return Vector2f(sf::Mouse::getPosition(window_).x,
                     sf::Mouse::getPosition(window_).y);
@@ -478,7 +504,7 @@ void screenShot()
 #endif
 
 #if defined(__WIN32__) || defined(_WIN32)
-    CreateDirectory((settings::C_configPath + "screenshots/").c_str(), NULL);
+    CreateDirectory((settings::C_configPath + "screenshots/").c_str(), nullptr);
     if (shot.saveToFile(settings::C_configPath + "screenshots/" +
                         filename.str()))
     {
@@ -496,16 +522,16 @@ void screenShot()
 
 void showCursor(bool show) { window_.setMouseCursorVisible(show); }
 
-Vector2f const coordToPixel(Vector2f const & spaceCoord)
+auto coordToPixel(Vector2f const & spaceCoord) -> Vector2f const
 {
     return spaceCoord * scale_;
 }
 
-Vector2f const PixelToCoord(Vector2f const & screenCoord)
+auto PixelToCoord(Vector2f const & screenCoord) -> Vector2f const
 {
     return Vector2f(screenCoord.x_ - (window_.getSize().x - viewPort_.x_) / 2,
                     screenCoord.y_ - (window_.getSize().y - viewPort_.y_) / 2);
 }
 
-Vector2f const & getViewPort() { return viewPort_; }
+auto getViewPort() -> Vector2f const & { return viewPort_; }
 } // namespace window

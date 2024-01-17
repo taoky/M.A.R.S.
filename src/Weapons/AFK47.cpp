@@ -17,13 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/AFK47.hpp"
 
+#include <GL/gl.h>
+#include <cfloat>
+#include <cmath>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
-
-#include <SFML/Graphics.hpp>
-#include <cfloat>
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 void AFK47::draw(float alpha) const
 {
@@ -82,8 +86,8 @@ void AFK47::fire() const
     }
 }
 
-float AFK47::maxDistance() const { return FLT_MAX; }
+auto AFK47::maxDistance() const -> float { return FLT_MAX; }
 
-float AFK47::minDistance() const { return 0.f; }
+auto AFK47::minDistance() const -> float { return 0.f; }
 
-float AFK47::maxAngle() const { return 10.f; }
+auto AFK47::maxAngle() const -> float { return 10.f; }

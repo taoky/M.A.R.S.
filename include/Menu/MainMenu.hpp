@@ -20,6 +20,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/UiWindow.hpp"
 
+struct Vector2f;
+
 class MainMenu : public UiWindow
 {
   public:

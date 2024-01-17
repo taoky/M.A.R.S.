@@ -17,13 +17,20 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/SpaceBall.hpp"
 
+#include "Controllers/controllers.hpp"
+#include "Games/games.hpp"
 #include "Media/music.hpp"
 #include "Players/players.hpp"
 #include "SpaceObjects/balls.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
 #include "System/settings.hpp"
-#include "Teams/DMTeam.hpp"
 #include "Teams/SBTeam.hpp"
+#include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
+#include "Zones/zones.hpp"
+
+class Home;
 
 SpaceBall::SpaceBall() : Game(games::gSpaceBall)
 {
@@ -33,8 +40,8 @@ SpaceBall::SpaceBall() : Game(games::gSpaceBall)
 
     music::play();
 
-    Team * myTeamL = NULL;
-    Team * myTeamR = NULL;
+    Team * myTeamL = nullptr;
+    Team * myTeamR = nullptr;
 
     if (settings::C_playerIteamL)
     {

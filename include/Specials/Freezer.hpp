@@ -18,7 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef FREEZER_HPP_INCLUDED
 #define FREEZER_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Specials/Special.hpp"
+#include "Specials/specials.hpp"
+
+class Ship;
 
 /// Special: Freezer.
 /// A Freezing wave.

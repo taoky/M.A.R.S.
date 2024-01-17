@@ -22,10 +22,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define TEXT_ALIGN_CENTER 1
 #define TEXT_ALIGN_RIGHT 2
 
+#include <SFML/System/String.hpp>
+
 #include "Media/font.hpp"
 #include "System/Color3f.hpp"
 #include "System/Vector2f.hpp"
 #include "System/settings.hpp"
+
+namespace sf
+{
+class Font;
+} // namespace sf
+struct Color3f;
+struct Vector2f;
 
 /// A namespace for drawing text on the screen.
 
@@ -40,7 +49,8 @@ namespace text
 /// look blurred due to being drawn between two pixels. This looks a bit choppy
 /// with  moving texts - for those use text::drawMobileSpaceText instead.
 void drawSpaceText(sf::String const &, Vector2f const &, float size, int align,
-                   Color3f const &, float alpha = 1.f, sf::Font * font = NULL);
+                   Color3f const &, float alpha = 1.f,
+                   sf::Font * font = nullptr);
 
 /// Draws text to the given space coordinates.
 /// Internally the given space location (from upper left (0, 0) to lower right
@@ -52,13 +62,14 @@ void drawSpaceText(sf::String const &, Vector2f const &, float size, int align,
 /// texts. For static texts use text::drawSpaceText instead.
 void drawMobileSpaceText(sf::String const &, Vector2f const &, float size,
                          int align, Color3f const &, float alpha = 1.f,
-                         sf::Font * font = NULL);
+                         sf::Font * font = nullptr);
 
 /// Draws text to the given screen coordinates.
 /// The given location is clamped to the screen resolution, so every text will
 /// stay inside the screen.
 void drawScreenText(sf::String const &, Vector2f const &, float size, int align,
-                    Color3f const &, float alpha = 1.f, sf::Font * font = NULL);
+                    Color3f const &, float alpha = 1.f,
+                    sf::Font * font = nullptr);
 
 /// Fixes strange SFML-OpenGL behaviour.
 /// Sometimes, when drawing text on screen, some OpenGL states are messed up,
@@ -71,7 +82,7 @@ void drawFooText();
 
 /// Returns the position of a character in a string relatively to it's location.
 float getCharacterPos(sf::String const &, int pos, float size, int align,
-                      sf::Font * font = NULL);
+                      sf::Font * font = nullptr);
 } // namespace text
 
 #endif // TEXT_HPP_INCLUDED

@@ -18,7 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef ROFLE_HPP_INCLUDED
 #define ROFLE_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Weapons/Weapon.hpp"
+#include "Weapons/weapons.hpp"
+
+class Ship;
 
 /// Weapon: ROFLE.
 /// A long distance gun, a sniper.

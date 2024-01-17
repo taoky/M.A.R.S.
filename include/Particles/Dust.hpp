@@ -18,9 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef DUST_HPP_INCLUDED
 #define DUST_HPP_INCLUDED
 
-#include "Particles/Particle.hpp"
+#include <list>
+#include <memory>
 
+#include "Particles/Particle.hpp"
 #include "System/Color3f.hpp"
+
+class Player;
+struct Vector2f;
 
 class Dust : public Particle<Dust>
 {

@@ -18,7 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef RASTERZONE_HPP_INCLUDED
 #define RASTERZONE_HPP_INCLUDED
 
+#include "System/Vector2f.hpp"
 #include "Zones/Zone.hpp"
+
+class SpaceObject;
 
 /// Zone: RasterZone.
 /// A square shaped zone.

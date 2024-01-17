@@ -18,7 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SMOKE_HPP_INCLUDED
 #define SMOKE_HPP_INCLUDED
 
+#include <list>
+#include <memory>
+
 #include "Particles/Particle.hpp"
+#include "System/Color3f.hpp"
+
+class Player;
+struct Vector2f;
 
 class Smoke : public Particle<Smoke>
 {

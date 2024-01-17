@@ -20,6 +20,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/SpaceObject.hpp"
 
+struct Vector2f;
+
 class Sun : public SpaceObject
 {
   public:

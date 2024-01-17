@@ -21,13 +21,22 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Interface/Label.hpp"
 #include "Interface/UiElement.hpp"
 #include "Media/text.hpp"
+#include "System/Key.hpp"
+
+class Label;
+namespace sf
+{
+class Font;
+class String;
+} // namespace sf
+struct Vector2f;
 
 class Button : public UiElement
 {
   public:
     Button(sf::String * text, sf::String * toolTip, bool * key,
            Vector2f const & topLeft, int width, int height,
-           int align = TEXT_ALIGN_CENTER, sf::Font * font = NULL);
+           int align = TEXT_ALIGN_CENTER, sf::Font * font = nullptr);
     ~Button();
 
     void mouseMoved(Vector2f const & position);

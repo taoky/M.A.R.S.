@@ -15,17 +15,19 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
+#include <GL/gl.h>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Shader.hpp>
 #include <Shaders/postFX.hpp>
+#include <iostream>
+#include <string>
 
 #include "DecoObjects/decoObjects.hpp"
-#include "Media/texture.hpp"
 #include "Particles/particles.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "defines.hpp"
-
-#include <SFML/OpenGL.hpp>
-#include <iostream>
 
 namespace postFX
 {
@@ -68,9 +70,9 @@ void update()
 
 void onExplosion() { flashTimer_ = 0.5f; }
 
-sf::Shader * get() { return &postFX_; }
+auto get() -> sf::Shader * { return &postFX_; }
 
-bool supported() { return (sf::Shader::isAvailable()); }
+auto supported() -> bool { return (sf::Shader::isAvailable()); }
 
 void load()
 {

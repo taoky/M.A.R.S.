@@ -114,17 +114,20 @@ void onShipExplode()
     }
 }
 
-float frameTime() { return frameTime_; }
+auto frameTime() -> float { return frameTime_; }
 
-float realFrameTime() { return realFrameTime_; }
+auto realFrameTime() -> float { return realFrameTime_; }
 
-float totalTime() { return totalTime_; }
+auto totalTime() -> float { return totalTime_; }
 
-float realTotalTime() { return realTotalTime_; }
+auto realTotalTime() -> float { return realTotalTime_; }
 
-float slowMoTime() { return slowMoTimer_ < 0.f ? 0.f : slowMoTimer_ * 0.2f; }
+auto slowMoTime() -> float
+{
+    return slowMoTimer_ < 0.f ? 0.f : slowMoTimer_ * 0.2f;
+}
 
 void resetSlowMotion() { slowMoTimer_ = 0.f; }
 
-float fps() { return fps_; }
+auto fps() -> float { return fps_; }
 } // namespace timer

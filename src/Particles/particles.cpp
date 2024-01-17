@@ -17,10 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/particles.hpp"
 
-#include "System/settings.hpp"
-#include "System/timer.hpp"
+#include <GL/gl.h>
 
 #include "Media/text.hpp"
+#include "Media/texture.hpp"
 #include "Particles/AmmoAFK47.hpp"
 #include "Particles/AmmoBurner.hpp"
 #include "Particles/AmmoFist.hpp"
@@ -52,7 +52,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Particles/Smoke.hpp"
 #include "Particles/Spark.hpp"
 #include "Particles/Star.hpp"
-
+#include "System/settings.hpp"
+#include "System/timer.hpp"
 #include "TrailEffects/trailEffects.hpp"
 
 namespace particles
@@ -358,7 +359,7 @@ void shockWave(Vector2f const & location, float strength, float radius)
     MiniFlameSmoke::shockWave(location, strength, radius);
 }
 
-int count()
+auto count() -> int
 {
     return trailEffects::count() + Fuel::count() + Mud::count() +
            Smoke::count() + Eruption::count() + AmmoAFK47::count() +

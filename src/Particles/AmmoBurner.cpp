@@ -17,12 +17,22 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/AmmoBurner.hpp"
 
-#include "Media/sound.hpp"
+#include <GL/gl.h>
+#include <cmath>
+#include <vector>
+
+#include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/balls.hpp"
+#include "SpaceObjects/physics.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
+
+class Player;
+class SpaceObject;
 
 std::list<std::shared_ptr<AmmoBurner>> AmmoBurner::activeParticles_;
 
@@ -62,11 +72,11 @@ void AmmoBurner::update()
 
     // check for collisions with ships
     auto const & shipsList = ships::getShips();
-    for (auto it = shipsList.begin(); it != shipsList.end(); ++it)
-        if ((location_ - (*it)->location()).lengthSquare() <
-                std::pow(radius_ + (*it)->radius(), 2) &&
-            (*it)->collidable())
-            (*it)->onCollision(this, location_, velocity_, velocity_);
+    for (const auto & it : shipsList)
+        if ((location_ - it->location()).lengthSquare() <
+                std::pow(radius_ + it->radius(), 2) &&
+            it->collidable())
+            it->onCollision(this, location_, velocity_, velocity_);
 
     // check for collisions with ball
     auto ball = balls::getBall();

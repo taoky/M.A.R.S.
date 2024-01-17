@@ -17,13 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/H2OMG.hpp"
 
+#include <GL/gl.h>
+#include <cfloat>
+#include <cmath>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
-#include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
-
-#include <SFML/Graphics.hpp>
-#include <cfloat>
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 void H2OMG::draw(float alpha) const
 {
@@ -65,8 +68,8 @@ void H2OMG::fire() const
     }
 }
 
-float H2OMG::maxDistance() const { return FLT_MAX; }
+auto H2OMG::maxDistance() const -> float { return FLT_MAX; }
 
-float H2OMG::minDistance() const { return 0.f; }
+auto H2OMG::minDistance() const -> float { return 0.f; }
 
-float H2OMG::maxAngle() const { return 20.f; }
+auto H2OMG::maxAngle() const -> float { return 20.f; }

@@ -17,13 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "TrailEffects/trailEffects.hpp"
 
-#include "TrailEffects/FloatingTrail.hpp"
-#include "TrailEffects/PersistantTrail.hpp"
-
+#include <algorithm>
 #include <atomic>
 #include <memory>
 #include <set>
 #include <vector>
+
+#include "TrailEffects/FloatingTrail.hpp"
+#include "TrailEffects/PersistantTrail.hpp"
+#include "TrailEffects/Trail.hpp"
+
+struct Color3f;
 
 extern std::atomic_bool exiting;
 
@@ -58,12 +62,12 @@ void update()
 
 void draw()
 {
-    for (auto it = trails_.begin(); it != trails_.end(); ++it)
-        (*it)->draw();
+    for (auto & trail : trails_)
+        trail->draw();
 }
 
-Trail * attach(SpaceObject * target, float timeStep, float duration,
-               float width, Color3f const & color, bool persistant)
+auto attach(SpaceObject * target, float timeStep, float duration, float width,
+            Color3f const & color, bool persistant) -> Trail *
 {
     Trail * trail;
     if (persistant)
@@ -76,7 +80,7 @@ Trail * attach(SpaceObject * target, float timeStep, float duration,
 
 void detach(SpaceObject * target) { toBeDetached_.insert(target); }
 
-int count() { return trails_.size(); }
+auto count() -> int { return trails_.size(); }
 
 void clear()
 {

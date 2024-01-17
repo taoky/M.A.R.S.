@@ -17,21 +17,28 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/Home.hpp"
 
-#include "Games/games.hpp"
+#include <GL/gl.h>
+#include <SFML/System/String.hpp>
+#include <cmath>
+#include <sstream>
+#include <string>
+
 #include "Media/announcer.hpp"
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
+#include "Media/texture.hpp"
 #include "Particles/particles.hpp"
-#include "Players/players.hpp"
+#include "Players/Player.hpp"
 #include "Shaders/postFX.hpp"
 #include "SpaceObjects/Ball.hpp"
+#include "SpaceObjects/physics.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/window.hpp"
 #include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
 #include "defines.hpp"
-
-#include <sstream>
 
 Home::Home(Vector2f const & location, int life, float radius, float mass,
            Color3f const & color)
@@ -91,7 +98,7 @@ void Home::drawLife() const
     }
 }
 
-int Home::getLife() const { return life_ < 0 ? 0 : life_; }
+auto Home::getLife() const -> int { return life_ < 0 ? 0 : life_; }
 
 void Home::createShips(std::vector<Player *> & inhabitants) const
 {
@@ -105,8 +112,7 @@ void Home::createShips(std::vector<Player *> & inhabitants) const
         angle = ((inhabitants.size() + 1) % 2) * deltaAngle / 2;
         int shipCounter = 0;
 
-        for (std::vector<Player *>::iterator it = inhabitants.begin();
-             it != inhabitants.end(); ++it)
+        for (auto & inhabitant : inhabitants)
         {
             // calc location of ship
             angle += deltaAngle * shipCounter * std::pow(-1.0, shipCounter);
@@ -114,7 +120,7 @@ void Home::createShips(std::vector<Player *> & inhabitants) const
                                     (radius_ + SHIP_RADIUS) +
                                 location_;
             float rotation = angle * 180 / M_PI;
-            ships::addShip(location, rotation, *it);
+            ships::addShip(location, rotation, inhabitant);
             ++shipCounter;
         }
     }
@@ -126,8 +132,7 @@ void Home::createShips(std::vector<Player *> & inhabitants) const
         angle = ((inhabitants.size() + 1) % 2) * deltaAngle / 2;
         int shipCounter = 0;
 
-        for (std::vector<Player *>::iterator it = inhabitants.begin();
-             it != inhabitants.end(); ++it)
+        for (auto & inhabitant : inhabitants)
         {
             // calc location of ship
             angle += deltaAngle * shipCounter * std::pow(-1.0, shipCounter);
@@ -135,7 +140,7 @@ void Home::createShips(std::vector<Player *> & inhabitants) const
                 Vector2f(-std::cos(angle), std::sin(angle)) * (radius_ + 16) +
                 location_;
             float rotation = 180 - angle * 180 / M_PI;
-            ships::addShip(location, rotation, *it);
+            ships::addShip(location, rotation, inhabitant);
             ++shipCounter;
         }
     }
@@ -145,8 +150,7 @@ void Home::createShips(std::vector<Player *> & inhabitants) const
         float deltaAngle = 2 * M_PI / (inhabitants.size());
         float angle = 0;
 
-        for (std::vector<Player *>::iterator it = inhabitants.begin();
-             it != inhabitants.end(); ++it)
+        for (auto & inhabitant : inhabitants)
         {
             // calc location of ship
             angle += deltaAngle;
@@ -154,7 +158,7 @@ void Home::createShips(std::vector<Player *> & inhabitants) const
                 Vector2f(std::cos(angle), std::sin(angle)) * (radius_ + 16) +
                 location_;
             float rotation = angle * 180 / M_PI;
-            ships::addShip(location, rotation, *it);
+            ships::addShip(location, rotation, inhabitant);
         }
     }
 }
@@ -199,7 +203,7 @@ void Home::onCollision(SpaceObject * with, Vector2f const & location,
             teams::getTeamL()->home() == this ? teams::getTeamR()->addPoint()
                                               : teams::getTeamL()->addPoint();
 
-        if (ball->lastShooter() != NULL)
+        if (ball->lastShooter() != nullptr)
         {
             // If an oponnent threw the ball to the home, give him a
             // point

@@ -17,17 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/UiElement.hpp"
 
+#include <SFML/Window/Mouse.hpp>
+
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
-#include "Media/sound.hpp"
 #include "Menu/menus.hpp"
 #include "System/timer.hpp"
-#include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
-#include <iostream>
 
 UiElement::UiElement(Vector2f const & topLeft, int width, int height)
-    : parent_(NULL), topLeft_(topLeft), width_(width), height_(height),
+    : parent_(nullptr), topLeft_(topLeft), width_(width), height_(height),
       hovered_(false), focused_(false), pressed_(false), hoveredFadeTime_(0.f),
       focusedFadeTime_(0.f)
 {
@@ -95,19 +93,19 @@ void UiElement::setFocus(UiElement * toBeFocused, bool isPrevious)
 
 void UiElement::clearFocus() { focused_ = false; }
 
-Vector2f UiElement::getTopLeft() const
+auto UiElement::getTopLeft() const -> Vector2f
 {
     Vector2f topLeft(topLeft_);
     if (!locales::getCurrentLocale().LTR_)
         topLeft.x_ *= -1.f;
 
-    if (parent_ != NULL)
+    if (parent_ != nullptr)
         return topLeft + parent_->getTopLeft();
     else
         return topLeft;
 }
 
-int UiElement::width() const
+auto UiElement::width() const -> int
 {
     if (locales::getCurrentLocale().LTR_)
         return width_;

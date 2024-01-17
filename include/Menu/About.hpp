@@ -21,6 +21,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Interface/UiWindow.hpp"
 
 class TextBox;
+namespace sf
+{
+class String;
+} // namespace sf
 
 class About : public UiWindow
 {

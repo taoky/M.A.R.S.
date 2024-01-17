@@ -17,13 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Hud/CountDown.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Games/games.hpp"
 #include "Media/sound.hpp"
 #include "Media/texture.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 #include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
 
 void CountDown::draw() const
 {

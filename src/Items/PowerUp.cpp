@@ -17,9 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Items/PowerUp.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+#include <memory>
+#include <vector>
+
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "System/timer.hpp"
 
 PowerUp::PowerUp(items::PowerUpType type, Vector2f const & location,
                  float radius, float totalLifeTime, int texX, int texY,
@@ -32,9 +38,8 @@ PowerUp::PowerUp(items::PowerUpType type, Vector2f const & location,
 
 PowerUp::~PowerUp()
 {
-    for (std::list<Ship *>::iterator it = ships_.begin(); it != ships_.end();
-         ++it)
-        (*it)->collectedPowerUps_[type_] = NULL;
+    for (auto & ship : ships_)
+        ship->collectedPowerUps_[type_] = nullptr;
 }
 
 void PowerUp::update()
@@ -53,19 +58,18 @@ void PowerUp::update()
                 collected_ = true;
                 if (type_ == items::puReverse || type_ == items::puSleep)
                 {
-                    for (auto ite = shipList.begin(); ite != shipList.end();
-                         ++ite)
+                    for (const auto & ite : shipList)
                         if ((*it)->getOwner()->team() !=
-                            (*ite)->getOwner()->team())
-                            ships_.push_back(ite->get());
+                            ite->getOwner()->team())
+                            ships_.push_back(ite.get());
                 }
                 else
                     ships_.push_back(it->get());
             }
-        std::list<Ship *>::iterator it = ships_.begin();
+        auto it = ships_.begin();
         while (it != ships_.end())
         {
-            if ((*it)->collectedPowerUps_[type_] != NULL)
+            if ((*it)->collectedPowerUps_[type_] != nullptr)
             {
                 (*it)->collectedPowerUps_[type_]->lifeTime_ = 0;
                 it = ships_.erase(it);
@@ -88,12 +92,12 @@ void PowerUp::update()
     }
     else
     {
-        std::list<Ship *>::iterator it = ships_.begin();
+        auto it = ships_.begin();
         while (it != ships_.end())
         {
             if (*it && (*it)->getLife() == 0.f)
             {
-                (*it)->collectedPowerUps_[type_] = NULL;
+                (*it)->collectedPowerUps_[type_] = nullptr;
                 it = ships_.erase(it);
             }
             else
@@ -153,12 +157,12 @@ void PowerUp::draw() const
     glPopMatrix();
 }
 
-Vector2f const & PowerUp::location() const { return location_; }
+auto PowerUp::location() const -> Vector2f const & { return location_; }
 
-float PowerUp::radius() const { return radius_; }
+auto PowerUp::radius() const -> float { return radius_; }
 
-items::PowerUpType PowerUp::type() const { return type_; }
+auto PowerUp::type() const -> items::PowerUpType { return type_; }
 
-bool PowerUp::isDead() const { return lifeTime_ >= totalLifeTime_; }
+auto PowerUp::isDead() const -> bool { return lifeTime_ >= totalLifeTime_; }
 
-bool PowerUp::isCollected() const { return collected_; }
+auto PowerUp::isCollected() const -> bool { return collected_; }

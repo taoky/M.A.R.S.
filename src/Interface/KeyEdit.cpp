@@ -17,15 +17,24 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/KeyEdit.hpp"
 
+#include <GL/gl.h>
+#include <algorithm>
+
+#include "Interface/Label.hpp"
 #include "Interface/toolTip.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/generateName.hpp"
-#include "System/settings.hpp"
 
-#include <SFML/OpenGL.hpp>
+namespace sf
+{
+class String;
+} // namespace sf
 
 KeyEdit::KeyEdit(sf::String * text, sf::String * toolTip, Key * value,
                  Vector2f const & topLeft, int width, int labelWidth)

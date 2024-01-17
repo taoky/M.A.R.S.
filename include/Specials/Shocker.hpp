@@ -18,10 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SHOCKER_HPP_INCLUDED
 #define SHOCKER_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+#include <list>
+
 #include "SpaceObjects/Ball.hpp"
 #include "Specials/Special.hpp"
+#include "Specials/specials.hpp"
 
-#include <list>
+class Ball;
+class Ship;
 
 /// Special: Shocker.
 /// Fires shocking bolts.

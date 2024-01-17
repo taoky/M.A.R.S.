@@ -18,6 +18,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef HUD_HPP_INCLUDED
 #define HUD_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "System/Color3f.hpp"
 #include "System/Vector2f.hpp"
 

@@ -17,11 +17,22 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Zones/zones.hpp"
 
+#include <algorithm>
+#include <atomic>
+#include <memory>
+#include <utility>
+#include <vector>
+
 #include "Games/games.hpp"
+#include "Players/Player.hpp"
+#include "Players/players.hpp"
+#include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/balls.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "Teams/Team.hpp"
 #include "Zones/HomeZone.hpp"
@@ -29,11 +40,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Zones/TacticalZone.hpp"
 #include "Zones/TeamZone.hpp"
 #include "Zones/TutorialZone.hpp"
+#include "Zones/Zone.hpp"
 #include "defines.hpp"
-
-#include <atomic>
-#include <iostream>
-#include <memory>
 
 extern std::atomic_bool exiting;
 
@@ -42,7 +50,7 @@ namespace zones
 
 namespace
 {
-Zone *homeL_(NULL), *homeR_(NULL), *teamL_(NULL), *teamR_(NULL);
+Zone *homeL_(nullptr), *homeR_(nullptr), *teamL_(nullptr), *teamR_(nullptr);
 std::vector<std::unique_ptr<TutorialZone>> tutorialZones_;
 std::vector<std::unique_ptr<TacticalZone>> tacticalZonesL_;
 std::vector<std::unique_ptr<TacticalZone>> tacticalZonesR_;
@@ -51,7 +59,7 @@ float totalTacticalAreaL_(0), totalTacticalAreaR_(0);
 int lastZone_(0);
 } // namespace
 
-Zone * addTeamZone(Vector2f const & location)
+auto addTeamZone(Vector2f const & location) -> Zone *
 {
     if (location.x_ < SPACE_X_RESOLUTION * 0.5f)
         return teamL_ = new TeamZone(0);
@@ -59,7 +67,7 @@ Zone * addTeamZone(Vector2f const & location)
         return teamR_ = new TeamZone(1);
 }
 
-Zone * addHomeZone(Vector2f const & location)
+auto addHomeZone(Vector2f const & location) -> Zone *
 {
     if (location.x_ < SPACE_X_RESOLUTION * 0.5f)
         return homeL_ = new HomeZone(location);
@@ -78,17 +86,16 @@ void detectTacticalZones()
     std::vector<SpaceObject *> objectsLeft = std::vector<SpaceObject *>();
     std::vector<SpaceObject *> objectsRight = std::vector<SpaceObject *>();
 
-    for (auto it = spaceObjects::getObjects().begin();
-         it != spaceObjects::getObjects().end(); ++it)
+    for (const auto & it : spaceObjects::getObjects())
     {
-        if ((*it)->location().x_ < SPACE_X_RESOLUTION * 0.5f &&
-            it->get() != spaceObjects::getHomes()[0] &&
-            it->get() != spaceObjects::getHomes()[1])
-            objectsLeft.push_back(it->get());
-        if ((*it)->location().x_ > 641 &&
-            it->get() != spaceObjects::getHomes()[0] &&
-            it->get() != spaceObjects::getHomes()[1])
-            objectsRight.push_back(it->get());
+        if (it->location().x_ < SPACE_X_RESOLUTION * 0.5f &&
+            it.get() != spaceObjects::getHomes()[0] &&
+            it.get() != spaceObjects::getHomes()[1])
+            objectsLeft.push_back(it.get());
+        if (it->location().x_ > 641 &&
+            it.get() != spaceObjects::getHomes()[0] &&
+            it.get() != spaceObjects::getHomes()[1])
+            objectsRight.push_back(it.get());
     }
 
     Vector2f homeConnection(spaceObjects::getHomes()[0]->location() -
@@ -368,15 +375,15 @@ void createRaster(int dimX, int dimY)
 
 void update()
 {
-    for (auto it = tacticalZonesL_.begin(); it != tacticalZonesL_.end(); ++it)
-        (*it)->update();
-    for (auto it = tacticalZonesR_.begin(); it != tacticalZonesR_.end(); ++it)
-        (*it)->update();
-    for (auto it = rasterZones_.begin(); it != rasterZones_.end(); ++it)
-        (*it)->update();
+    for (auto & it : tacticalZonesL_)
+        it->update();
+    for (auto & it : tacticalZonesR_)
+        it->update();
+    for (auto & rasterZone : rasterZones_)
+        rasterZone->update();
 }
 
-bool updateTutZones()
+auto updateTutZones() -> bool
 {
     if (tutorialZones_.back()->isInside(*players::getPlayerI()->ship()))
     {
@@ -401,18 +408,18 @@ void draw()
         if (homeR_)
             homeR_->draw();
     }
-    for (auto it = tacticalZonesL_.begin(); it != tacticalZonesL_.end(); ++it)
-        (*it)->draw();
-    for (auto it = tacticalZonesR_.begin(); it != tacticalZonesR_.end(); ++it)
-        (*it)->draw();
+    for (auto & it : tacticalZonesL_)
+        it->draw();
+    for (auto & it : tacticalZonesR_)
+        it->draw();
     if (games::type() != games::gTutorial)
-        for (auto it = rasterZones_.begin(); it != rasterZones_.end(); ++it)
-            (*it)->draw();
-    for (auto it = tutorialZones_.begin(); it != tutorialZones_.end(); ++it)
-        (*it)->draw();
+        for (auto & rasterZone : rasterZones_)
+            rasterZone->draw();
+    for (auto & tutorialZone : tutorialZones_)
+        tutorialZone->draw();
 }
 
-std::map<float, TacticalZone *> const toProtect(Team * checker)
+auto toProtect(Team * checker) -> std::map<float, TacticalZone *> const
 {
     std::map<float, TacticalZone *> sortedZones;
     auto ball = balls::getBall();
@@ -420,30 +427,28 @@ std::map<float, TacticalZone *> const toProtect(Team * checker)
     {
         Vector2f ballLocation(ball->location());
         if (checker->homeZone_ == homeL_)
-            for (auto it = tacticalZonesL_.begin(); it != tacticalZonesL_.end();
-                 ++it)
+            for (auto & it : tacticalZonesL_)
             {
                 sortedZones.insert(std::make_pair(
                     ((ballLocation + checker->home()->location()) * 0.5f -
-                     (*it)->location())
+                     it->location())
                         .lengthSquare(),
-                    it->get()));
+                    it.get()));
             }
         else
-            for (auto it = tacticalZonesR_.begin(); it != tacticalZonesR_.end();
-                 ++it)
+            for (auto & it : tacticalZonesR_)
             {
                 sortedZones.insert(std::make_pair(
                     ((ballLocation + checker->home()->location()) * 0.5f -
-                     (*it)->location())
+                     it->location())
                         .lengthSquare(),
-                    it->get()));
+                    it.get()));
             }
     }
     return sortedZones;
 }
 
-RasterZone * freeZone()
+auto freeZone() -> RasterZone *
 {
     unsigned int count(0), i(lastZone_);
     while (++count < rasterZones_.size() &&
@@ -456,12 +461,12 @@ RasterZone * freeZone()
     return rasterZones_[lastZone_].get();
 }
 
-float totalTacticalArea(short homeSide)
+auto totalTacticalArea(short homeSide) -> float
 {
     return homeSide == 0 ? totalTacticalAreaL_ : totalTacticalAreaR_;
 }
 
-short isInside(Team * checker, SpaceObject const & toBeChecked)
+auto isInside(Team * checker, SpaceObject const & toBeChecked) -> short
 {
     if (homeL_->isInside(toBeChecked))
         return checker->homeZone_ == homeL_ ? OWN_HOME : ENEMY_HOME;
@@ -479,22 +484,22 @@ void clear()
     if (homeL_)
     {
         delete homeL_;
-        homeL_ = NULL;
+        homeL_ = nullptr;
     }
     if (homeR_)
     {
         delete homeR_;
-        homeR_ = NULL;
+        homeR_ = nullptr;
     }
     if (teamL_)
     {
         delete teamL_;
-        teamL_ = NULL;
+        teamL_ = nullptr;
     }
     if (teamR_)
     {
         delete teamR_;
-        teamR_ = NULL;
+        teamR_ = nullptr;
     }
     if (!exiting)
     {

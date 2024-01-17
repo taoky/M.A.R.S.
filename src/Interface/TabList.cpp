@@ -17,42 +17,46 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/TabList.hpp"
 
+#include <GL/gl.h>
+#include <algorithm>
+
+#include "Interface/Label.hpp"
+#include "Interface/Tab.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
-#include "System/settings.hpp"
-#include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
 TabList::TabList(Vector2f const & topLeft, int width, int height)
-    : UiElement(topLeft, width, height), focusedTab_(NULL), lastTabEnd_(0)
+    : UiElement(topLeft, width, height), focusedTab_(nullptr), lastTabEnd_(0)
 {
 }
 
 TabList::~TabList()
 {
-    for (std::vector<Tab *>::iterator i = tabs_.begin(); i != tabs_.end(); ++i)
-        delete *i;
+    for (auto & tab : tabs_)
+        delete tab;
 }
 
 void TabList::mouseMoved(Vector2f const & position)
 {
-    for (std::vector<Tab *>::iterator i = tabs_.begin(); i != tabs_.end(); ++i)
-        (*i)->mouseMoved(position);
+    for (auto & tab : tabs_)
+        tab->mouseMoved(position);
 }
 
 void TabList::mouseWheelMoved(Vector2f const & position, int delta)
 {
-    for (std::vector<Tab *>::iterator i = tabs_.begin(); i != tabs_.end(); ++i)
-        (*i)->mouseWheelMoved(position, delta);
+    for (auto & tab : tabs_)
+        tab->mouseWheelMoved(position, delta);
 }
 
 void TabList::mouseLeft(bool down)
 {
-    for (std::vector<Tab *>::iterator i = tabs_.begin(); i != tabs_.end(); ++i)
-        (*i)->mouseLeft(down);
+    for (auto & tab : tabs_)
+        tab->mouseLeft(down);
 }
 
 void TabList::keyEvent(bool down, Key const & key)
@@ -99,7 +103,7 @@ void TabList::keyEvent(bool down, Key const & key)
     }
 }
 
-bool TabList::tabNext()
+auto TabList::tabNext() -> bool
 {
     if (focusedTab_)
     {
@@ -117,7 +121,7 @@ bool TabList::tabNext()
     return true;
 }
 
-bool TabList::tabPrevious()
+auto TabList::tabPrevious() -> bool
 {
     if (focusedTab_)
     {
@@ -182,9 +186,8 @@ void TabList::draw() const
     glVertex2f(origin.x_ + width(), origin.y_ + 20);
     glEnd();
 
-    for (std::vector<Tab *>::const_iterator i = tabs_.begin(); i != tabs_.end();
-         ++i)
-        (*i)->draw();
+    for (auto tab : tabs_)
+        tab->draw();
 }
 
 void TabList::setFocus(UiElement * toBeFocused, bool isPrevious)
@@ -203,8 +206,8 @@ void TabList::setFocus(UiElement * toBeFocused, bool isPrevious)
 void TabList::clearFocus()
 {
     UiElement::clearFocus();
-    for (std::vector<Tab *>::iterator i = tabs_.begin(); i != tabs_.end(); ++i)
-        (*i)->clearFocus();
+    for (auto & tab : tabs_)
+        tab->clearFocus();
 }
 
 void TabList::addTab(Tab * toBeAdded)
@@ -232,8 +235,8 @@ void TabList::addTab(Tab * toBeAdded)
 
 void TabList::activate(Tab * toBeActivated)
 {
-    for (std::vector<Tab *>::iterator i = tabs_.begin(); i != tabs_.end(); ++i)
-        (*i)->active_ = false;
+    for (auto & tab : tabs_)
+        tab->active_ = false;
 
     menus::clearFocus();
     setFocus(this, false);

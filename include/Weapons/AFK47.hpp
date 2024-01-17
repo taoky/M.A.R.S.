@@ -18,7 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef AFK47_HPP_INCLUDED
 #define AFK47_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Weapons/Weapon.hpp"
+#include "Weapons/weapons.hpp"
+
+class Ship;
 
 /// Weapon: AFK47.
 /// A long distance gun, classic star wars laser flair.

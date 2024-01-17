@@ -18,8 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TEXTEDIT_HPP_INCLUDED
 #define TEXTEDIT_HPP_INCLUDED
 
+#include <SFML/Config.hpp>
+#include <SFML/System/String.hpp>
+
 #include "Interface/Label.hpp"
 #include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
+
+class Label;
+struct Vector2f;
 
 #define TEXT_EDIT 0
 #define PORT_EDIT 1

@@ -18,7 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TACTICALZONE_HPP_INCLUDED
 #define TACTICALZONE_HPP_INCLUDED
 
+#include "System/Vector2f.hpp"
 #include "Zones/Zone.hpp"
+
+class SpaceObject;
 
 /// Zone: TacticalZone.
 /// A round Zone.

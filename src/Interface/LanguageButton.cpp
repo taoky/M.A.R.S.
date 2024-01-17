@@ -17,17 +17,24 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/LanguageButton.hpp"
 
+#include <GL/gl.h>
+#include <algorithm>
+
+#include "Interface/Label.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
 #include "Media/texture.hpp"
 #include "Menu/ChooseLanguage.hpp"
 #include "Menu/menus.hpp"
-#include "System/settings.hpp"
-#include "System/window.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-#include <SFML/OpenGL.hpp>
-#include <iostream>
+namespace sf
+{
+class String;
+} // namespace sf
 
 LanguageButton::LanguageButton(sf::String * text, Vector2f const & topLeft,
                                int width, int labelWidth)

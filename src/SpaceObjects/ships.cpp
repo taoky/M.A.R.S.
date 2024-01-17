@@ -17,11 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/ships.hpp"
 
-#include "SpaceObjects/Ship.hpp"
-
+#include <GL/gl.h>
 #include <atomic>
 #include <memory>
 #include <vector>
+
+#include "Media/texture.hpp"
+#include "SpaceObjects/Ship.hpp"
+
+struct Vector2f;
 
 extern std::atomic_bool exiting;
 
@@ -39,8 +43,8 @@ void addShip(Vector2f const & location, float rotation, Player * owner)
 
 void update()
 {
-    for (auto it = shipList_.begin(); it != shipList_.end(); ++it)
-        (*it)->update();
+    for (auto & it : shipList_)
+        it->update();
 }
 
 void draw()
@@ -48,19 +52,22 @@ void draw()
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture::getTexture(texture::Weapons));
 
-    for (auto it = shipList_.begin(); it != shipList_.end(); ++it)
-        (*it)->drawWeapon();
+    for (auto & it : shipList_)
+        it->drawWeapon();
 
     glBindTexture(GL_TEXTURE_2D, texture::getTexture(texture::Ships));
 
-    for (auto it = shipList_.begin(); it != shipList_.end(); ++it)
-        (*it)->draw();
+    for (auto & it : shipList_)
+        it->draw();
 
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-std::vector<std::shared_ptr<Ship>> const & getShips() { return shipList_; }
+auto getShips() -> std::vector<std::shared_ptr<Ship>> const &
+{
+    return shipList_;
+}
 
 void clear()
 {

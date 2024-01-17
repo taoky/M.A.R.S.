@@ -17,10 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "DecoObjects/Bolt.hpp"
 
+#include <GL/gl.h>
+
 #include "DecoObjects/decoObjects.hpp"
+#include "Media/texture.hpp"
 #include "Menu/menus.hpp"
-#include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/Ball.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
+#include "System/timer.hpp"
 
 void Bolt::draw() const
 {

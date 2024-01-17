@@ -18,10 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef HOME_HPP_INCLUDED
 #define HOME_HPP_INCLUDED
 
+#include <float.h>
+#include <vector>
+
 #include "Players/Player.hpp"
 #include "SpaceObjects/SpaceObject.hpp"
+#include "System/Color3f.hpp"
 
-#include <float.h>
+class Player;
+struct Vector2f;
 
 class Home : public SpaceObject
 {

@@ -17,15 +17,24 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Teams/SBTeam.hpp"
 
+#include <algorithm>
+#include <list>
+#include <map>
+#include <memory>
+#include <utility>
+
 #include "Items/PowerUp.hpp"
 #include "Items/items.hpp"
 #include "Players/Player.hpp"
+#include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/balls.hpp"
 #include "SpaceObjects/ships.hpp"
 #include "System/settings.hpp"
+#include "Teams/Job.hpp"
+#include "Zones/zones.hpp"
 
-#include <list>
+class TacticalZone;
 
 void SBTeam::createJobs()
 {
@@ -45,8 +54,8 @@ void SBTeam::checkEnemies()
     auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (auto it = ships.begin(); it != ships.end(); ++it)
-        if ((*it)->getOwner()->team() != this && (*it)->attackable())
+    for (const auto & ship : ships)
+        if (ship->getOwner()->team() != this && ship->attackable())
         {
             existAny = true;
             break;
@@ -62,8 +71,8 @@ void SBTeam::checkPowerUps()
     auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (auto it = ships.begin(); it != ships.end(); ++it)
-        if ((*it)->getOwner()->team() != this && (*it)->attackable())
+    for (const auto & ship : ships)
+        if (ship->getOwner()->team() != this && ship->attackable())
         {
             existAny = true;
             break;
@@ -71,12 +80,12 @@ void SBTeam::checkPowerUps()
 
     powerUpLocations_.clear();
     auto const & powerUps = items::getPowerUps();
-    for (auto it = powerUps.begin(); it != powerUps.end(); ++it)
+    for (const auto & powerUp : powerUps)
     {
-        if (!(*it)->isCollected())
+        if (!powerUp->isCollected())
         {
-            powerUpLocations_.push_back((*it)->location());
-            switch ((*it)->type())
+            powerUpLocations_.push_back(powerUp->location());
+            switch (powerUp->type())
             {
             case items::puFuel:
                 addJob(Job(Job::jGetPUFuel, 30, &powerUpLocations_.back()));
@@ -127,8 +136,7 @@ void SBTeam::checkBall()
             case OWN_TEAM:
             {
                 std::map<float, TacticalZone *> zones(zones::toProtect(this));
-                std::map<float, TacticalZone *>::iterator currentZone =
-                    zones.begin();
+                auto currentZone = zones.begin();
                 int protectJobs(botControllers_.size() * 0.5);
                 while (protectJobs > 0)
                 {
@@ -149,8 +157,7 @@ void SBTeam::checkBall()
             default:
             {
                 std::map<float, TacticalZone *> zones(zones::toProtect(this));
-                std::map<float, TacticalZone *>::iterator currentZone =
-                    zones.begin();
+                auto currentZone = zones.begin();
                 int protectJobs(botControllers_.size() * 0.4);
                 while (protectJobs > 0)
                 {

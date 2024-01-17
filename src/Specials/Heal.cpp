@@ -17,16 +17,20 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Specials/Heal.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+#include <memory>
+#include <vector>
+
 #include "Games/games.hpp"
 #include "Menu/menus.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 #include "Teams/Team.hpp"
-
-#include <SFML/Graphics.hpp>
-#include <vector>
 
 void Heal::draw(float alpha) const
 {
@@ -86,22 +90,22 @@ void Heal::activate() const
     {
         radius_ = radius();
         auto const & ships = ships::getShips();
-        for (auto it = ships.begin(); it != ships.end(); ++it)
+        for (const auto & ship : ships)
         {
-            if (it->get() != parent_)
+            if (ship.get() != parent_)
             {
                 float distance(
-                    ((*it)->location() - parent_->location()).length());
-                if ((*it)->collidable() &&
-                    parent_->getOwner()->team() == (*it)->getOwner()->team() &&
+                    (ship->location() - parent_->location()).length());
+                if (ship->collidable() &&
+                    parent_->getOwner()->team() == ship->getOwner()->team() &&
                     distance <= radius_)
                 {
-                    (*it)->heal(parent_->getOwner(),
-                                ((radius_ / distance) - 0.8f) *
-                                    parent_->fragStars_ * 30);
-                    (*it)->refuel(parent_->getOwner(),
-                                  ((radius_ / distance) - 0.8f) *
-                                      parent_->fragStars_ * 30);
+                    ship->heal(parent_->getOwner(),
+                               ((radius_ / distance) - 0.8f) *
+                                   parent_->fragStars_ * 30);
+                    ship->refuel(parent_->getOwner(),
+                                 ((radius_ / distance) - 0.8f) *
+                                     parent_->fragStars_ * 30);
                 }
             }
             else
@@ -115,7 +119,7 @@ void Heal::activate() const
     }
 }
 
-float Heal::radius() const
+auto Heal::radius() const -> float
 {
     return (parent_->fragStars_ > 0 ? parent_->fragStars_ * 50.f + 50.f : 0.f);
 }

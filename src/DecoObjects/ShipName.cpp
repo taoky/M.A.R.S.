@@ -17,13 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "DecoObjects/ShipName.hpp"
 
+#include <SFML/System/String.hpp>
+#include <memory>
+#include <sstream>
+#include <string>
+
+#include "Controllers/controllers.hpp"
 #include "Media/text.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
-#include "System/settings.hpp"
-#include "System/window.hpp"
-
-#include <sstream>
+#include "Specials/Special.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "Weapons/Weapon.hpp"
 
 void ShipName::draw() const
 {

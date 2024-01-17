@@ -15,19 +15,23 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Controllers/BotController.hpp"
+#include <algorithm>
+#include <map>
+#include <memory>
+#include <utility>
+#include <vector>
 
-#include "Items/CannonControl.hpp"
-#include "Items/items.hpp"
+#include "Controllers/BotController.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "Specials/Special.hpp"
+#include "Specials/specials.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
+#include "Teams/Job.hpp"
 #include "Teams/Team.hpp"
-#include "Zones/zones.hpp"
-
-#include <cmath>
 
 void BotController::checkAggro()
 {
@@ -47,39 +51,36 @@ void BotController::checkAggro()
 
         // process aggroTable
         float maxAggro(-1.f);
-        for (std::map<Ship *, float>::iterator it = aggroTable_.begin();
-             it != aggroTable_.end(); ++it)
+        for (auto & it : aggroTable_)
         {
-            if (it->second > 0.f && !it->first->collidable())
-                it->second = 0.f;
-            if (it->second > 0.f && it->first != target_)
-                it->second -= 5.f;
-            if (it->second > maxAggro && it->first->collidable())
-                maxAggro = it->second;
+            if (it.second > 0.f && !it.first->collidable())
+                it.second = 0.f;
+            if (it.second > 0.f && it.first != target_)
+                it.second -= 5.f;
+            if (it.second > maxAggro && it.first->collidable())
+                maxAggro = it.second;
         }
         // if there is one enemy with a lot more aggro than the current
         // target, attack this one
         if (maxAggro > 120.f)
-            for (std::map<Ship *, float>::iterator it = aggroTable_.begin();
-                 it != aggroTable_.end(); ++it)
+            for (auto & it : aggroTable_)
             {
-                if (it->second == maxAggro && it->first->attackable())
+                if (it.second == maxAggro && it.first->attackable())
                 {
-                    it->second = 100.f;
-                    target_ = it->first;
+                    it.second = 100.f;
+                    target_ = it.first;
                 }
                 else
-                    it->second /= (maxAggro / 100.f);
+                    it.second /= (maxAggro / 100.f);
             }
 
         // normalize aggro to 100 for the target
         if (target_)
         {
             float targetAggro(aggroTable_[target_]);
-            for (std::map<Ship *, float>::iterator it = aggroTable_.begin();
-                 it != aggroTable_.end(); ++it)
+            for (auto & it : aggroTable_)
             {
-                it->second /= (targetAggro / 100.f);
+                it.second /= (targetAggro / 100.f);
             }
         }
     }
@@ -89,10 +90,9 @@ void BotController::checkEnergy()
 {
     if (!ship()->collidable())
     {
-        for (std::map<Ship *, float>::iterator it = aggroTable_.begin();
-             it != aggroTable_.end(); ++it)
-            it->second = 0.f;
-        target_ = NULL;
+        for (auto & it : aggroTable_)
+            it.second = 0.f;
+        target_ = nullptr;
     }
     else
     {
@@ -136,16 +136,16 @@ void BotController::checkSpecial()
         {
             int decision(0);
             auto const & ships(ships::getShips());
-            for (auto it = ships.begin(); it != ships.end(); ++it)
+            for (const auto & ship_ : ships)
             {
-                if ((*it)->collidable() && (*it)->frozen_ <= 0 &&
-                    (it->get()) != slave_->ship())
+                if (ship_->collidable() && ship_->frozen_ <= 0 &&
+                    (ship_.get()) != slave_->ship())
                 {
                     float distance(
-                        ((*it)->location_ - ship()->location_).lengthSquare());
+                        (ship_->location_ - ship()->location_).lengthSquare());
                     if (distance <= radius * radius)
                     {
-                        if ((*it)->owner_->team() == slave_->team())
+                        if (ship_->owner_->team() == slave_->team())
                             --decision;
                         else
                             ++decision;
@@ -161,15 +161,15 @@ void BotController::checkSpecial()
         {
             int decision(0);
             auto const & ships(ships::getShips());
-            for (auto it = ships.begin(); it != ships.end(); ++it)
+            for (const auto & ship_ : ships)
             {
-                if ((*it)->attackable() && (it->get()) != slave_->ship())
+                if (ship_->attackable() && (ship_.get()) != slave_->ship())
                 {
                     float distance(
-                        ((*it)->location_ - ship()->location_).lengthSquare());
+                        (ship_->location_ - ship()->location_).lengthSquare());
                     if (distance <= radius * radius)
                     {
-                        if ((*it)->owner_->team() == slave_->team())
+                        if (ship_->owner_->team() == slave_->team())
                             --decision;
                         else
                             ++decision;
@@ -187,18 +187,18 @@ void BotController::checkSpecial()
 void BotController::checkCloseEnemies()
 {
     auto const & ships(ships::getShips());
-    for (auto it = ships.begin(); it != ships.end(); ++it)
+    for (const auto & ship_ : ships)
     {
-        if ((*it)->attackable() && (*it)->owner_->team() != slave_->team())
+        if (ship_->attackable() && ship_->owner_->team() != slave_->team())
         {
-            float aggroGain(90.f - (*it)->getLife() * 0.9);
-            float distance(((*it)->location_ - ship()->location_).length() *
+            float aggroGain(90.f - ship_->getLife() * 0.9);
+            float distance((ship_->location_ - ship()->location_).length() *
                            0.01f);
             aggroGain -= distance;
             if (aggroGain < 0.f)
                 aggroGain = 0.f;
             aggroGain *= settings::C_iDumb * 0.01f;
-            aggroTable_[it->get()] += aggroGain;
+            aggroTable_[ship_.get()] += aggroGain;
         }
     }
 }

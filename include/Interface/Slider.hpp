@@ -18,10 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SLIDER_HPP_INCLUDED
 #define SLIDER_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+#include <vector>
+
 #include "Interface/Label.hpp"
 #include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
 
-#include <vector>
+class Label;
+struct Vector2f;
 
 class Slider : public UiElement
 {

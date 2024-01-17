@@ -17,19 +17,26 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/AmmoRocket.hpp"
 
-#include "Media/sound.hpp"
+#include <GL/gl.h>
+#include <cfloat>
+#include <cmath>
+#include <vector>
+
 #include "Particles/particles.hpp"
 #include "Players/Player.hpp"
 #include "Shaders/postFX.hpp"
 #include "SpaceObjects/Ball.hpp"
+#include "SpaceObjects/MobileSpaceObject.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/balls.hpp"
+#include "SpaceObjects/physics.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "TrailEffects/trailEffects.hpp"
-
-#include <cfloat>
 
 std::list<std::shared_ptr<AmmoRocket>> AmmoRocket::activeParticles_;
 
@@ -38,8 +45,9 @@ AmmoRocket::AmmoRocket(Vector2f const & location, Vector2f const & direction,
                        Player * damageSource)
     : Particle<AmmoRocket>(spaceObjects::oAmmoRocket, location, 10.f, 3.0f,
                            10000.f),
-      timer_(1.f), shipTarget_(NULL), ballTarget_(NULL), parent_(damageSource),
-      rotation_(0.f), life_(50.f), frozen_(0.f), visible_(true)
+      timer_(1.f), shipTarget_(nullptr), ballTarget_(nullptr),
+      parent_(damageSource), rotation_(0.f), life_(50.f), frozen_(0.f),
+      visible_(true)
 {
 
     setDamageSource(damageSource);
@@ -63,7 +71,7 @@ void AmmoRocket::update()
         if (shipTarget_ || ballTarget_)
         {
 
-            MobileSpaceObject * target(NULL);
+            MobileSpaceObject * target(nullptr);
             if (ballTarget_)
                 target = ballTarget_;
             else if (shipTarget_)
@@ -87,12 +95,12 @@ void AmmoRocket::update()
             if (shipTarget_ &&
                 dynamic_cast<Ship *>(shipTarget_)->getLife() <= 0.f)
             {
-                shipTarget_ = NULL;
+                shipTarget_ = nullptr;
             }
             else if (ballTarget_ &&
                      !(dynamic_cast<Ball *>(ballTarget_)->isVisible()))
             {
-                ballTarget_ = NULL;
+                ballTarget_ = nullptr;
             }
         }
 
@@ -116,17 +124,17 @@ void AmmoRocket::update()
         {
             timer_ = 0.5f;
 
-            ballTarget_ = NULL;
-            shipTarget_ = NULL;
+            ballTarget_ = nullptr;
+            shipTarget_ = nullptr;
 
             auto const & ships(ships::getShips());
             float closest(FLT_MAX);
-            for (auto it = ships.begin(); it != ships.end(); ++it)
+            for (const auto & ship : ships)
             {
-                float distance((location_ - (*it)->location()).lengthSquare());
-                if (distance < closest && (*it)->collidable())
+                float distance((location_ - ship->location()).lengthSquare());
+                if (distance < closest && ship->collidable())
                 {
-                    shipTarget_ = it->get();
+                    shipTarget_ = ship.get();
                     closest = distance;
                 }
             }
@@ -138,7 +146,7 @@ void AmmoRocket::update()
                 if (distance < closest && ball->isVisible())
                 {
                     ballTarget_ = ball.get();
-                    shipTarget_ = NULL;
+                    shipTarget_ = nullptr;
                 }
             }
         }
@@ -195,7 +203,7 @@ void AmmoRocket::draw() const
     glTexCoord2f(posX * 0.125f, posY * 0.125f);
     glVertex2f(topRight.x_, topRight.y_);
 
-    MobileSpaceObject * target(NULL);
+    MobileSpaceObject * target(nullptr);
     if (ballTarget_)
         target = ballTarget_;
     else if (shipTarget_)

@@ -18,14 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef BOTCONTROLLER_HPP_INCLUDED
 #define BOTCONTROLLER_HPP_INCLUDED
 
-#include "Controllers/Controller.hpp"
+#include <map>
 
+#include "Controllers/Controller.hpp"
 #include "System/Vector2f.hpp"
 #include "Teams/Job.hpp"
 
-#include <map>
-
 class TacticalZone;
+class Player;
+class Ship;
 
 class BotController : public Controller
 {

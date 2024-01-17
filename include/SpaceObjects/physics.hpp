@@ -18,10 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef PHYSICS_HPP_INCLUDED
 #define PHYSICS_HPP_INCLUDED
 
-#include "System/Vector2f.hpp"
-
 #include <list>
 #include <vector>
+
+#include "System/Vector2f.hpp"
 
 #define MOBILES 1
 #define STATICS 2

@@ -17,15 +17,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/stars.hpp"
 
+#include <GL/gl.h>
+
 #include "Media/texture.hpp"
 #include "Particles/Star.hpp"
-#include "Particles/particles.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "System/window.hpp"
-#include "defines.hpp"
-
-#include <SFML/System.hpp>
 
 namespace stars
 {

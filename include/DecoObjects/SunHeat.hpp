@@ -19,8 +19,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define SUNHEAT_HPP_INCLUDED
 
 #include "DecoObjects/DecoObject.hpp"
-
 #include "Media/texture.hpp"
+#include "System/Vector2f.hpp"
 
 class Sun;
 

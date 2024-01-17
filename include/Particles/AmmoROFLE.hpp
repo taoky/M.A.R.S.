@@ -18,7 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef AMMOROFLE_HPP_INCLUDED
 #define AMMOROFLE_HPP_INCLUDED
 
+#include <list>
+#include <memory>
+
 #include "Particles/Particle.hpp"
+
+class Player;
+class SpaceObject;
+struct Color3f;
+struct Vector2f;
 
 class AmmoROFLE : public Particle<AmmoROFLE>
 {

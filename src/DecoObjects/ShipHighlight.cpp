@@ -17,9 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "DecoObjects/ShipHighlight.hpp"
 
-#include "Particles/AmmoInsta.hpp"
+#include <GL/gl.h>
+#include <cmath>
+#include <memory>
+
+#include "Media/texture.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
+#include "Weapons/Weapon.hpp"
+#include "Weapons/weapons.hpp"
 
 void ShipHighlight::draw() const
 {

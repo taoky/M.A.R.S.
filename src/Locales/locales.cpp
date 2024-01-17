@@ -17,13 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Locales/locales.hpp"
 
+#include <SFML/System/String.hpp>
+#include <algorithm>
+#include <iostream>
+#include <sstream>
+#include <string>
+
 #include "Locales/Locale.hpp"
 #include "Media/file.hpp"
 #include "System/generateName.hpp"
 #include "System/settings.hpp"
-
-#include <iostream>
-#include <sstream>
 
 namespace locales
 {
@@ -33,20 +36,19 @@ namespace
 std::vector<Locale> locales_;
 std::vector<sf::String> localeStrings_(COUNT, "Error");
 
-bool load(std::string const & fileName)
+auto load(std::string const & fileName) -> bool
 {
     std::vector<sf::String> lines;
     if (file::load(fileName, lines))
     {
-        for (std::vector<sf::String>::iterator it = lines.begin();
-             it != lines.end(); ++it)
+        for (auto & line : lines)
         {
-            std::stringstream sstr(it->toAnsiString());
+            std::stringstream sstr(line.toAnsiString());
             int id;
             sstr >> id;
-            if (id < COUNT && it->getSize() > 4)
+            if (id < COUNT && line.getSize() > 4)
             {
-                sf::String tmp(*it);
+                sf::String tmp(line);
                 tmp.erase(0, 4);
 
                 for (int i = 0; i < tmp.getSize(); ++i)
@@ -136,7 +138,7 @@ bool load(std::string const & fileName)
 }
 } // namespace
 
-bool load()
+auto load() -> bool
 {
     std::vector<sf::String> lines;
     if (file::load(settings::C_dataPath + "locales/locales.conf", lines))
@@ -144,17 +146,16 @@ bool load()
         locales_.clear();
         Locale newLocale;
         bool first(true);
-        for (std::vector<sf::String>::iterator it = lines.begin();
-             it != lines.end(); ++it)
+        for (auto & line : lines)
         {
-            if ((*it).toAnsiString()[0] == '[')
+            if (line.toAnsiString()[0] == '[')
             {
                 if (!first)
                 {
                     locales_.push_back(newLocale);
                     newLocale = Locale();
                 }
-                newLocale.name_ = *it;
+                newLocale.name_ = line;
                 newLocale.name_.erase(0, 1);
                 newLocale.name_.erase(newLocale.name_.getSize() - 1, 1);
 
@@ -162,11 +163,11 @@ bool load()
             }
             else
             {
-                std::stringstream sstr(std::string((*it).toAnsiString()));
+                std::stringstream sstr(std::string(line.toAnsiString()));
                 std::string flag;
                 sstr >> flag;
 
-                sf::String arg(*it);
+                sf::String arg(line);
                 arg.erase(0, flag.size() + 1);
 
                 if (flag == "file:")
@@ -224,11 +225,17 @@ bool load()
     }
 }
 
-std::vector<Locale> const & getLocales() { return locales_; }
+auto getLocales() -> std::vector<Locale> const & { return locales_; }
 
-sf::String * getLocale(LocaleType type) { return &localeStrings_[type]; }
+auto getLocale(LocaleType type) -> sf::String *
+{
+    return &localeStrings_[type];
+}
 
-Locale const & getCurrentLocale() { return locales_[settings::C_languageID]; }
+auto getCurrentLocale() -> Locale const &
+{
+    return locales_[settings::C_languageID];
+}
 
 void setCurrentLocale()
 {

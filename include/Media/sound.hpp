@@ -18,10 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SOUND_HPP_INCLUDED
 #define SOUND_HPP_INCLUDED
 
+#include <SFML/Audio.hpp>
+
 #include "System/Vector2f.hpp"
 #include "defines.hpp"
-
-#include <SFML/Audio.hpp>
 
 /// A namespace for playing sound effects.
 /// It is possible to choose which sound to play,

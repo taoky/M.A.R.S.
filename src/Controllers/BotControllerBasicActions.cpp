@@ -16,10 +16,10 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Controllers/BotController.hpp"
-
 #include "Players/Player.hpp"
 #include "SpaceObjects/Home.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "Teams/Team.hpp"
 

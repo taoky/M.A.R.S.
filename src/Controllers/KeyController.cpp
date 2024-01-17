@@ -17,10 +17,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Controllers/KeyController.hpp"
 
+#include <algorithm>
+
+#include "Controllers/controllers.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "System/settings.hpp"
 #include "System/window.hpp"
+#include "Teams/Job.hpp"
 #include "Teams/Team.hpp"
 
 KeyController::KeyController(Player * slave) : Controller(slave) {}

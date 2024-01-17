@@ -18,9 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef FONT_HPP_INCLUDED
 #define FONT_HPP_INCLUDED
 
+#include <SFML/Graphics.hpp>
+
 #include "System/settings.hpp"
 
-#include <SFML/Graphics.hpp>
+namespace sf
+{
+class Font;
+} // namespace sf
 
 /// A namespace for loading font files.
 

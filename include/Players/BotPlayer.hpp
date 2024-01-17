@@ -18,7 +18,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef BOTPLAYER_HPP_INCLUDED
 #define BOTPLAYER_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+#include <utility>
+
 #include "Players/Player.hpp"
+#include "System/Color3f.hpp"
 
 class BotController;
 class Team;

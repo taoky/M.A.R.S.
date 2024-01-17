@@ -17,16 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Specials/Blast.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Games/games.hpp"
 #include "Menu/menus.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/physics.hpp"
-#include "SpaceObjects/ships.hpp"
+#include "System/Color3f.hpp"
 #include "System/timer.hpp"
 #include "Teams/Team.hpp"
-
-#include <SFML/Graphics.hpp>
 
 void Blast::draw(float alpha) const
 {
@@ -99,7 +100,7 @@ void Blast::activate() const
     }
 }
 
-float Blast::radius() const
+auto Blast::radius() const -> float
 {
     return (parent_->fragStars_ > 0 ? parent_->fragStars_ * 150.f + 150.f
                                     : 0.f);

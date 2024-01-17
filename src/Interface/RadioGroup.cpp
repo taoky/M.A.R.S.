@@ -17,29 +17,30 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/RadioGroup.hpp"
 
+#include <algorithm>
+
+#include "Interface/RadioButton.hpp"
 #include "Menu/menus.hpp"
+#include "System/Vector2f.hpp"
 
 RadioGroup::RadioGroup() : UiElement(Vector2f(), 0, 0) {}
 
 RadioGroup::~RadioGroup()
 {
-    for (std::vector<RadioButton *>::iterator i = radioButtons_.begin();
-         i != radioButtons_.end(); ++i)
-        delete *i;
+    for (auto & radioButton : radioButtons_)
+        delete radioButton;
 }
 
 void RadioGroup::mouseMoved(Vector2f const & position)
 {
-    for (std::vector<RadioButton *>::iterator i = radioButtons_.begin();
-         i != radioButtons_.end(); ++i)
-        (*i)->mouseMoved(position);
+    for (auto & radioButton : radioButtons_)
+        radioButton->mouseMoved(position);
 }
 
 void RadioGroup::mouseLeft(bool down)
 {
-    for (std::vector<RadioButton *>::iterator i = radioButtons_.begin();
-         i != radioButtons_.end(); ++i)
-        (*i)->mouseLeft(down);
+    for (auto & radioButton : radioButtons_)
+        radioButton->mouseLeft(down);
 }
 
 void RadioGroup::keyEvent(bool down, Key const & key)
@@ -48,7 +49,7 @@ void RadioGroup::keyEvent(bool down, Key const & key)
         focusedButton_->keyEvent(down, key);
 }
 
-bool RadioGroup::tabNext()
+auto RadioGroup::tabNext() -> bool
 {
     if (radioButtons_.size() > 0)
     {
@@ -79,7 +80,7 @@ bool RadioGroup::tabNext()
     return true;
 }
 
-bool RadioGroup::tabPrevious()
+auto RadioGroup::tabPrevious() -> bool
 {
     if (radioButtons_.size() > 0)
     {
@@ -112,7 +113,7 @@ bool RadioGroup::tabPrevious()
 void RadioGroup::setFocus(UiElement * toBeFocused, bool isPrevious)
 {
     UiElement::setFocus(this, isPrevious);
-    RadioButton * toFocus = dynamic_cast<RadioButton *>(toBeFocused);
+    auto * toFocus = dynamic_cast<RadioButton *>(toBeFocused);
     if (toFocus)
     {
         focusedButton_ = toFocus;
@@ -129,17 +130,15 @@ void RadioGroup::setFocus(UiElement * toBeFocused, bool isPrevious)
 void RadioGroup::clearFocus()
 {
     UiElement::clearFocus();
-    focusedButton_ = NULL;
-    for (std::vector<RadioButton *>::iterator i = radioButtons_.begin();
-         i != radioButtons_.end(); ++i)
-        (*i)->clearFocus();
+    focusedButton_ = nullptr;
+    for (auto & radioButton : radioButtons_)
+        radioButton->clearFocus();
 }
 
 void RadioGroup::draw() const
 {
-    for (std::vector<RadioButton *>::const_iterator i = radioButtons_.begin();
-         i != radioButtons_.end(); ++i)
-        (*i)->draw();
+    for (auto radioButton : radioButtons_)
+        radioButton->draw();
 }
 
 void RadioGroup::addRadioButton(RadioButton * toBeAdded)
@@ -151,7 +150,6 @@ void RadioGroup::addRadioButton(RadioButton * toBeAdded)
 
 void RadioGroup::allOff()
 {
-    for (std::vector<RadioButton *>::iterator i = radioButtons_.begin();
-         i != radioButtons_.end(); ++i)
-        *((*i)->value_) = false;
+    for (auto & radioButton : radioButtons_)
+        *(radioButton->value_) = false;
 }

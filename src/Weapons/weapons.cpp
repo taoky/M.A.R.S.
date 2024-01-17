@@ -17,6 +17,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/weapons.hpp"
 
+#include "Controllers/controllers.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "System/settings.hpp"
@@ -34,7 +35,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 namespace weapons
 {
 
-Weapon * create(WeaponType type, Ship * parent)
+auto create(WeaponType type, Ship * parent) -> Weapon *
 {
     int i(1), tmpType(type);
     while (i < wNoWeapon && !(settings::C_EnabledWeapons & tmpType))
@@ -77,7 +78,7 @@ Weapon * create(WeaponType type, Ship * parent)
     }
 }
 
-Weapon * createNext(WeaponType type, Ship * parent)
+auto createNext(WeaponType type, Ship * parent) -> Weapon *
 {
     int next(type == wNoWeapon ? 1 : type * 2), i(1);
 
@@ -90,7 +91,7 @@ Weapon * createNext(WeaponType type, Ship * parent)
     return create(static_cast<WeaponType>(next), parent);
 }
 
-Weapon * createPrev(WeaponType type, Ship * parent)
+auto createPrev(WeaponType type, Ship * parent) -> Weapon *
 {
     int next(type == 1 ? wNoWeapon : type * 0.5), i(1);
 

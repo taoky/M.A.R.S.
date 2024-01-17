@@ -17,24 +17,25 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Menu/ShaderError.hpp"
 
-#include "Games/games.hpp"
 #include "Interface/Button.hpp"
+#include "Interface/Label.hpp"
 #include "Interface/UiWindow.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
-#include "System/window.hpp"
+#include "System/Vector2f.hpp"
 
-UiWindow * ShaderError::instance_(NULL);
+UiWindow * ShaderError::instance_(nullptr);
 bool ShaderError::kOk_(false);
 
-UiWindow * ShaderError::get()
+auto ShaderError::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new ShaderError(350, 80);
-        instance_->addWidget(new Button(locales::getLocale(locales::Ok), NULL,
-                                        &kOk_, Vector2f(250, 50), 90, 20));
+        instance_->addWidget(new Button(locales::getLocale(locales::Ok),
+                                        nullptr, &kOk_, Vector2f(250, 50), 90,
+                                        20));
         instance_->addWidget(new Label(locales::getLocale(locales::ShaderError),
                                        TEXT_ALIGN_LEFT, Vector2f(10, 8)));
     }
@@ -54,5 +55,5 @@ void ShaderError::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

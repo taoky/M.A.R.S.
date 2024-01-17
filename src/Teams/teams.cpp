@@ -17,11 +17,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Teams/teams.hpp"
 
-#include "SpaceObjects/Home.hpp"
-#include "Teams/Team.hpp"
-
+#include <algorithm>
+#include <atomic>
 #include <climits>
+#include <iostream>
 #include <memory>
+
+#include "Teams/Team.hpp"
 
 extern std::atomic_bool exiting;
 
@@ -32,7 +34,7 @@ namespace
 std::vector<std::unique_ptr<Team>> allTeams_;
 }
 
-Team * addTeam(Team * newTeam)
+auto addTeam(Team * newTeam) -> Team *
 {
     allTeams_.push_back(std::unique_ptr<Team>(newTeam));
     return newTeam;
@@ -41,8 +43,8 @@ Team * addTeam(Team * newTeam)
 void assignHomes(Home * home)
 {
     if (allTeams_.size() > 0)
-        for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
-            (*it)->setHome(home);
+        for (auto & allTeam : allTeams_)
+            allTeam->setHome(home);
     else
         std::cout << "Cant assign Home Planet! No Teams are specified!\n";
 }
@@ -61,44 +63,47 @@ void assignHomes(Home * homeL, Home * homeR)
 
 void update()
 {
-    for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
-        (*it)->update();
+    for (auto & allTeam : allTeams_)
+        allTeam->update();
 }
 
-Team const * getTeamL() { return allTeams_[0].get(); }
+auto getTeamL() -> Team const * { return allTeams_[0].get(); }
 
-Team const * getTeamR() { return allTeams_[1].get(); }
+auto getTeamR() -> Team const * { return allTeams_[1].get(); }
 
-std::vector<std::unique_ptr<Team>> const & getAllTeams() { return allTeams_; }
+auto getAllTeams() -> std::vector<std::unique_ptr<Team>> const &
+{
+    return allTeams_;
+}
 
-Team const * getEnemy(Team const * checker)
+auto getEnemy(Team const * checker) -> Team const *
 {
     return checker == allTeams_[0].get() ? allTeams_[1].get()
                                          : allTeams_[0].get();
 }
 
-int getFirstPoints()
+auto getFirstPoints() -> int
 {
     int highest(INT_MIN);
-    for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
-        if ((*it)->points() > highest)
-            highest = (*it)->points();
+    for (auto & allTeam : allTeams_)
+        if (allTeam->points() > highest)
+            highest = allTeam->points();
     return highest;
 }
 
-int getSecondPoints()
+auto getSecondPoints() -> int
 {
     int first(INT_MIN);
     int second(INT_MIN);
-    for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
-        if ((*it)->points() >= first)
+    for (auto & allTeam : allTeams_)
+        if (allTeam->points() >= first)
         {
             second = first;
-            first = (*it)->points();
+            first = allTeam->points();
         }
-        else if ((*it)->points() > second)
+        else if (allTeam->points() > second)
         {
-            second = (*it)->points();
+            second = allTeam->points();
         }
     if (second == INT_MIN)
         second = 0;
@@ -107,8 +112,8 @@ int getSecondPoints()
 
 void resetTeamPoints()
 {
-    for (auto it = allTeams_.begin(); it != allTeams_.end(); ++it)
-        (*it)->resetPoints();
+    for (auto & allTeam : allTeams_)
+        allTeam->resetPoints();
 }
 
 void clear()

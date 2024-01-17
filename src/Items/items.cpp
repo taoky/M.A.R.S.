@@ -17,6 +17,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Items/items.hpp"
 
+#include <GL/gl.h>
+#include <atomic>
+#include <cmath>
+#include <list>
+#include <stdlib.h>
+#include <vector>
+
 #include "Items/CannonControl.hpp"
 #include "Items/PUFuel.hpp"
 #include "Items/PUHealth.hpp"
@@ -24,14 +31,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Items/PUShield.hpp"
 #include "Items/PUSleep.hpp"
 #include "Items/PowerUp.hpp"
+#include "Media/texture.hpp"
 #include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
+#include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "defines.hpp"
-
-#include <atomic>
-#include <list>
 
 extern std::atomic_bool exiting;
 
@@ -40,7 +48,7 @@ namespace items
 
 namespace
 {
-CannonControl * cannonControl_(NULL);
+CannonControl * cannonControl_(nullptr);
 std::list<std::unique_ptr<PowerUp>> powerUps_;
 
 void spawnPowerUp()
@@ -59,10 +67,9 @@ void spawnPowerUp()
 
         // check for collisions with other objects
         newPowerUpFits = true;
-        for (auto it = spaceObjects::getObjects().begin();
-             it != spaceObjects::getObjects().end(); ++it)
-            if (((*it)->location() - position).lengthSquare() <
-                std::pow((*it)->radius() + 50, 2))
+        for (const auto & it : spaceObjects::getObjects())
+            if ((it->location() - position).lengthSquare() <
+                std::pow(it->radius() + 50, 2))
             {
                 newPowerUpFits = false;
                 break;
@@ -145,8 +152,8 @@ void draw()
     if (cannonControl_)
         cannonControl_->draw();
 
-    for (auto it = powerUps_.begin(); it != powerUps_.end(); ++it)
-        (*it)->draw();
+    for (auto & powerUp : powerUps_)
+        powerUp->draw();
 
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -160,9 +167,8 @@ void addCannonControl()
     if (homes.size() >= 2)
     {
         Vector2f midPoint;
-        for (std::vector<Home *>::const_iterator it = homes.begin();
-             it != homes.end(); ++it)
-            midPoint += (*it)->location();
+        for (auto home : homes)
+            midPoint += home->location();
         midPoint /= homes.size();
         cannonControl_ = new CannonControl(midPoint);
     }
@@ -170,16 +176,19 @@ void addCannonControl()
         cannonControl_ = new CannonControl(Vector2f());
 }
 
-CannonControl * getCannonControl() { return cannonControl_; }
+auto getCannonControl() -> CannonControl * { return cannonControl_; }
 
-std::list<std::unique_ptr<PowerUp>> const & getPowerUps() { return powerUps_; }
+auto getPowerUps() -> std::list<std::unique_ptr<PowerUp>> const &
+{
+    return powerUps_;
+}
 
 void clear()
 {
     if (cannonControl_)
     {
         delete cannonControl_;
-        cannonControl_ = NULL;
+        cannonControl_ = nullptr;
     }
     if (!exiting)
         powerUps_.clear();

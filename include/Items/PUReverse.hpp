@@ -18,11 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef PUREVERSE_HPP_INCLUDED
 #define PUREVERSE_HPP_INCLUDED
 
+#include <SFML/System.hpp>
+
 #include "Items/PowerUp.hpp"
+#include "Items/items.hpp"
+#include "System/Color3f.hpp"
 #include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 
-#include <SFML/System.hpp>
+struct Vector2f;
 
 class PUReverse : public PowerUp
 {

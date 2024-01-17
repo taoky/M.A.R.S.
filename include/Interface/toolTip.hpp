@@ -18,9 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TOOLTIP_HPP_INCLUDED
 #define TOOLTIP_HPP_INCLUDED
 
+#include <SFML/System.hpp>
+
 #include "System/Vector2f.hpp"
 
-#include <SFML/System.hpp>
+namespace sf
+{
+class String;
+} // namespace sf
+struct Vector2f;
 
 namespace toolTip
 {

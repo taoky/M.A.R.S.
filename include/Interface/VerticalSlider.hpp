@@ -18,10 +18,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef VERTICALSLIDER_HPP_INCLUDED
 #define VERTICALSLIDER_HPP_INCLUDED
 
+#include <vector>
+
 #include "Interface/Label.hpp"
 #include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
 
-#include <vector>
+struct Vector2f;
 
 class VerticalSlider : public UiElement
 {

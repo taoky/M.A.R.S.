@@ -17,15 +17,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/VerticalSlider.hpp"
 
-#include "Interface/toolTip.hpp"
-#include "Locales/locales.hpp"
-#include "Media/text.hpp"
-#include "Media/texture.hpp"
-#include "System/settings.hpp"
-#include "System/window.hpp"
+#include <GL/gl.h>
 
-#include <SFML/OpenGL.hpp>
-#include <sstream>
+#include "Locales/Locale.hpp"
+#include "Locales/locales.hpp"
+#include "Media/texture.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/window.hpp"
 
 VerticalSlider::VerticalSlider(float * value, float minValue, float maxValue,
                                Vector2f const & topLeft, int height)

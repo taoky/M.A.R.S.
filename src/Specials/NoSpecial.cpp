@@ -17,12 +17,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Specials/NoSpecial.hpp"
 
-#include "Games/games.hpp"
+#include <GL/gl.h>
+
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "System/Color3f.hpp"
 #include "Teams/Team.hpp"
-
-#include <SFML/Graphics.hpp>
 
 void NoSpecial::draw(float alpha) const
 {

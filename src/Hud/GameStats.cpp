@@ -17,14 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Hud/GameStats.hpp"
 
+#include <GL/gl.h>
+#include <SFML/System/String.hpp>
+#include <sstream>
+#include <string>
+
 #include "Media/text.hpp"
 #include "Media/texture.hpp"
 #include "Particles/particles.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
-
-#include <SFML/OpenGL.hpp>
-#include <sstream>
 
 void GameStats::draw() const
 {

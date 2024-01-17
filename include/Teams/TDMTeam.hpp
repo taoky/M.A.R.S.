@@ -18,6 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TDMTEAM_HPP_INCLUDED
 #define TDMTEAM_HPP_INCLUDED
 
+#include <vector>
+
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "Teams/Team.hpp"
 
 class TDMTeam : public Team

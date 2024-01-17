@@ -19,6 +19,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define MUSIC_HPP_INCLUDED
 
 #include <SFML/Audio.hpp>
+#include <string>
 
 /// A namespace for playing music.
 /// Music is streamed from OGG files.

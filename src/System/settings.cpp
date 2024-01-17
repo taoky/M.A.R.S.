@@ -17,23 +17,26 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "System/settings.hpp"
 
-#include "Media/file.hpp"
-#include "Shaders/postFX.hpp"
-#include "Vendor/xdg.hpp"
-#include "defines.hpp"
-
-#include <sys/stat.h>
-
+#include <SFML/Config.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <sys/stat.h>
+#include <vector>
+
+#include "Media/file.hpp"
+#include "System/Color3f.hpp"
+#include "Vendor/xdg.hpp"
+#include "defines.hpp"
 
 #if defined(__WIN32__) || defined(_WIN32)
 #include <shlobj.h>
 #include <windows.h>
 #endif
 
-inline int clamp(int x, int min, int max)
+inline auto clamp(int x, int min, int max) -> int
 {
     return x < min ? min : (x > max ? max : x);
 }
@@ -131,7 +134,7 @@ int C_iDumb = 70;
 sf::String C_ip = "192.168.0.1";
 sf::String C_port = "12345";
 
-bool save()
+auto save() -> bool
 {
     std::ofstream outStream((C_configPath + "mars.cfg").c_str());
 
@@ -277,7 +280,7 @@ bool save()
     }
 }
 
-bool load()
+auto load() -> bool
 {
 // check whether application directory in the home diretory exists, if not
 // create it
@@ -292,9 +295,9 @@ bool load()
 
 #if defined(__WIN32__) || defined(_WIN32)
     TCHAR szAppData[MAX_PATH];
-    SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szAppData);
+    SHGetFolderPath(nullptr, CSIDL_APPDATA, nullptr, 0, szAppData);
     std::string home(szAppData);
-    CreateDirectory((home + "/.marsshooter/").c_str(), NULL);
+    CreateDirectory((home + "/.marsshooter/").c_str(), nullptr);
 #endif
 
 #ifdef __APPLE__
@@ -330,7 +333,7 @@ bool load()
 
 #if defined(__WIN32__) || defined(_WIN32)
         TCHAR szAppData[MAX_PATH];
-        SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szAppData);
+        SHGetFolderPath(nullptr, CSIDL_APPDATA, nullptr, 0, szAppData);
         std::string home(szAppData);
 
         if (std::ifstream((C_configPath + "mars.cfg").c_str()))
@@ -432,10 +435,9 @@ bool load()
     std::vector<sf::String> lines;
     if (file::load(C_configPath + "mars.cfg", lines))
     {
-        for (std::vector<sf::String>::iterator it = lines.begin();
-             it != lines.end(); ++it)
+        for (auto & line : lines)
         {
-            std::istringstream iss(it->toAnsiString());
+            std::istringstream iss(line.toAnsiString());
             std::string inputLine;
             iss >> inputLine;
             if (inputLine == "[soundVolume]")

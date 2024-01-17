@@ -19,11 +19,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/Button.hpp"
 #include "Interface/ComboBox.hpp"
+#include "Interface/UiElement.hpp"
 #include "Media/text.hpp"
-#include "Media/texture.hpp"
 #include "Menu/menus.hpp"
-
-#include <SFML/OpenGL.hpp>
+#include "System/Vector2f.hpp"
 
 DropDownWindow::DropDownWindow(int width, ComboBox * parent,
                                std::vector<sf::String> elements)
@@ -37,7 +36,7 @@ DropDownWindow::DropDownWindow(int width, ComboBox * parent,
         elements_[i] = std::make_pair(elements[i], false);
         Button * newOne;
         newOne =
-            new Button(&(elements_[i].first), NULL, &(elements_[i].second),
+            new Button(&(elements_[i].first), nullptr, &(elements_[i].second),
                        Vector2f(10, top), width_ - 20, 20, TEXT_ALIGN_CENTER);
         newOne->setParent(this);
         addWidget(newOne);
@@ -47,13 +46,11 @@ DropDownWindow::DropDownWindow(int width, ComboBox * parent,
 
 void DropDownWindow::checkWidgets()
 {
-    for (std::vector<std::pair<sf::String, bool>>::iterator it =
-             elements_.begin();
-         it != elements_.end(); ++it)
-        if (it->second)
+    for (auto & element : elements_)
+        if (element.second)
         {
-            it->second = false;
-            *(parent_->currentValue_) = it->first;
+            element.second = false;
+            *(parent_->currentValue_) = element.first;
             menus::hideWindow();
         }
 }

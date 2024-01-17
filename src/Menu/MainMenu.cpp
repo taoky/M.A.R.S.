@@ -28,9 +28,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Menu/NewGameMenu.hpp"
 #include "Menu/OptionsMenu.hpp"
 #include "Menu/menus.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 
-UiWindow * MainMenu::instance_(NULL);
+UiWindow * MainMenu::instance_(nullptr);
 bool MainMenu::kStartLocal_(false);
 bool MainMenu::kStartTut_(false);
 bool MainMenu::kStartMulti_(false);
@@ -39,31 +40,32 @@ bool MainMenu::kOptions_(false);
 bool MainMenu::kAbout_(false);
 bool MainMenu::kExit_(false);
 
-UiWindow * MainMenu::get()
+auto MainMenu::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new MainMenu(180, 220, Vector2f(0.f, 50.f));
         instance_->addWidget(
-            new Button(locales::getLocale(locales::StartLocalGame), NULL,
+            new Button(locales::getLocale(locales::StartLocalGame), nullptr,
                        &kStartLocal_, Vector2f(10, 10), 160, 20));
         instance_->addWidget(
-            new Button(locales::getLocale(locales::StartTutorial), NULL,
+            new Button(locales::getLocale(locales::StartTutorial), nullptr,
                        &kStartTut_, Vector2f(10, 40), 160, 20));
         instance_->addWidget(
-            new Button(locales::getLocale(locales::StartNetworkGame), NULL,
+            new Button(locales::getLocale(locales::StartNetworkGame), nullptr,
                        &kStartMulti_, Vector2f(10, 70), 160, 20));
         instance_->addWidget(
-            new Button(locales::getLocale(locales::JoinNetworkGame), NULL,
+            new Button(locales::getLocale(locales::JoinNetworkGame), nullptr,
                        &kJoinMulti_, Vector2f(10, 100), 160, 20));
         instance_->addWidget(new Button(locales::getLocale(locales::Options),
-                                        NULL, &kOptions_, Vector2f(10, 130),
+                                        nullptr, &kOptions_, Vector2f(10, 130),
                                         160, 20));
         instance_->addWidget(new Button(locales::getLocale(locales::About),
-                                        NULL, &kAbout_, Vector2f(10, 160), 160,
-                                        20));
-        instance_->addWidget(new Button(locales::getLocale(locales::Quit), NULL,
-                                        &kExit_, Vector2f(10, 190), 160, 20));
+                                        nullptr, &kAbout_, Vector2f(10, 160),
+                                        160, 20));
+        instance_->addWidget(new Button(locales::getLocale(locales::Quit),
+                                        nullptr, &kExit_, Vector2f(10, 190),
+                                        160, 20));
     }
     return instance_;
 }
@@ -114,5 +116,5 @@ void MainMenu::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

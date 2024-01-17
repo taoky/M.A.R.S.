@@ -18,9 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef AMMOSHOTGUN_HPP_INCLUDED
 #define AMMOSHOTGUN_HPP_INCLUDED
 
-#include "Particles/Particle.hpp"
+#include <list>
+#include <memory>
 
+#include "Particles/Particle.hpp"
 #include "System/Color3f.hpp"
+
+class Player;
+class SpaceObject;
+struct Vector2f;
 
 class AmmoShotgun : public Particle<AmmoShotgun>
 {

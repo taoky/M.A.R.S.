@@ -22,6 +22,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/Color3f.hpp"
 
 class Label;
+namespace sf
+{
+class String;
+} // namespace sf
+struct Vector2f;
 
 class LabeledBox : public UiElement
 {

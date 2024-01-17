@@ -15,61 +15,63 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
+#include <algorithm>
+#include <vector>
+
 #include "Controllers/BotController.hpp"
 #include "Controllers/KeyController.hpp"
+#include "Controllers/controllers.hpp"
 #include "Players/Player.hpp"
 #include "System/settings.hpp"
 
-#include <SFML/Window.hpp>
+struct Key;
 
 namespace controllers
 {
 namespace
 {
-KeyController * keyControllers1_(NULL);
-KeyController * keyControllers2_(NULL);
+KeyController * keyControllers1_(nullptr);
+KeyController * keyControllers2_(nullptr);
 std::vector<BotController *> botControllers_;
 } // namespace
 
 void update()
 {
-    if (keyControllers1_ != NULL &&
+    if (keyControllers1_ != nullptr &&
         (settings::C_playerIteamL | settings::C_playerIteamR))
         keyControllers1_->update();
-    if (keyControllers2_ != NULL &&
+    if (keyControllers2_ != nullptr &&
         (settings::C_playerIIteamL | settings::C_playerIIteamR))
         keyControllers2_->update();
 
-    for (std::vector<BotController *>::iterator it = botControllers_.begin();
-         it != botControllers_.end(); ++it)
-        (*it)->update();
+    for (auto & botController : botControllers_)
+        botController->update();
 }
 
 void singleKeyEvent(Key const & keyCode)
 {
-    if (keyControllers1_ != NULL &&
+    if (keyControllers1_ != nullptr &&
         (settings::C_playerIteamL | settings::C_playerIteamR))
         keyControllers1_->update(keyCode);
-    if (keyControllers2_ != NULL &&
+    if (keyControllers2_ != nullptr &&
         (settings::C_playerIIteamL | settings::C_playerIIteamR))
         keyControllers2_->update(keyCode);
 }
 
 void draw()
 {
-    for (std::vector<BotController *>::iterator it = botControllers_.begin();
-         it != botControllers_.end(); ++it)
-        (*it)->draw();
+    for (auto & botController : botControllers_)
+        botController->draw();
 }
 
-BotController * addBotController(Player * slave, float strength)
+auto addBotController(Player * slave, float strength) -> BotController *
 {
-    BotController * bot = new BotController(slave, strength);
+    auto * bot = new BotController(slave, strength);
     botControllers_.push_back(bot);
     return bot;
 }
 
-KeyController * addKeyController(Player * slave)
+auto addKeyController(Player * slave) -> KeyController *
 {
     switch (slave->type())
     {
@@ -84,21 +86,19 @@ KeyController * addKeyController(Player * slave)
 
 void resetBots()
 {
-    for (std::vector<BotController *>::iterator it = botControllers_.begin();
-         it != botControllers_.end(); ++it)
-        (*it)->reset();
+    for (auto & botController : botControllers_)
+        botController->reset();
 }
 
 void clear()
 {
     delete keyControllers1_;
     delete keyControllers2_;
-    keyControllers1_ = NULL;
-    keyControllers2_ = NULL;
+    keyControllers1_ = nullptr;
+    keyControllers2_ = nullptr;
 
-    for (std::vector<BotController *>::iterator it = botControllers_.begin();
-         it != botControllers_.end(); ++it)
-        delete *it;
+    for (auto & botController : botControllers_)
+        delete botController;
     botControllers_.clear();
 }
 } // namespace controllers

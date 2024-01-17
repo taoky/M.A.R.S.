@@ -16,10 +16,14 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Zones/TeamZone.hpp"
+
+#include <GL/gl.h>
+
 #include "SpaceObjects/SpaceObject.hpp"
+#include "System/Vector2f.hpp"
 #include "defines.hpp"
 
-bool TeamZone::isInside(SpaceObject const & toBeChecked) const
+auto TeamZone::isInside(SpaceObject const & toBeChecked) const -> bool
 {
     switch (homeSide_)
     {

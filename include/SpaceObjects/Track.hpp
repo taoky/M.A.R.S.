@@ -18,10 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TRACK_HPP_INCLUDED
 #define TRACK_HPP_INCLUDED
 
+#include <vector>
+
 #include "System/Color3f.hpp"
 #include "System/Vector2f.hpp"
-
-#include <vector>
 
 class Home;
 

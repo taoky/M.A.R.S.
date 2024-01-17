@@ -17,18 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "System/generateName.hpp"
 
-#include "Locales/locales.hpp"
-#include "Media/file.hpp"
-#include "System/settings.hpp"
-
+#include <SFML/Window/Keyboard.hpp>
 #include <algorithm>
-#include <chrono>
-#include <cstdlib>
-#include <ctime>
+#include <bits/chrono.h>
 #include <iostream>
 #include <list>
 #include <random>
 #include <sstream>
+#include <string>
+
+#include "Locales/locales.hpp"
+#include "Media/file.hpp"
+#include "System/settings.hpp"
 
 namespace generateName
 {
@@ -46,10 +46,9 @@ void loadBotNames()
     if (file::load(settings::C_dataPath + "botnames.txt", lines))
     {
         std::list<std::pair<sf::String, int>> newList;
-        for (std::vector<sf::String>::iterator it = lines.begin();
-             it != lines.end(); ++it)
+        for (auto & line : lines)
         {
-            if ((*it).toAnsiString()[0] == '[')
+            if (line.toAnsiString()[0] == '[')
             {
                 if (newList.size() > 0)
                 {
@@ -60,14 +59,14 @@ void loadBotNames()
             else
             {
                 std::stringstream strengthStream(
-                    std::string((*it).toAnsiString(), (*it).getSize() - 3));
+                    std::string(line.toAnsiString(), line.getSize() - 3));
                 int strength;
                 strengthStream >> strength;
-                (*it).erase((*it).getSize() - 3, 3);
-                while ((*it)[(*it).getSize() - 1] == ' ' ||
-                       (*it)[(*it).getSize() - 1] == '\t')
-                    (*it).erase((*it).getSize() - 1);
-                newList.push_back(std::make_pair(*it, strength));
+                line.erase(line.getSize() - 3, 3);
+                while (line[line.getSize() - 1] == ' ' ||
+                       line[line.getSize() - 1] == '\t')
+                    line.erase(line.getSize() - 1);
+                newList.emplace_back(line, strength);
             }
         }
     }
@@ -76,32 +75,32 @@ void loadBotNames()
         std::cout << "Failed to open botnames.txt! Reverting to some boring "
                      "default names...\n";
         std::list<std::pair<sf::String, int>> defaultnames;
-        defaultnames.push_back(std::make_pair("Ernst", 90));
-        defaultnames.push_back(std::make_pair("Holger", 50));
-        defaultnames.push_back(std::make_pair("Jimmy", 78));
-        defaultnames.push_back(std::make_pair("Arnold", 100));
-        defaultnames.push_back(std::make_pair("Ute", 92));
-        defaultnames.push_back(std::make_pair("John", 94));
-        defaultnames.push_back(std::make_pair("Matt", 20));
-        defaultnames.push_back(std::make_pair("Gudrun", 67));
-        defaultnames.push_back(std::make_pair("Ringo", 82));
-        defaultnames.push_back(std::make_pair("Elvis", 98));
-        defaultnames.push_back(std::make_pair("Bertold", 100));
-        defaultnames.push_back(std::make_pair("Karl", 87));
-        defaultnames.push_back(std::make_pair("Joe", 41));
-        defaultnames.push_back(std::make_pair("Tom", 95));
-        defaultnames.push_back(std::make_pair("Hilde", 84));
-        defaultnames.push_back(std::make_pair("Herbert", 85));
-        defaultnames.push_back(std::make_pair("Lars", 99));
-        defaultnames.push_back(std::make_pair("Jeremy", 36));
-        defaultnames.push_back(std::make_pair("Thomas", 57));
-        defaultnames.push_back(std::make_pair("Jenny", 99));
-        defaultnames.push_back(std::make_pair("James", 66));
-        defaultnames.push_back(std::make_pair("Erwin", 92));
-        defaultnames.push_back(std::make_pair("Thompson", 90));
-        defaultnames.push_back(std::make_pair("August", 30));
-        defaultnames.push_back(std::make_pair("Thorben", 77));
-        defaultnames.push_back(std::make_pair("Tony", 80));
+        defaultnames.emplace_back("Ernst", 90);
+        defaultnames.emplace_back("Holger", 50);
+        defaultnames.emplace_back("Jimmy", 78);
+        defaultnames.emplace_back("Arnold", 100);
+        defaultnames.emplace_back("Ute", 92);
+        defaultnames.emplace_back("John", 94);
+        defaultnames.emplace_back("Matt", 20);
+        defaultnames.emplace_back("Gudrun", 67);
+        defaultnames.emplace_back("Ringo", 82);
+        defaultnames.emplace_back("Elvis", 98);
+        defaultnames.emplace_back("Bertold", 100);
+        defaultnames.emplace_back("Karl", 87);
+        defaultnames.emplace_back("Joe", 41);
+        defaultnames.emplace_back("Tom", 95);
+        defaultnames.emplace_back("Hilde", 84);
+        defaultnames.emplace_back("Herbert", 85);
+        defaultnames.emplace_back("Lars", 99);
+        defaultnames.emplace_back("Jeremy", 36);
+        defaultnames.emplace_back("Thomas", 57);
+        defaultnames.emplace_back("Jenny", 99);
+        defaultnames.emplace_back("James", 66);
+        defaultnames.emplace_back("Erwin", 92);
+        defaultnames.emplace_back("Thompson", 90);
+        defaultnames.emplace_back("August", 30);
+        defaultnames.emplace_back("Thorben", 77);
+        defaultnames.emplace_back("Tony", 80);
         botNames_.push_back(defaultnames);
     }
 }
@@ -125,47 +124,41 @@ void init_()
     loadShipNames();
 
     // init game names
-    gameNames_.push_back("Retarded Shooter");
-    gameNames_.push_back("Random Shooter");
-    gameNames_.push_back("Ridiculous Shooter");
-    gameNames_.push_back("Rapid Shooter");
-    gameNames_.push_back("Rough Shooter");
-    gameNames_.push_back("Rigged Shooter");
-    gameNames_.push_back("Rude Shooter");
-    gameNames_.push_back("Retro-Shooter");
+    gameNames_.emplace_back("Retarded Shooter");
+    gameNames_.emplace_back("Random Shooter");
+    gameNames_.emplace_back("Ridiculous Shooter");
+    gameNames_.emplace_back("Rapid Shooter");
+    gameNames_.emplace_back("Rough Shooter");
+    gameNames_.emplace_back("Rigged Shooter");
+    gameNames_.emplace_back("Rude Shooter");
+    gameNames_.emplace_back("Retro-Shooter");
 
     // shuffle both lists
     std::vector<std::pair<sf::String, int>> temp;
-    for (unsigned int i = 0; i < botNames_.size(); ++i)
+    for (auto & botName : botNames_)
     {
-        for (std::list<std::pair<sf::String, int>>::iterator it =
-                 botNames_[i].begin();
-             it != botNames_[i].end(); ++it)
+        for (auto it = botName.begin(); it != botName.end(); ++it)
             temp.push_back(*it);
         std::shuffle(temp.begin(), temp.end(), rng);
-        botNames_[i].clear();
-        for (std::vector<std::pair<sf::String, int>>::iterator it =
-                 temp.begin();
-             it != temp.end(); ++it)
-            botNames_[i].push_back(*it);
+        botName.clear();
+        for (auto & it : temp)
+            botName.push_back(it);
         temp.clear();
     }
 
     std::vector<sf::String> temp2;
-    for (std::list<sf::String>::iterator it = gameNames_.begin();
-         it != gameNames_.end(); ++it)
-        temp2.push_back(*it);
+    for (auto & gameName : gameNames_)
+        temp2.push_back(gameName);
     std::shuffle(temp2.begin(), temp2.end(), rng);
     gameNames_.clear();
-    for (std::vector<sf::String>::iterator it = temp2.begin();
-         it != temp2.end(); ++it)
-        gameNames_.push_back(*it);
+    for (auto & it : temp2)
+        gameNames_.push_back(it);
 
     initialized_ = true;
 }
 } // namespace
 
-std::pair<sf::String, int> const & bot(int randomNumber)
+auto bot(int randomNumber) -> std::pair<sf::String, int> const &
 {
     if (!initialized_)
         init_();
@@ -175,7 +168,7 @@ std::pair<sf::String, int> const & bot(int randomNumber)
     return *botNames_[group].begin();
 }
 
-sf::String const & game()
+auto game() -> sf::String const &
 {
     if (!initialized_)
         init_();
@@ -184,9 +177,9 @@ sf::String const & game()
     return *gameNames_.begin();
 }
 
-std::vector<sf::String> const & shipNames() { return shipNames_; }
+auto shipNames() -> std::vector<sf::String> const & { return shipNames_; }
 
-sf::String const key(Key const & key)
+auto key(Key const & key) -> sf::String const
 {
     sf::String result("Unknown Key");
     switch (key.type_)

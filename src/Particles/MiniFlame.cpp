@@ -17,10 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/MiniFlame.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Particles/particles.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
-#include "System/settings.hpp"
 #include "System/timer.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<MiniFlame>> MiniFlame::activeParticles_;
 

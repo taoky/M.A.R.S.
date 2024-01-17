@@ -15,25 +15,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Controllers/BotController.hpp"
+#include <bits/std_abs.h>
+#include <cmath>
+#include <memory>
+#include <vector>
 
-#include "Games/games.hpp"
+#include "Controllers/BotController.hpp"
 #include "Particles/AmmoInsta.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
-#include "SpaceObjects/balls.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/ships.hpp"
-#include "System/settings.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
+#include "Weapons/Weapon.hpp"
+#include "Weapons/weapons.hpp"
 #include "defines.hpp"
-
-#include <cfloat>
 
 int pathDepth = 0;
 
-bool BotController::moveTo(Vector2f const & location, float stopFactor,
+auto BotController::moveTo(Vector2f const & location, float stopFactor,
                            bool avoidBall, float minDistance, bool goingToLand)
+    -> bool
 {
     moveToPoint_ = location;
     nextPathPoint_ = calcPath(location, avoidBall);
@@ -77,7 +82,7 @@ bool BotController::moveTo(Vector2f const & location, float stopFactor,
             minDistance * minDistance);
 }
 
-bool BotController::turnTo(Vector2f const & location)
+auto BotController::turnTo(Vector2f const & location) -> bool
 {
     float shipRotation = ship()->rotation_ * M_PI / 180.f;
     Vector2f aimDirection_ = location - ship()->location();
@@ -90,7 +95,8 @@ bool BotController::turnTo(Vector2f const & location)
     return std::abs(angle) < 1.f;
 }
 
-Vector2f BotController::calcPath(Vector2f const & endPoint, bool avoidBall)
+auto BotController::calcPath(Vector2f const & endPoint, bool avoidBall)
+    -> Vector2f
 {
     // get some useful data...
     Vector2f toEndPoint = (endPoint - ship()->location()).normalize();
@@ -102,7 +108,7 @@ Vector2f BotController::calcPath(Vector2f const & endPoint, bool avoidBall)
         SpaceObject const * obstacle = spaceObjects::getObstacle(
             ship()->location(), endPoint, avoidBall, 40.f);
 
-        if (obstacle != NULL)
+        if (obstacle != nullptr)
         {
             // special case: obstacle center is target point
             if (obstacle->location() == endPoint)
@@ -116,11 +122,11 @@ Vector2f BotController::calcPath(Vector2f const & endPoint, bool avoidBall)
                 while (!fits && ++count < 6)
                 {
                     fits = true;
-                    for (auto it = allShips.begin(); it != allShips.end(); ++it)
+                    for (const auto & allShip : allShips)
                     {
-                        if ((it->get()) != ship() &&
-                            ((*it)->location() - surfacePoint).lengthSquare() <
-                                225.f)
+                        if ((allShip.get()) != ship() &&
+                            (allShip->location() - surfacePoint)
+                                    .lengthSquare() < 225.f)
                         {
                             fits = false;
                             Vector2f rotated;
@@ -176,7 +182,7 @@ Vector2f BotController::calcPath(Vector2f const & endPoint, bool avoidBall)
                 ship()->location(), newEndPoint, avoidBall, 40.f);
 
             // if a new obstacle was found, calculate the midpoint of both
-            if (newObstacle != NULL && obstacle != newObstacle)
+            if (newObstacle != nullptr && obstacle != newObstacle)
             {
                 Vector2f obst1obst2 =
                     (newObstacle->location() - obstacle->location())
@@ -208,11 +214,10 @@ void BotController::shootEnemies()
 {
     std::vector<Player *> const & enemies =
         teams::getEnemy(slave_->team())->members();
-    for (std::vector<Player *>::const_iterator it = enemies.begin();
-         it != enemies.end(); ++it)
+    for (auto enemie : enemies)
     {
-        Vector2f pathToEnemy = calcPath((*it)->ship()->location(), false);
-        if (pathToEnemy == (*it)->ship()->location())
+        Vector2f pathToEnemy = calcPath(enemie->ship()->location(), false);
+        if (pathToEnemy == enemie->ship()->location())
         {
             shootPoint(pathToEnemy);
             break;
@@ -249,17 +254,15 @@ void BotController::shootPoint(Vector2f const & location, bool avoidTeamMembers)
                 {
                     std::vector<Player *> const & teamMates =
                         slave_->team()->members();
-                    for (std::vector<Player *>::const_iterator it =
-                             teamMates.begin();
-                         it != teamMates.end(); ++it)
+                    for (auto teamMate : teamMates)
                     {
-                        if (*it != slave_)
+                        if (teamMate != slave_)
                             if (spaceObjects::isOnLine(
                                     ship()->location(),
                                     location - ship()->location(),
-                                    (*it)->ship()->location(), 20.f) &&
+                                    teamMate->ship()->location(), 20.f) &&
                                 ((location - ship()->location()) >
-                                 ((*it)->ship()->location() -
+                                 (teamMate->ship()->location() -
                                   ship()->location())))
                             {
                                 doShoot = 0;

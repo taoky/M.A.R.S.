@@ -17,21 +17,26 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/TextEdit.hpp"
 
+#include <GL/gl.h>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include <algorithm>
+
+#include "Interface/Label.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
-#include "System/settings.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
-#include <iostream>
 
 TextEdit::TextEdit(sf::String * text, sf::String * value, sf::String fallBack,
                    Vector2f const & topLeft, int width, int labelWidth,
                    int type, int maxLength)
     : UiElement(topLeft, width, 20), value_(value), fallBack_(fallBack),
-      label_(NULL), maxLength_(maxLength), cursorPos_(value->getSize()),
+      label_(nullptr), maxLength_(maxLength), cursorPos_(value->getSize()),
       cursorTimer_(0), type_(type), labelWidth_(labelWidth)
 {
 

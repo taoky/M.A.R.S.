@@ -22,6 +22,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 class SpaceObject;
 class Trail;
+struct Color3f;
 
 namespace trailEffects
 {

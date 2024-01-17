@@ -18,14 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef MENUS_HPP_INCLUDED
 #define MENUS_HPP_INCLUDED
 
-#include "System/Vector2f.hpp"
+#include <SFML/Config.hpp>
+#include <SFML/Window.hpp>
 
 #include "System/Key.hpp"
-
-#include <SFML/Window.hpp>
+#include "System/Vector2f.hpp"
 
 class UiWindow;
 class UiElement;
+struct Vector2f;
 
 namespace menus
 {

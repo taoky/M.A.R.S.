@@ -17,14 +17,20 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/AmmoInsta.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+#include <vector>
+
 #include "Media/sound.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/physics.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
 #include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
-#include "Teams/Team.hpp"
 #include "TrailEffects/Trail.hpp"
 #include "TrailEffects/trailEffects.hpp"
 #include "defines.hpp"
@@ -144,8 +150,8 @@ void AmmoInsta::onCollision(SpaceObject * with, Vector2f const & location,
     killMe();
 }
 
-int AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
-                       Team * team)
+auto AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
+                        Team * team) -> int
 {
 
     // glLineWidth(3.f);
@@ -159,13 +165,12 @@ int AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
     for (int i = 0; i < 10 + settings::C_iDumb * 0.9f; ++i)
     {
         Vector2f acceleration;
-        for (auto it = physics::getGravitySources().begin();
-             it != physics::getGravitySources().end(); ++it)
+        for (auto it : physics::getGravitySources())
         {
-            float distanceSquared = (from - (*it)->location()).lengthSquare();
+            float distanceSquared = (from - it->location()).lengthSquare();
             if (distanceSquared > 100.f)
-                acceleration += ((*it)->location() - from) * (*it)->mass() /
-                                distanceSquared;
+                acceleration +=
+                    (it->location() - from) * it->mass() / distanceSquared;
         }
         acceleration *= 60.f;
         Vector2f to(from + velocity * resolution +
@@ -177,16 +182,15 @@ int AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
              glVertex2f(to.x_, to.y_);
          glEnd();*/
 
-        for (auto it = ships::getShips().begin(); it != ships::getShips().end();
-             ++it)
+        for (const auto & it : ships::getShips())
         {
-            if ((*it)->attackable())
+            if (it->attackable())
             {
-                Vector2f shipLocation((*it)->location() +
-                                      (*it)->velocity() * resolution * i *
-                                          0.01f * settings::C_iDumb);
+                Vector2f shipLocation(it->location() +
+                                      it->velocity() * resolution * i * 0.01f *
+                                          settings::C_iDumb);
                 Vector2f orthoDir(velocity.y_, -velocity.x_);
-                orthoDir = orthoDir.normalize() * (*it)->radius();
+                orthoDir = orthoDir.normalize() * it->radius();
                 Vector2f shipLeft(shipLocation - orthoDir),
                     shipRight(shipLocation + orthoDir);
 
@@ -195,7 +199,7 @@ int AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
                     clockWise(orthoDir, from - shipRight) &&
                     !clockWise(orthoDir, to - shipRight))
                 {
-                    if ((*it)->getOwner()->team() != team)
+                    if (it->getOwner()->team() != team)
                     {
                         /* glPointSize(50.f);
                          glColor3f(0.f, 1.f, 0.f);
@@ -221,12 +225,11 @@ int AmmoInsta::hitsAny(Vector2f const & location, Vector2f const & direction,
             to.y_ > SPACE_Y_RESOLUTION + 100)
             return 0;
 
-        for (auto it = physics::getGravitySources().begin();
-             it != physics::getGravitySources().end(); ++it)
+        for (auto it : physics::getGravitySources())
         {
-            if ((*it)->type() != spaceObjects::oBlackHole &&
-                ((*it)->location() - to).lengthSquare() <
-                    std::pow((*it)->radius(), 2))
+            if (it->type() != spaceObjects::oBlackHole &&
+                (it->location() - to).lengthSquare() <
+                    std::pow(it->radius(), 2))
                 return 0;
         }
 

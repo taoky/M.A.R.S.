@@ -17,16 +17,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Media/file.hpp"
 
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
-
+#include <SFML/Config.hpp>
+#include <SFML/System/String.hpp>
+#include <SFML/System/Utf.hpp>
+#include <algorithm>
+#include <fribidi/fribidi-bidi-types.h>
+#include <fribidi/fribidi-char-sets.h>
+#include <fribidi/fribidi-types.h>
 #include <fribidi/fribidi.h>
+#include <fstream>
+#include <iterator>
+#include <vector>
 
 namespace file
 {
-bool load(std::string fileName, std::vector<sf::String> & strings)
+auto load(std::string fileName, std::vector<sf::String> & strings) -> bool
 {
     // Open the file (contains UTF-8 encoded text)
     std::ifstream fileStream(fileName.c_str());
@@ -65,8 +70,8 @@ bool load(std::string fileName, std::vector<sf::String> & strings)
 
             std::vector<FriBidiChar> visual(outSize);
             FriBidiParType base = FRIBIDI_PAR_LTR;
-            fribidi_log2vis(logical.data(), outSize, &base, visual.data(), NULL,
-                            NULL, NULL);
+            fribidi_log2vis(logical.data(), outSize, &base, visual.data(),
+                            nullptr, nullptr, nullptr);
 
             std::vector<char> outstring(outSize * 4, 0);
             fribidi_unicode_to_charset(FRIBIDI_CHAR_SET_UTF8, visual.data(),
@@ -78,7 +83,7 @@ bool load(std::string fileName, std::vector<sf::String> & strings)
             sf::Utf8::toUtf32(line.begin(), line.end(),
                               back_inserter(utf32line));
 
-            strings.push_back(utf32line);
+            strings.emplace_back(utf32line);
         }
         fileStream.close();
     }

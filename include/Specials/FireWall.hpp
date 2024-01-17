@@ -18,7 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef FIREWALL_HPP_INCLUDED
 #define FIREWALL_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Specials/Special.hpp"
+#include "Specials/specials.hpp"
+
+class Ship;
 
 /// Special: FireWall.
 /// A fire wave.

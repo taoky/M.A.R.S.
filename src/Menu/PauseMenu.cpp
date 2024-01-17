@@ -25,34 +25,35 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Menu/OptionsMenu.hpp"
 #include "Menu/ToMainConfirm.hpp"
 #include "Menu/menus.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 
-UiWindow * PauseMenu::instance_(NULL);
+UiWindow * PauseMenu::instance_(nullptr);
 bool PauseMenu::kResume_(false);
 bool PauseMenu::kNew_(false);
 bool PauseMenu::kOptions_(false);
 bool PauseMenu::kToMainMenu_(false);
 bool PauseMenu::kHide_(false);
 
-UiWindow * PauseMenu::get()
+auto PauseMenu::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new PauseMenu(180, 160);
         instance_->addWidget(new Button(locales::getLocale(locales::Continue),
-                                        NULL, &kResume_, Vector2f(10, 10), 160,
-                                        20));
+                                        nullptr, &kResume_, Vector2f(10, 10),
+                                        160, 20));
         instance_->addWidget(
-            new Button(locales::getLocale(locales::RestartGame), NULL, &kNew_,
-                       Vector2f(10, 40), 160, 20));
+            new Button(locales::getLocale(locales::RestartGame), nullptr,
+                       &kNew_, Vector2f(10, 40), 160, 20));
         instance_->addWidget(new Button(locales::getLocale(locales::Options),
-                                        NULL, &kOptions_, Vector2f(10, 70), 160,
-                                        20));
+                                        nullptr, &kOptions_, Vector2f(10, 70),
+                                        160, 20));
         instance_->addWidget(new Button(locales::getLocale(locales::HideMenu),
-                                        NULL, &kHide_, Vector2f(10, 100), 160,
-                                        20));
+                                        nullptr, &kHide_, Vector2f(10, 100),
+                                        160, 20));
         instance_->addWidget(
-            new Button(locales::getLocale(locales::QuitCurrentGame), NULL,
+            new Button(locales::getLocale(locales::QuitCurrentGame), nullptr,
                        &kToMainMenu_, Vector2f(10, 130), 160, 20));
     }
     return instance_;
@@ -94,5 +95,5 @@ void PauseMenu::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

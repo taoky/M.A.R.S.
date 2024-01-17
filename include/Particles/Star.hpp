@@ -18,9 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef STAR_HPP_INCLUDED
 #define STAR_HPP_INCLUDED
 
-#include "Particles/Particle.hpp"
+#include <list>
+#include <memory>
 
+#include "Particles/Particle.hpp"
 #include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+
+class Player;
 
 class Star : public Particle<Star>
 {

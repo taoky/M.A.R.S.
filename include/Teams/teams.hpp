@@ -18,9 +18,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TEAMS_HPP_INCLUDED
 #define TEAMS_HPP_INCLUDED
 
+#include <memory>
+#include <vector>
+
 #include "Controllers/controllers.hpp"
 #include "System/Color3f.hpp"
-#include <memory>
 
 class Team;
 class Home;

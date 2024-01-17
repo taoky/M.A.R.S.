@@ -25,30 +25,31 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Menu/OptionsMenu.hpp"
 #include "Menu/ToMainConfirm.hpp"
 #include "Menu/menus.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 
-UiWindow * EndMenu::instance_(NULL);
+UiWindow * EndMenu::instance_(nullptr);
 bool EndMenu::kNew_(false);
 bool EndMenu::kOptions_(false);
 bool EndMenu::kToMainMenu_(false);
 bool EndMenu::kHide_(false);
 
-UiWindow * EndMenu::get()
+auto EndMenu::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new EndMenu(180, 130);
         instance_->addWidget(
-            new Button(locales::getLocale(locales::RestartGame), NULL, &kNew_,
-                       Vector2f(10, 10), 160, 20));
+            new Button(locales::getLocale(locales::RestartGame), nullptr,
+                       &kNew_, Vector2f(10, 10), 160, 20));
         instance_->addWidget(new Button(locales::getLocale(locales::Options),
-                                        NULL, &kOptions_, Vector2f(10, 40), 160,
-                                        20));
+                                        nullptr, &kOptions_, Vector2f(10, 40),
+                                        160, 20));
         instance_->addWidget(new Button(locales::getLocale(locales::HideMenu),
-                                        NULL, &kHide_, Vector2f(10, 70), 160,
+                                        nullptr, &kHide_, Vector2f(10, 70), 160,
                                         20));
         instance_->addWidget(
-            new Button(locales::getLocale(locales::QuitCurrentGame), NULL,
+            new Button(locales::getLocale(locales::QuitCurrentGame), nullptr,
                        &kToMainMenu_, Vector2f(10, 100), 160, 20));
     }
     return instance_;
@@ -86,5 +87,5 @@ void EndMenu::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

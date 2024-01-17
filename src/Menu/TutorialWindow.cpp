@@ -17,30 +17,35 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Menu/TutorialWindow.hpp"
 
+#include <SFML/System/String.hpp>
+#include <sstream>
+#include <string>
+
 #include "Interface/Button.hpp"
+#include "Interface/Label.hpp"
 #include "Interface/Line.hpp"
 #include "Interface/TextBox.hpp"
 #include "Interface/UiWindow.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-#include <sstream>
-
-UiWindow * TutorialWindow::instance_(NULL);
+UiWindow * TutorialWindow::instance_(nullptr);
 bool TutorialWindow::kOk_(false);
 sf::String TutorialWindow::index_("1/1");
 
-UiWindow * TutorialWindow::get(sf::String * title, sf::String * text, int index,
-                               bool info, bool next)
+auto TutorialWindow::get(sf::String * title, sf::String * text, int index,
+                         bool info, bool next) -> UiWindow *
 {
     reset();
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new TutorialWindow(400, 200);
         instance_->addWidget(
             new Button(locales::getLocale(next ? locales::Next : locales::Ok),
-                       NULL, &kOk_, Vector2f(300, 170), 90, 20));
+                       nullptr, &kOk_, Vector2f(300, 170), 90, 20));
         instance_->addWidget(new Label(title, TEXT_ALIGN_LEFT, Vector2f(10, 10),
                                        20.f, Color3f(1.f, 0.5f, 0.9f), false));
         if (info)
@@ -77,5 +82,5 @@ void TutorialWindow::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

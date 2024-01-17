@@ -17,11 +17,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "DecoObjects/Evil.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Media/texture.hpp"
 #include "System/timer.hpp"
 #include "defines.hpp"
-
-#include <SFML/OpenGL.hpp>
 
 void Evil::draw() const
 {

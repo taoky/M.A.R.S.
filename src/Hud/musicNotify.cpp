@@ -17,16 +17,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Hud/musicNotify.hpp"
 
-#include "Locales/locales.hpp"
-#include "Media/text.hpp"
-#include "System/timer.hpp"
-#include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
-
+#include <GL/gl.h>
+#include <SFML/System/String.hpp>
+#include <algorithm>
+#include <cmath>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
-#include <taglib/taglib.h>
+#include <taglib/tstring.h>
+
+#include "Locales/Locale.hpp"
+#include "Locales/locales.hpp"
+#include "Media/text.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
+#include "System/window.hpp"
 
 namespace musicNotify
 {

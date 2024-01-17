@@ -17,18 +17,24 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Specials/Shocker.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+#include <memory>
+#include <vector>
+
+#include "DecoObjects/decoObjects.hpp"
 #include "Games/games.hpp"
 #include "Menu/menus.hpp"
 #include "Particles/particles.hpp"
 #include "Players/Player.hpp"
+#include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/balls.hpp"
 #include "SpaceObjects/ships.hpp"
-#include "System/randomizer.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 #include "Teams/Team.hpp"
-
-#include <SFML/Graphics.hpp>
 
 void Shocker::draw(float alpha) const
 {
@@ -75,22 +81,22 @@ void Shocker::activate() const
     if (parent_->fragStars_ > 0 && timer_ <= 0.f)
     {
         targets_.clear();
-        ballTarget_ = NULL;
+        ballTarget_ = nullptr;
 
         auto const & ships = ships::getShips();
 
         if (ships.size() >= 2)
         {
 
-            for (auto it = ships.begin(); it != ships.end(); ++it)
+            for (const auto & ship : ships)
             {
-                if (it->get() != parent_)
+                if (ship.get() != parent_)
                 {
-                    Vector2f direction((*it)->location() - parent_->location());
+                    Vector2f direction(ship->location() - parent_->location());
                     float distance(direction.lengthSquare());
-                    if (distance <= radius() * radius() && (*it)->attackable())
+                    if (distance <= radius() * radius() && ship->attackable())
                     {
-                        targets_.push_back(it->get());
+                        targets_.push_back(ship.get());
                     }
                 }
             }
@@ -108,19 +114,18 @@ void Shocker::activate() const
             }
         }
 
-        int targetCount = targets_.size() + (ballTarget_ == NULL ? 0 : 1);
+        int targetCount = targets_.size() + (ballTarget_ == nullptr ? 0 : 1);
         float damage = parent_->fragStars_ / 3.f * 200.f / targetCount;
 
-        for (std::list<Ship *>::iterator it = targets_.begin();
-             it != targets_.end(); ++it)
+        for (auto & target : targets_)
         {
-            Vector2f direction((*it)->location() - parent_->location());
+            Vector2f direction(target->location() - parent_->location());
 
-            decoObjects::addBolt(parent_, *it, 100.f / targetCount);
+            decoObjects::addBolt(parent_, target, 100.f / targetCount);
 
-            (*it)->drainLife(parent_->getOwner(), damage, direction * 10);
+            target->drainLife(parent_->getOwner(), damage, direction * 10);
 
-            (*it)->velocity_ += direction.normalize() * damage * 5.f;
+            target->velocity_ += direction.normalize() * damage * 5.f;
         }
 
         if (ballTarget_)
@@ -139,4 +144,4 @@ void Shocker::activate() const
     }
 }
 
-float Shocker::radius() const { return 300.f; }
+auto Shocker::radius() const -> float { return 300.f; }

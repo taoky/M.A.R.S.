@@ -18,8 +18,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef MESSAGE_HPP_INCLUDED
 #define MESSAGE_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Hud/HudElement.hpp"
 #include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/window.hpp"
 
 class Message : public HudElement

@@ -18,7 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TUTORIALZONE_HPP_INCLUDED
 #define TUTORIALZONE_HPP_INCLUDED
 
+#include "System/Vector2f.hpp"
 #include "Zones/Zone.hpp"
+
+class SpaceObject;
 
 /// Zone: TutorialZone.
 /// A beautiful pinkish Zone, employed in the Tutorial.

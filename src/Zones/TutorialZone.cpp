@@ -17,22 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Zones/TutorialZone.hpp"
 
-#include "Players/Player.hpp"
-#include "Players/players.hpp"
-#include "SpaceObjects/Ship.hpp"
-#include "SpaceObjects/SpaceObject.hpp"
-#include "SpaceObjects/spaceObjects.hpp"
-#include "Teams/Team.hpp"
-#include <SFML/System.hpp>
-
+#include <GL/gl.h>
 #include <cmath>
+
+#include "SpaceObjects/SpaceObject.hpp"
+#include "System/timer.hpp"
 
 TutorialZone::TutorialZone(Vector2f const & location, float radius)
     : radius_(radius), location_(location)
 {
 }
 
-bool TutorialZone::isInside(SpaceObject const & toBeChecked) const
+auto TutorialZone::isInside(SpaceObject const & toBeChecked) const -> bool
 {
     return ((toBeChecked.location() - location_).lengthSquare() <=
             radius_ * radius_ * 0.7f);

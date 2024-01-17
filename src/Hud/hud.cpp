@@ -17,6 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Hud/hud.hpp"
 
+#include <GL/gl.h>
+#include <list>
+#include <vector>
+
 #include "DecoObjects/decoObjects.hpp"
 #include "Games/games.hpp"
 #include "Hud/CountDown.hpp"
@@ -32,10 +36,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Menu/menus.hpp"
 #include "Particles/particles.hpp"
 #include "SpaceObjects/Home.hpp"
-#include "SpaceObjects/ships.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/settings.hpp"
 #include "System/window.hpp"
-
-#include <sstream>
 
 namespace hud
 {
@@ -64,7 +67,7 @@ void update()
     tabStats_->display(games::type() != games::gMenu &&
                        window::isKeyDown(settings::C_statisticsKey));
 
-    std::list<Message *>::iterator it = messages_.begin();
+    auto it = messages_.begin();
     while (it != messages_.end())
     {
         (*it)->update();
@@ -100,9 +103,8 @@ void draw()
             games::type() == games::gCannonKeep)
         {
             std::vector<Home *> const & homes = spaceObjects::getHomes();
-            for (std::vector<Home *>::const_iterator it = homes.begin();
-                 it != homes.end(); ++it)
-                (*it)->drawLife();
+            for (auto home : homes)
+                home->drawLife();
         }
         gamePoints_->draw();
         rightLife_->draw();
@@ -115,9 +117,8 @@ void drawMessages()
 {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     text::drawFooText();
-    for (std::list<Message *>::iterator it = messages_.begin();
-         it != messages_.end(); ++it)
-        (*it)->draw();
+    for (auto & message : messages_)
+        message->draw();
     musicNotify::draw();
 }
 
@@ -127,7 +128,7 @@ void displayStats(bool show) { tabStats_->display(show); }
 
 void init() { tabStats_->refresh(); }
 
-bool statsVisible() { return tabStats_->visible(); }
+auto statsVisible() -> bool { return tabStats_->visible(); }
 
 void displayMessage(sf::String const & message, Color3f const & color)
 {

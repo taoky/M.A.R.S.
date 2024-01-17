@@ -18,7 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef INSTA_HPP_INCLUDED
 #define INSTA_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Weapons/Weapon.hpp"
+#include "Weapons/weapons.hpp"
+
+class Ship;
 
 /// Weapon: Insta.
 /// A long distance gun, killing instantly.

@@ -20,6 +20,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/UiWindow.hpp"
 
+namespace sf
+{
+class String;
+} // namespace sf
+
 class TutorialWindow : public UiWindow
 {
   public:

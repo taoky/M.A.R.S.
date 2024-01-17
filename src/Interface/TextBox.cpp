@@ -17,13 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/TextBox.hpp"
 
-#include "Media/text.hpp"
+#include <SFML/System/String.hpp>
+#include <algorithm>
 
-#include <SFML/OpenGL.hpp>
+#include "Interface/VerticalSlider.hpp"
+#include "Media/text.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 TextBox::TextBox(sf::String * text, Vector2f const & topLeft, int width,
                  int height, Color3f const & color)
-    : UiElement(topLeft, width, height), color_(color), slider_(NULL),
+    : UiElement(topLeft, width, height), color_(color), slider_(nullptr),
       position_(0), scrollSpeed_(0.f)
 {
 
@@ -116,9 +120,8 @@ TextBox::TextBox(sf::String * text, Vector2f const & topLeft, int width,
 
 TextBox::~TextBox()
 {
-    for (std::vector<sf::String *>::iterator it = texts_.begin();
-         it != texts_.end(); ++it)
-        delete *it;
+    for (auto & text : texts_)
+        delete text;
     if (slider_)
         delete slider_;
 }
@@ -186,8 +189,7 @@ void TextBox::draw() const
         glVertex2f(width() + origin.x_, origin.y_);
     glEnd();*/
 
-    for (std::vector<sf::String *>::const_iterator it = texts_.begin();
-         it != texts_.end(); ++it)
+    for (auto text : texts_)
     {
         float alpha(1.f);
         if (top > height_ - 15.f)
@@ -198,7 +200,7 @@ void TextBox::draw() const
             alpha = 0;
 
         if (alpha > 0)
-            text::drawScreenText(*(*it), origin + Vector2f(0, top), 12.f,
+            text::drawScreenText(*text, origin + Vector2f(0, top), 12.f,
                                  TEXT_ALIGN_LEFT, color_, alpha);
         top += 15.f;
     }

@@ -18,7 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef AMMOFLUBBA_HPP_INCLUDED
 #define AMMOFLUBBA_HPP_INCLUDED
 
+#include <list>
+#include <memory>
+
 #include "Particles/Particle.hpp"
+#include "System/Color3f.hpp"
+
+class Player;
+class SpaceObject;
+struct Vector2f;
 
 class AmmoFlubba : public Particle<AmmoFlubba>
 {

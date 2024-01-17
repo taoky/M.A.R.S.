@@ -17,12 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/Shotgun.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
-#include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
-
-#include <SFML/Graphics.hpp>
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 void Shotgun::draw(float alpha) const
 {
@@ -61,8 +64,8 @@ void Shotgun::fire() const
     }
 }
 
-float Shotgun::maxDistance() const { return 300.f; }
+auto Shotgun::maxDistance() const -> float { return 300.f; }
 
-float Shotgun::minDistance() const { return 0.f; }
+auto Shotgun::minDistance() const -> float { return 0.f; }
 
-float Shotgun::maxAngle() const { return 20.f; }
+auto Shotgun::maxAngle() const -> float { return 20.f; }

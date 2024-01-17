@@ -18,9 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef POSTFX_HPP_INCLUDED
 #define POSTFX_HPP_INCLUDED
 
+#include <SFML/Graphics.hpp>
+
 #include "System/Vector2f.hpp"
 
-#include <SFML/Graphics.hpp>
+namespace sf
+{
+class Shader;
+} // namespace sf
 
 /// A namespace for post processing shaders.
 
@@ -35,7 +40,7 @@ void update();
 void onExplosion();
 
 /// Returns a pointer to the active shader.
-/// If an error occured, it will return NULL.
+/// If an error occured, it will return nullptr.
 sf::Shader * get();
 
 /// Checks, whether GLSL shaders are supported on the current hardware.

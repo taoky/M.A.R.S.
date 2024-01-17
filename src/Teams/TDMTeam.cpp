@@ -17,12 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Teams/TDMTeam.hpp"
 
-#include "Games/games.hpp"
+#include <algorithm>
+#include <list>
+#include <memory>
+
 #include "Items/PowerUp.hpp"
 #include "Items/items.hpp"
 #include "Players/Player.hpp"
+#include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/ships.hpp"
-#include "Teams/teams.hpp"
+#include "Teams/Job.hpp"
 
 void TDMTeam::createJobs()
 {
@@ -41,8 +45,8 @@ void TDMTeam::checkEnemies()
     auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (auto it = ships.begin(); it != ships.end(); ++it)
-        if ((*it)->getOwner()->team() != this && (*it)->attackable())
+    for (const auto & ship : ships)
+        if (ship->getOwner()->team() != this && ship->attackable())
         {
             existAny = true;
             break;
@@ -65,8 +69,8 @@ void TDMTeam::checkPowerUps()
     auto const & ships = ships::getShips();
     bool existAny(false);
 
-    for (auto it = ships.begin(); it != ships.end(); ++it)
-        if ((*it)->getOwner()->team() != this && (*it)->attackable())
+    for (const auto & ship : ships)
+        if (ship->getOwner()->team() != this && ship->attackable())
         {
             existAny = true;
             break;
@@ -74,12 +78,12 @@ void TDMTeam::checkPowerUps()
 
     powerUpLocations_.clear();
     auto const & powerUps = items::getPowerUps();
-    for (auto it = powerUps.begin(); it != powerUps.end(); ++it)
+    for (const auto & powerUp : powerUps)
     {
-        if (!(*it)->isCollected())
+        if (!powerUp->isCollected())
         {
-            powerUpLocations_.push_back((*it)->location());
-            switch ((*it)->type())
+            powerUpLocations_.push_back(powerUp->location());
+            switch (powerUp->type())
             {
             case items::puFuel:
                 addJob(Job(Job::jGetPUFuel, 70, &powerUpLocations_.back()));

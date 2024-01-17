@@ -17,26 +17,35 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/toolTip.hpp"
 
-#include "Locales/locales.hpp"
-#include "Media/text.hpp"
-#include "System/timer.hpp"
-#include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
+#include <GL/gl.h>
+#include <SFML/System/String.hpp>
+#include <algorithm>
+#include <cmath>
 #include <vector>
 
-#define WAITING 0
-#define FADE_IN 1
-#define VISIBLE 2
-#define FADE_OUT 3
-#define INVISIBLE 4
+#include "Locales/Locale.hpp"
+#include "Locales/locales.hpp"
+#include "Media/text.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/settings.hpp"
+#include "System/timer.hpp"
+
+enum
+{
+    WAITING = 0,
+    FADE_IN = 1,
+    VISIBLE = 2,
+    FADE_OUT = 3,
+    INVISIBLE = 4
+};
 
 namespace toolTip
 {
 
 namespace
 {
-sf::String * currentLocale_(NULL);
+sf::String * currentLocale_(nullptr);
 std::vector<sf::String> lines_;
 int width_(300);
 float timer_(-5.f);
@@ -135,11 +144,10 @@ void drawToolTip(float alpha)
     int height(lines_.size() * 15 + 10);
     int width(10);
 
-    for (std::vector<sf::String>::iterator it = lines_.begin();
-         it != lines_.end(); ++it)
+    for (auto & line : lines_)
     {
         int tmp(
-            text::getCharacterPos(*it, it->getSize(), 12.f, TEXT_ALIGN_LEFT) +
+            text::getCharacterPos(line, line.getSize(), 12.f, TEXT_ALIGN_LEFT) +
             10);
         if (tmp > width)
             width = tmp;
@@ -261,10 +269,9 @@ void drawToolTip(float alpha)
 
     // draw text
     int top(5);
-    for (std::vector<sf::String>::iterator it = lines_.begin();
-         it != lines_.end(); ++it)
+    for (auto & line : lines_)
     {
-        text::drawScreenText(*it, position_ + Vector2f(-5 * mirror, top), 12.f,
+        text::drawScreenText(line, position_ + Vector2f(-5 * mirror, top), 12.f,
                              TEXT_ALIGN_LEFT,
                              Color3f(0.7f, 0.7f, 0.7f) * alpha);
         top += 15;

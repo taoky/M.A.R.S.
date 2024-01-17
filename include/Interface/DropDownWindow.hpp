@@ -18,10 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef DROPDOWNWINDOW_HPP_INCLUDED
 #define DROPDOWNWINDOW_HPP_INCLUDED
 
-#include "Interface/UiWindow.hpp"
-
 #include <SFML/System.hpp>
+#include <SFML/System/String.hpp>
+#include <utility>
 #include <vector>
+
+#include "Interface/UiWindow.hpp"
 
 class ComboBox;
 

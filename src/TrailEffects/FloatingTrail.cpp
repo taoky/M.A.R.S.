@@ -17,11 +17,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "TrailEffects/FloatingTrail.hpp"
 
+#include <GL/gl.h>
+
 #include "Media/texture.hpp"
 #include "SpaceObjects/SpaceObject.hpp"
 #include "System/timer.hpp"
-
-#include <SFML/OpenGL.hpp>
 
 FloatingTrail::FloatingTrail(SpaceObject * target, float timeStep,
                              float duration, float width, Color3f const & color)
@@ -109,4 +109,4 @@ void FloatingTrail::draw() const
     }
 }
 
-bool FloatingTrail::isDead() const { return length_ <= 0; }
+auto FloatingTrail::isDead() const -> bool { return length_ <= 0; }

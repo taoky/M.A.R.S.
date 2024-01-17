@@ -17,11 +17,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/ShipPreview.hpp"
 
-#include "Media/texture.hpp"
-#include "System/settings.hpp"
-#include "System/timer.hpp"
+#include <GL/gl.h>
+#include <cmath>
 
-#include <SFML/OpenGL.hpp>
+#include "Media/texture.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 ShipPreview::ShipPreview(Color3f * color, Color3f * teamColor, int * graphic,
                          Vector2f const & topLeft)

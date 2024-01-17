@@ -17,17 +17,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Players/players.hpp"
 
+#include <algorithm>
+#include <atomic>
+#include <climits>
+#include <memory>
+#include <stdlib.h>
+#include <vector>
+
 #include "Players/BotPlayer.hpp"
 #include "Players/LocalPlayer.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
 #include "System/generateName.hpp"
-#include "System/settings.hpp"
 #include "Teams/Team.hpp"
 #include "defines.hpp"
-
-#include <climits>
-#include <memory>
 
 extern std::atomic_bool exiting;
 
@@ -79,28 +83,26 @@ void createShips()
     // temporary list of all homes
     std::vector<Home *> const & homes = spaceObjects::getHomes();
     // temporary lists of all inhabitants of all
-    for (std::vector<Home *>::const_iterator homeIt = homes.begin();
-         homeIt != homes.end(); ++homeIt)
+    for (auto home : homes)
     {
         std::vector<Player *> inhabitants;
-        for (auto playIt = allPlayers_.begin(); playIt != allPlayers_.end();
-             ++playIt)
+        for (auto & allPlayer : allPlayers_)
         {
-            if ((*playIt)->team()->home() == (*homeIt))
-                inhabitants.push_back(playIt->get());
+            if (allPlayer->team()->home() == home)
+                inhabitants.push_back(allPlayer.get());
         }
-        (*homeIt)->createShips(inhabitants);
+        home->createShips(inhabitants);
     }
 }
 
-Player const * getPlayerI() { return playerI_.get(); }
+auto getPlayerI() -> Player const * { return playerI_.get(); }
 
-Player const * getPlayerII() { return playerII_.get(); }
+auto getPlayerII() -> Player const * { return playerII_.get(); }
 
 void resetPlayerPoints()
 {
-    for (auto it = allPlayers_.begin(); it != allPlayers_.end(); ++it)
-        (*it)->resetPoints();
+    for (auto & allPlayer : allPlayers_)
+        allPlayer->resetPoints();
 }
 
 void clear()

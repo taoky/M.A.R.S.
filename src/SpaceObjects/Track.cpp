@@ -17,9 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/Track.hpp"
 
-#include "SpaceObjects/Home.hpp"
+#include <GL/gl.h>
+#include <algorithm>
+#include <cmath>
+#include <memory>
+#include <utility>
+
+#include "Media/texture.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
 #include "System/randomizer.hpp"
-#include "Zones/RasterZone.hpp"
 #include "Zones/zones.hpp"
 #include "defines.hpp"
 
@@ -110,15 +117,13 @@ void Track::findAnchors()
 
 void Track::addAnchor(Vector2f const & point)
 {
-    for (std::vector<Vector2f>::iterator it = anchors_.begin();
-         it != anchors_.end(); ++it)
-        if ((*it - point).lengthSquare() < 90000.f)
+    for (auto & anchor : anchors_)
+        if ((anchor - point).lengthSquare() < 90000.f)
             return;
 
-    for (auto it = spaceObjects::getObjects().begin();
-         it != spaceObjects::getObjects().end(); ++it)
-        if (((*it)->location() - point).lengthSquare() <
-            std::pow((*it)->radius() + 200.f, 2))
+    for (const auto & it : spaceObjects::getObjects())
+        if ((it->location() - point).lengthSquare() <
+            std::pow(it->radius() + 200.f, 2))
             return;
 
     anchors_.push_back(point);
@@ -130,10 +135,9 @@ void Track::sortAnchors()
     sortLTR();
     // find middle
     Vector2f middle;
-    for (std::vector<Vector2f>::iterator it = anchors_.begin();
-         it != anchors_.end(); ++it)
+    for (auto & anchor : anchors_)
     {
-        middle += *it;
+        middle += anchor;
     }
     middle /= anchors_.size();
     zones::addTutorialZone(middle, 50.f);
@@ -153,10 +157,9 @@ void Track::sortLTR()
     {
         sorted = true;
 
-        for (std::vector<Vector2f>::iterator it = anchors_.begin();
-             it != --anchors_.end(); ++it)
+        for (auto it = anchors_.begin(); it != --anchors_.end(); ++it)
         {
-            std::vector<Vector2f>::iterator next(it);
+            auto next(it);
             ++next;
 
             if (it->x_ > next->x_)

@@ -17,6 +17,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Specials/specials.hpp"
 
+#include "Controllers/controllers.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "Specials/Blast.hpp"
@@ -30,7 +31,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 namespace specials
 {
 
-Special * create(SpecialType type, Ship * parent)
+auto create(SpecialType type, Ship * parent) -> Special *
 {
     int i(1), tmpType(type);
     while (i < sNoSpecial && !(settings::C_EnabledSpecials & tmpType))
@@ -65,7 +66,7 @@ Special * create(SpecialType type, Ship * parent)
     }
 }
 
-Special * createNext(SpecialType type, Ship * parent)
+auto createNext(SpecialType type, Ship * parent) -> Special *
 {
     int next(type == sNoSpecial ? 1 : type * 2), i(1);
 
@@ -78,7 +79,7 @@ Special * createNext(SpecialType type, Ship * parent)
     return create(static_cast<SpecialType>(next), parent);
 }
 
-Special * createPrev(SpecialType type, Ship * parent)
+auto createPrev(SpecialType type, Ship * parent) -> Special *
 {
     int next(type == 1 ? sNoSpecial : type * 0.5), i(1);
 

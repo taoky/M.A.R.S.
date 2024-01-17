@@ -18,7 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef CANNONBALL_HPP_INCLUDED
 #define CANNONBALL_HPP_INCLUDED
 
+#include <list>
+#include <memory>
+
 #include "Particles/Particle.hpp"
+
+class Player;
+struct Color3f;
+struct Vector2f;
 
 class CannonBall : public Particle<CannonBall>
 {

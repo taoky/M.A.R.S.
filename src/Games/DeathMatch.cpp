@@ -17,13 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/DeathMatch.hpp"
 
+#include "Controllers/controllers.hpp"
+#include "Games/games.hpp"
 #include "Media/music.hpp"
 #include "Players/players.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "Teams/DMTeam.hpp"
+#include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
+#include "Zones/zones.hpp"
 
 DeathMatch::DeathMatch() : Game(games::gDeathMatch)
 {

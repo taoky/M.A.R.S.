@@ -17,13 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Media/announcer.hpp"
 
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "defines.hpp"
-
-#include <SFML/Audio.hpp>
-#include <iostream>
 
 namespace announcer
 {
@@ -56,7 +60,7 @@ void loadSound_(SoundType sound, std::string fileName)
 void playSound(SoundType sound)
 {
     // check if sound is already loaded
-    if (sounds_[sound] != NULL)
+    if (sounds_[sound] != nullptr)
     {
         if (soundChannel_.getStatus() != sf::Sound::Playing)
         {
@@ -105,7 +109,7 @@ void playSound(SoundType sound)
             std::cout << "COUNT is not a valid Soundtype..." << std::endl;
         }
         // ... play it afterwards
-        if (sounds_[sound] != NULL)
+        if (sounds_[sound] != nullptr)
             playSound(sound);
     }
 }

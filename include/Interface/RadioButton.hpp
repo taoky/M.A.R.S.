@@ -21,8 +21,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Interface/Label.hpp"
 #include "Interface/RadioGroup.hpp"
 #include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
 
 class RadioGroup;
+class Label;
+namespace sf
+{
+class String;
+} // namespace sf
+struct Vector2f;
 
 class RadioButton : public UiElement
 {

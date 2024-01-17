@@ -18,6 +18,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Hud/Message.hpp"
 
 #include "Media/text.hpp"
+#include "System/timer.hpp"
 #include "defines.hpp"
 
 Message::Message(sf::String const & message, Color3f const & color)
@@ -46,4 +47,4 @@ void Message::update()
     }
 }
 
-bool Message::isDead() const { return timer_ > 2.f; }
+auto Message::isDead() const -> bool { return timer_ > 2.f; }

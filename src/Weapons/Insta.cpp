@@ -17,14 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/Insta.hpp"
 
+#include <GL/gl.h>
+#include <cfloat>
+#include <cmath>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 #include "Teams/Team.hpp"
-
-#include <SFML/Graphics.hpp>
-#include <cfloat>
 
 void Insta::draw(float alpha) const
 {
@@ -61,8 +65,8 @@ void Insta::fire() const
     }
 }
 
-float Insta::maxDistance() const { return FLT_MAX; }
+auto Insta::maxDistance() const -> float { return FLT_MAX; }
 
-float Insta::minDistance() const { return 500.f; }
+auto Insta::minDistance() const -> float { return 500.f; }
 
-float Insta::maxAngle() const { return 30.f; }
+auto Insta::maxAngle() const -> float { return 30.f; }

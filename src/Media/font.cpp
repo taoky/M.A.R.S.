@@ -17,11 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Media/font.hpp"
 
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/System/String.hpp>
+#include <map>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "System/settings.hpp"
-
-#include <iostream>
-#include <memory>
 
 namespace font
 {
@@ -30,13 +36,13 @@ namespace
 std::map<int, std::unique_ptr<sf::Font>> fonts_;
 }
 
-sf::Font * getFont(int languageID)
+auto getFont(int languageID) -> sf::Font *
 {
     auto it = fonts_.find(languageID);
     if (it == fonts_.end())
     {
         // load it from file and...
-        sf::Font * font = new sf::Font();
+        auto * font = new sf::Font();
         font->loadFromFile(settings::C_dataPath + "fonts/" +
                            locales::getLocales()[languageID].font_);
         fonts_.insert(std::make_pair(languageID, font));

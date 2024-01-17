@@ -17,15 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/Slider.hpp"
 
+#include <GL/gl.h>
+#include <sstream>
+#include <string>
+
+#include "Interface/Label.hpp"
 #include "Interface/toolTip.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Media/texture.hpp"
-#include "System/settings.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
-#include <sstream>
 
 Slider::Slider(sf::String * text, sf::String * toolTip, int * value,
                int minValue, int maxValue, int step, Vector2f const & topLeft,

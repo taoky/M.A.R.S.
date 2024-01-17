@@ -17,8 +17,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/Planet.hpp"
 
+#include <GL/gl.h>
+
 #include "DecoObjects/decoObjects.hpp"
 #include "Particles/particles.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 
 Planet::Planet(Vector2f const & location, float radius)

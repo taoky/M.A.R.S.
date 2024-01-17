@@ -17,8 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/Fuel.hpp"
 
+#include <GL/gl.h>
+
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<Fuel>> Fuel::activeParticles_;
 

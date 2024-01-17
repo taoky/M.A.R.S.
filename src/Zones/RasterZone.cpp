@@ -16,19 +16,24 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Zones/RasterZone.hpp"
+
+#include <GL/gl.h>
+#include <cmath>
+#include <memory>
+#include <vector>
+
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
 #include "System/randomizer.hpp"
-
-#include <cfloat>
 
 RasterZone::RasterZone(Vector2f const & bottomLeft, Vector2f const & topRight)
     : bottomLeft_(bottomLeft), topRight_(topRight), covered_(false)
 {
 }
 
-bool RasterZone::isInside(SpaceObject const & toBeChecked) const
+auto RasterZone::isInside(SpaceObject const & toBeChecked) const -> bool
 {
     return toBeChecked.location().x_ > bottomLeft_.x_ &&
            toBeChecked.location().y_ > bottomLeft_.y_ &&
@@ -40,8 +45,8 @@ void RasterZone::update()
 {
     covered_ = false;
     auto const & ships = ships::getShips();
-    for (auto it = ships.begin(); it != ships.end(); ++it)
-        if (isInside(*(*it)))
+    for (const auto & ship : ships)
+        if (isInside(*ship))
         {
             covered_ = true;
             break;
@@ -71,7 +76,7 @@ void RasterZone::draw() const
     glEnd();
 }
 
-Vector2f RasterZone::getRandomPoint() const
+auto RasterZone::getRandomPoint() const -> Vector2f
 {
     Vector2f randomPoint;
     for (int i = 0; i < 100; ++i)
@@ -80,11 +85,10 @@ Vector2f RasterZone::getRandomPoint() const
             Vector2f(randomizer::random(bottomLeft_.x_, topRight_.x_),
                      randomizer::random(bottomLeft_.y_, topRight_.y_));
         bool fits = true;
-        for (auto it = spaceObjects::getObjects().begin();
-             it != spaceObjects::getObjects().end(); ++it)
+        for (const auto & it : spaceObjects::getObjects())
         {
-            if ((randomPoint - (*it)->location()).lengthSquare() <
-                std::pow((*it)->radius() + 50, 2))
+            if ((randomPoint - it->location()).lengthSquare() <
+                std::pow(it->radius() + 50, 2))
                 fits = false;
         }
         if (fits)
@@ -93,4 +97,4 @@ Vector2f RasterZone::getRandomPoint() const
     return randomPoint;
 }
 
-bool RasterZone::covered() const { return covered_; }
+auto RasterZone::covered() const -> bool { return covered_; }

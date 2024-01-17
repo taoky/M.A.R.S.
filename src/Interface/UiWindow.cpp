@@ -17,46 +17,44 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/UiWindow.hpp"
 
+#include <GL/gl.h>
+#include <algorithm>
+
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Media/texture.hpp"
 #include "Menu/menus.hpp"
-#include "System/settings.hpp"
 #include "System/window.hpp"
 
-#include <SFML/OpenGL.hpp>
-
 UiWindow::UiWindow(int width, int height, Vector2f const & position)
-    : UiElement(position, width, height), focusedWidget_(NULL), topMost_(false)
+    : UiElement(position, width, height), focusedWidget_(nullptr),
+      topMost_(false)
 {
 }
 
 UiWindow::~UiWindow()
 {
-    for (std::vector<UiElement *>::iterator i = widgets_.begin();
-         i != widgets_.end(); ++i)
-        delete *i;
+    for (auto & widget : widgets_)
+        delete widget;
 }
 
 void UiWindow::mouseMoved(Vector2f const & position)
 {
-    for (std::vector<UiElement *>::iterator i = widgets_.begin();
-         i != widgets_.end(); ++i)
-        (*i)->mouseMoved(position);
+    for (auto & widget : widgets_)
+        widget->mouseMoved(position);
 }
 
 void UiWindow::mouseWheelMoved(Vector2f const & position, int delta)
 {
-    for (std::vector<UiElement *>::iterator i = widgets_.begin();
-         i != widgets_.end(); ++i)
-        (*i)->mouseWheelMoved(position, delta);
+    for (auto & widget : widgets_)
+        widget->mouseWheelMoved(position, delta);
 }
 
 void UiWindow::mouseLeft(bool down)
 {
-    for (std::vector<UiElement *>::iterator i = widgets_.begin();
-         i != widgets_.end(); ++i)
-        (*i)->mouseLeft(down);
+    for (auto & widget : widgets_)
+        widget->mouseLeft(down);
 }
 
 void UiWindow::keyEvent(bool down, Key const & key)
@@ -65,7 +63,7 @@ void UiWindow::keyEvent(bool down, Key const & key)
         focusedWidget_->keyEvent(down, key);
 }
 
-bool UiWindow::tabNext()
+auto UiWindow::tabNext() -> bool
 {
     if (focusedWidget_->tabNext())
     {
@@ -83,7 +81,7 @@ bool UiWindow::tabNext()
     return false;
 }
 
-bool UiWindow::tabPrevious()
+auto UiWindow::tabPrevious() -> bool
 {
     if (focusedWidget_->tabPrevious())
     {
@@ -233,9 +231,8 @@ void UiWindow::draw() const
 
     text::drawFooText();
 
-    for (std::vector<UiElement *>::const_iterator i = widgets_.begin();
-         i != widgets_.end(); ++i)
-        (*i)->draw();
+    for (auto widget : widgets_)
+        widget->draw();
 }
 
 void UiWindow::setFocus(UiElement * toBeFocused, bool isPrevious)
@@ -247,9 +244,8 @@ void UiWindow::setFocus(UiElement * toBeFocused, bool isPrevious)
 void UiWindow::clearFocus()
 {
     UiElement::clearFocus();
-    for (std::vector<UiElement *>::iterator i = widgets_.begin();
-         i != widgets_.end(); ++i)
-        (*i)->clearFocus();
+    for (auto & widget : widgets_)
+        widget->clearFocus();
 }
 
 void UiWindow::addWidget(UiElement * toBeAdded)
@@ -265,7 +261,7 @@ void UiWindow::addWidget(UiElement * toBeAdded)
 
 void UiWindow::setTopMost(bool active) { topMost_ = active; }
 
-Vector2f UiWindow::getTopLeft() const
+auto UiWindow::getTopLeft() const -> Vector2f
 {
     Vector2f viewPort = window::getViewPort();
     Vector2f origin;

@@ -18,7 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SHOTGUN_HPP_INCLUDED
 #define SHOTGUN_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Weapons/Weapon.hpp"
+#include "Weapons/weapons.hpp"
+
+class Ship;
 
 /// Weapon: Shotgun.
 /// A short distance gun, which fires some particles in multiple direction.

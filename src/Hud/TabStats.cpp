@@ -17,21 +17,31 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Hud/TabStats.hpp"
 
+#include <GL/gl.h>
+#include <SFML/System/String.hpp>
+#include <cmath>
+#include <iomanip>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "Controllers/controllers.hpp"
 #include "Games/games.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Media/texture.hpp"
 #include "Menu/menus.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "System/window.hpp"
 #include "Teams/teams.hpp"
-
-#include <SFML/OpenGL.hpp>
-#include <iomanip>
-#include <sstream>
 
 // helper function
 void inline writeScoreAtCol(sf::String value, int col, Vector2f topLeft,
@@ -61,9 +71,8 @@ void TabStats::update()
     {
         // check for necessity of a map-update
         int currentPoints(0);
-        for (auto it = teams::getAllTeams().begin();
-             it != teams::getAllTeams().end(); ++it)
-            currentPoints += (*it)->points();
+        for (const auto & it : teams::getAllTeams())
+            currentPoints += it->points();
 
         if (currentPoints != sumPoints_ || refresh_)
         {
@@ -74,11 +83,11 @@ void TabStats::update()
                 std::multimap<Team *, std::multiset<Player *, playerPtrCmp>,
                               teamPtrCmp>();
             auto const & teams = teams::getAllTeams();
-            for (auto it = teams.begin(); it != teams.end(); ++it)
+            for (const auto & team : teams)
                 teamMap_.insert(std::make_pair(
-                    it->get(),
+                    team.get(),
                     std::multiset<Player *, playerPtrCmp>(
-                        (*it)->members().begin(), (*it)->members().end())));
+                        team->members().begin(), team->members().end())));
         }
     }
 }
@@ -316,23 +325,19 @@ void TabStats::draw() const
 
         topLeft.y_ += 15;
 
-        for (std::multimap<Team *, std::multiset<Player *, playerPtrCmp>,
-                           teamPtrCmp>::const_iterator it = teamMap_.begin();
-             it != teamMap_.end(); ++it)
+        for (const auto & it : teamMap_)
         {
             int totalPoints(0), totalFrags(0), totalCannonShots(0),
                 totalGoals(0), totalSelfGoals(0), totalSuicides(0),
                 totalTeamKills(0), totalDeaths(0);
-            Color3f teamColor = it->first->color();
+            Color3f teamColor = it.first->color();
             teamColor.v(1.f);
             teamColor.s(0.5f);
-            std::multiset<Player *, playerPtrCmp> const & members = it->second;
-            for (std::multiset<Player *, playerPtrCmp>::iterator currentPlayer =
-                     members.begin();
-                 currentPlayer != members.end(); ++currentPlayer)
+            std::multiset<Player *, playerPtrCmp> const & members = it.second;
+            for (auto member : members)
             {
-                if ((*currentPlayer)->controlType_ == controllers::cPlayer1 ||
-                    (*currentPlayer)->controlType_ == controllers::cPlayer2)
+                if (member->controlType_ == controllers::cPlayer1 ||
+                    member->controlType_ == controllers::cPlayer2)
                     teamColor.gl4f(0.4 +
                                    std::sin(timer::totalTime() * 150.f) * 0.1f);
                 else
@@ -345,19 +350,19 @@ void TabStats::draw() const
                 glVertex2f(topLeft.x_, topLeft.y_ + height + 1);
                 glEnd();
 
-                Color3f drawColor((*currentPlayer)->color());
+                Color3f drawColor(member->color());
                 drawColor.v(1.f);
                 drawColor.s(0.8f);
                 // draw name, shadowed
-                text::drawScreenText((*currentPlayer)->name(),
+                text::drawScreenText(member->name(),
                                      topLeft + Vector2f(3 * mirror, 1), 12.f,
                                      TEXT_ALIGN_LEFT, Color3f(0.f, 0.f, 0.f));
-                text::drawScreenText((*currentPlayer)->name(),
+                text::drawScreenText(member->name(),
                                      topLeft + Vector2f(2 * mirror, 0), 12.f,
                                      TEXT_ALIGN_LEFT, drawColor);
                 // draw [BOT]
-                if ((*currentPlayer)->controlType_ != controllers::cPlayer1 &&
-                    (*currentPlayer)->controlType_ != controllers::cPlayer2)
+                if (member->controlType_ != controllers::cPlayer1 &&
+                    member->controlType_ != controllers::cPlayer2)
                 {
                     text::drawScreenText(
                         sf::String("[BOT]"), topLeft + Vector2f(81 * mirror, 1),
@@ -368,7 +373,7 @@ void TabStats::draw() const
                 }
                 col = 0;
                 // draw points
-                int value = (*currentPlayer)->points_;
+                int value = member->points_;
                 if (value > 0)
                     drawColor = Color3f(0.3, 1, 0.3);
                 else if (value < 0)
@@ -380,7 +385,7 @@ void TabStats::draw() const
                 // draw cannonShots
                 if (games::type() == games::gCannonKeep)
                 {
-                    value = (*currentPlayer)->cannonShots_;
+                    value = member->cannonShots_;
                     if (value > 0)
                         drawColor = Color3f(0.3, 1, 0.3);
                     else
@@ -391,11 +396,9 @@ void TabStats::draw() const
                 // draw goals
                 else if (games::type() == games::gSpaceBall)
                 {
-                    value =
-                        (*currentPlayer)->goals_ + (*currentPlayer)->selfGoals_;
+                    value = member->goals_ + member->selfGoals_;
                     std::stringstream sstr;
-                    sstr << (*currentPlayer)->goals_ << "/"
-                         << (*currentPlayer)->selfGoals_;
+                    sstr << member->goals_ << "/" << member->selfGoals_;
                     if (value > 0)
                         drawColor = Color3f(0.3, 1, 0.3);
                     else if (value < 0)
@@ -404,11 +407,11 @@ void TabStats::draw() const
                         drawColor = Color3f(1, 1, 0.3);
                     writeScoreAtCol(sf::String(sstr.str()), col++, topLeft,
                                     mirror, drawColor);
-                    totalGoals += (*currentPlayer)->goals_;
-                    totalSelfGoals += (*currentPlayer)->selfGoals_;
+                    totalGoals += member->goals_;
+                    totalSelfGoals += member->selfGoals_;
                 }
                 // draw frags
-                value = (*currentPlayer)->frags_;
+                value = member->frags_;
                 if (value > 0)
                     drawColor = Color3f(0.3, 1, 0.3);
                 else
@@ -419,7 +422,7 @@ void TabStats::draw() const
                 if (games::type() != games::gDeathMatch &&
                     games::type() != games::gRally)
                 {
-                    value = (*currentPlayer)->teamKills_;
+                    value = member->teamKills_;
                     if (value > 0)
                         drawColor = Color3f(1, 0.3, 0.3);
                     else
@@ -428,7 +431,7 @@ void TabStats::draw() const
                     totalTeamKills += value;
                 }
                 // draw suicides
-                value = (*currentPlayer)->suicides_;
+                value = member->suicides_;
                 if (value > 0)
                     drawColor = Color3f(1, 0.3, 0.3);
                 else
@@ -436,7 +439,7 @@ void TabStats::draw() const
                 writeScoreAtCol(value, col++, topLeft, mirror, drawColor);
                 totalSuicides += value;
                 // draw deaths
-                value = (*currentPlayer)->deaths_;
+                value = member->deaths_;
                 if (value > 0)
                     drawColor = Color3f(1, 0.3, 0.3);
                 else
@@ -536,4 +539,4 @@ void TabStats::display(bool show) { visible_ = show; }
 
 void TabStats::refresh() { refresh_ = true; }
 
-bool TabStats::visible() const { return visible_; }
+auto TabStats::visible() const -> bool { return visible_; }

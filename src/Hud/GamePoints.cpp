@@ -17,18 +17,23 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Hud/GamePoints.hpp"
 
+#include <GL/gl.h>
+#include <SFML/System/String.hpp>
+#include <cmath>
+#include <sstream>
+#include <string>
+
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
 #include "Media/texture.hpp"
 #include "Particles/particles.hpp"
-#include "Players/players.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 #include "System/window.hpp"
 #include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
-
-#include <SFML/OpenGL.hpp>
-#include <sstream>
+#include "defines.hpp"
 
 void GamePoints::draw() const
 {

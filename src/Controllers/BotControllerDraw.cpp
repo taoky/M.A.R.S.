@@ -15,18 +15,23 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Controllers/BotController.hpp"
+#include <GL/gl.h>
+#include <map>
+#include <utility>
 
+#include "Controllers/BotController.hpp"
+#include "DecoObjects/decoObjects.hpp"
 #include "Items/CannonControl.hpp"
 #include "Items/items.hpp"
-#include "Particles/AmmoInsta.hpp"
 #include "Players/Player.hpp"
+#include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/Home.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
+#include "Teams/Job.hpp"
 #include "Teams/Team.hpp"
-
-#include <SFML/OpenGL.hpp>
 
 void BotController::draw()
 {
@@ -123,26 +128,23 @@ void BotController::draw()
             }
             case Job::jAttackAny:
             {
-                for (std::map<Ship *, float>::iterator it = aggroTable_.begin();
-                     it != aggroTable_.end(); ++it)
+                for (auto & it : aggroTable_)
                 {
-                    if (it->first == target_)
+                    if (it.first == target_)
                     {
-                        Vector2f direction(it->first->location() -
-                                           shipLocation);
+                        Vector2f direction(it.first->location() - shipLocation);
                         decoObjects::drawArrow(shipLocation + direction * 0.1f,
                                                shipLocation + direction * 0.9f,
                                                Color3f(0.6f, 0.f, 0.f), 8.f);
                     }
                     else
                     {
-                        Vector2f direction(it->first->location() -
-                                           shipLocation);
+                        Vector2f direction(it.first->location() - shipLocation);
                         decoObjects::drawArrow(
                             shipLocation + direction * 0.1f,
                             shipLocation + direction * 0.9f,
-                            Color3f(it->second / 120.f, it->second / 240.f, 0),
-                            8.f * it->second / 120.f);
+                            Color3f(it.second / 120.f, it.second / 240.f, 0),
+                            8.f * it.second / 120.f);
                     }
                 }
                 break;

@@ -17,13 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/Flubba.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
-#include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
-#include "Teams/Team.hpp"
-
-#include <SFML/Graphics.hpp>
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 void Flubba::draw(float alpha) const
 {
@@ -59,8 +61,8 @@ void Flubba::fire() const
     sound::playSound(sound::Blub, parent_->location());
 }
 
-float Flubba::maxDistance() const { return 200.f; }
+auto Flubba::maxDistance() const -> float { return 200.f; }
 
-float Flubba::minDistance() const { return 20.f; }
+auto Flubba::minDistance() const -> float { return 20.f; }
 
-float Flubba::maxAngle() const { return 70.f; }
+auto Flubba::maxAngle() const -> float { return 70.f; }

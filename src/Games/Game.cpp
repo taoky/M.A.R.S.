@@ -17,6 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/Game.hpp"
 
+#include <memory>
+#include <vector>
+
+#include "Controllers/controllers.hpp"
 #include "DecoObjects/decoObjects.hpp"
 #include "Hud/hud.hpp"
 #include "Items/items.hpp"
@@ -26,12 +30,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Players/players.hpp"
 #include "Shaders/postFX.hpp"
 #include "SpaceObjects/balls.hpp"
+#include "SpaceObjects/physics.hpp"
 #include "SpaceObjects/ships.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
 #include "SpaceObjects/stars.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
-#include "System/window.hpp"
 #include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
 #include "TrailEffects/trailEffects.hpp"
@@ -99,14 +103,13 @@ void Game::update()
         {
             if (!ended_)
             {
-                Team * best(NULL);
+                Team * best(nullptr);
                 int most(0);
-                for (auto it = teams::getAllTeams().begin();
-                     it != teams::getAllTeams().end(); ++it)
-                    if (most < (*it)->points())
+                for (const auto & it : teams::getAllTeams())
+                    if (most < it->points())
                     {
-                        best = it->get();
-                        most = (*it)->points();
+                        best = it.get();
+                        most = it->points();
                     }
                 if (best)
                     best->addVictory();
@@ -168,8 +171,11 @@ void Game::restart()
     ended_ = false;
 }
 
-games::GameType Game::type() const { return type_; }
+auto Game::type() const -> games::GameType { return type_; }
 
-float Game::elapsedTime() const { return timer::totalTime() - startTime_; }
+auto Game::elapsedTime() const -> float
+{
+    return timer::totalTime() - startTime_;
+}
 
-bool Game::ended() const { return ended_; }
+auto Game::ended() const -> bool { return ended_; }

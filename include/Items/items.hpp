@@ -18,10 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef ITEMS_HPP_INCLUDED
 #define ITEMS_HPP_INCLUDED
 
-#include "System/Vector2f.hpp"
-
 #include <list>
 #include <memory>
+
+#include "System/Vector2f.hpp"
 
 class CannonControl;
 class PowerUp;

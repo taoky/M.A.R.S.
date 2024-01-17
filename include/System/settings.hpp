@@ -18,13 +18,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SETTINGS_HPP_INCLUDED
 #define SETTINGS_HPP_INCLUDED
 
+#include <SFML/Graphics.hpp>
+#include <SFML/System/String.hpp>
+#include <string>
+
 #include "Color3f.hpp"
 #include "Specials/Special.hpp"
+#include "Specials/specials.hpp"
 #include "System/Key.hpp"
 #include "Weapons/Weapon.hpp"
-
-#include <SFML/Graphics.hpp>
-#include <string>
+#include "Weapons/weapons.hpp"
 
 /// A namespace which handles the settings.
 /// All settings are stored in global variables and

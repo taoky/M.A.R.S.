@@ -17,14 +17,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/LabeledBox.hpp"
 
+#include <GL/gl.h>
+
 #include "Interface/Label.hpp"
 #include "Media/text.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-#include <SFML/OpenGL.hpp>
+namespace sf
+{
+class String;
+} // namespace sf
 
 LabeledBox::LabeledBox(sf::String * text, Vector2f const & topLeft, int width,
                        int height)
-    : UiElement(topLeft, width, height), label_(NULL)
+    : UiElement(topLeft, width, height), label_(nullptr)
 {
 
     if (text)

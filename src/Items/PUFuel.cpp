@@ -17,8 +17,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Items/PUFuel.hpp"
 
+#include <list>
+
 #include "Particles/particles.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "System/Vector2f.hpp"
 
 void PUFuel::draw() const
 {
@@ -31,9 +34,8 @@ void PUFuel::draw() const
 void PUFuel::refreshLifeTime()
 {
     lifeTime_ = totalLifeTime_;
-    for (std::list<Ship *>::iterator it = ships_.begin(); it != ships_.end();
-         ++it)
-        (*it)->refuel((*it)->owner_, 100);
+    for (auto & ship : ships_)
+        ship->refuel(ship->owner_, 100);
     // direction is abused for texture coords
     particles::spawnMultiple(5, particles::pPowerUpCollect, location_,
                              Vector2f(3, 1));

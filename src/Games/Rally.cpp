@@ -17,16 +17,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/Rally.hpp"
 
+#include "Controllers/controllers.hpp"
+#include "Games/games.hpp"
 #include "Media/music.hpp"
 #include "Players/players.hpp"
 #include "SpaceObjects/Track.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "Teams/DMTeam.hpp"
+#include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
-#include "TrailEffects/Trail.hpp"
-#include "TrailEffects/trailEffects.hpp"
+#include "Zones/zones.hpp"
+
+class Home;
 
 Rally::Rally() : Game(games::gRally)
 {

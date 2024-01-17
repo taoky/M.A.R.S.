@@ -18,9 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TEXTURE_HPP_INCLUDED
 #define TEXTURE_HPP_INCLUDED
 
-#include "System/Color3f.hpp"
-
+#include <GL/gl.h>
 #include <SFML/OpenGL.hpp>
+
+#include "System/Color3f.hpp"
 
 /// A namespace for texture handling.
 /// When asked for a reference to a texture, this namespace will load the

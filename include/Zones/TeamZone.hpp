@@ -20,6 +20,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Zone.hpp"
 
+class SpaceObject;
+
 /// Zone: TutorialZone.
 /// A very large Zone, covering half the screen.
 

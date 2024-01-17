@@ -17,11 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "Menu/menus.hpp"
 
+#include <SFML/System/String.hpp>
+#include <algorithm>
+#include <vector>
+
 #include "Games/games.hpp"
+#include "Interface/UiElement.hpp"
+#include "Interface/UiWindow.hpp"
 #include "Interface/toolTip.hpp"
+#include "Media/music.hpp"
 #include "Media/text.hpp"
 #include "Menu/About.hpp"
-#include "Menu/ChooseLanguage.hpp"
 #include "Menu/Connect.hpp"
 #include "Menu/EndMenu.hpp"
 #include "Menu/ExitConfirm.hpp"
@@ -32,7 +38,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "Menu/InfoTDM.hpp"
 #include "Menu/MainMenu.hpp"
 #include "Menu/PauseMenu.hpp"
-#include "Menu/ShaderError.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/settings.hpp"
 #include "System/window.hpp"
 #include "defines.hpp"
 
@@ -43,7 +51,7 @@ namespace
 {
 std::vector<UiWindow *> windowStack_;
 bool hidden_(false);
-UiElement * keyboardFixTarget_(NULL);
+UiElement * keyboardFixTarget_(nullptr);
 } // namespace
 
 void showMain()
@@ -67,9 +75,8 @@ void draw()
 {
     if (visible() && !hidden_)
     {
-        for (std::vector<UiWindow *>::iterator it = windowStack_.begin();
-             it != windowStack_.end(); ++it)
-            (*it)->draw();
+        for (auto & it : windowStack_)
+            it->draw();
 
         Vector2f viewPort = window::getViewPort();
         text::drawScreenText(
@@ -193,9 +200,9 @@ void clearFocus()
 
 void fixKeyboardOn(UiElement * target) { keyboardFixTarget_ = target; }
 
-void unFixKeyboard() { keyboardFixTarget_ = NULL; }
+void unFixKeyboard() { keyboardFixTarget_ = nullptr; }
 
-bool keyboardFixed() { return keyboardFixTarget_; }
+auto keyboardFixed() -> bool { return keyboardFixTarget_; }
 
 void reload()
 {
@@ -208,5 +215,5 @@ void reload()
     InfoTDM::reset();
 }
 
-bool visible() { return !windowStack_.empty(); }
+auto visible() -> bool { return !windowStack_.empty(); }
 } // namespace menus

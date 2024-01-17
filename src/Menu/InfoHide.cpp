@@ -19,24 +19,27 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/Button.hpp"
 #include "Interface/Checkbox.hpp"
+#include "Interface/Label.hpp"
 #include "Interface/Line.hpp"
 #include "Interface/TextBox.hpp"
 #include "Interface/UiWindow.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 
-UiWindow * InfoHide::instance_(NULL);
+UiWindow * InfoHide::instance_(nullptr);
 bool InfoHide::kOk_(false);
 
-UiWindow * InfoHide::get()
+auto InfoHide::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new InfoHide(320, 200);
         instance_->addWidget(new Button(locales::getLocale(locales::Close),
-                                        NULL, &kOk_, Vector2f(220, 170), 90,
+                                        nullptr, &kOk_, Vector2f(220, 170), 90,
                                         20));
         instance_->addWidget(new Label(locales::getLocale(locales::HideMenu),
                                        TEXT_ALIGN_LEFT, Vector2f(10, 10), 20.f,
@@ -49,7 +52,7 @@ UiWindow * InfoHide::get()
             new TextBox(locales::getLocale(locales::HideMenuText),
                         Vector2f(10, 50), 300, 110));
         instance_->addWidget(
-            new Checkbox(locales::getLocale(locales::ShowAgainButton), NULL,
+            new Checkbox(locales::getLocale(locales::ShowAgainButton), nullptr,
                          &settings::C_showInfoHide, Vector2f(10, 170), 170));
     }
     return instance_;
@@ -70,5 +73,5 @@ void InfoHide::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

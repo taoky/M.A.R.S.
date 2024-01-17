@@ -15,22 +15,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Controllers/BotController.hpp"
+#include <cmath>
+#include <float.h>
+#include <map>
+#include <memory>
+#include <vector>
 
-#include "Games/games.hpp"
+#include "Controllers/BotController.hpp"
 #include "Items/CannonControl.hpp"
 #include "Items/items.hpp"
 #include "Players/Player.hpp"
+#include "SpaceObjects/Ball.hpp"
 #include "SpaceObjects/Home.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/balls.hpp"
 #include "SpaceObjects/ships.hpp"
-#include "System/settings.hpp"
-#include "System/window.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
+#include "Teams/Job.hpp"
 #include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
+#include "Weapons/Weapon.hpp"
 #include "Zones/RasterZone.hpp"
 #include "Zones/TacticalZone.hpp"
+#include "Zones/zones.hpp"
 
 void BotController::kickBallToEnemy()
 {
@@ -81,11 +90,10 @@ void BotController::kickBallToEnemy()
                 5000.f)
             {
                 bool ballIsCloseToPlanet(false);
-                for (auto it = spaceObjects::getObjects().begin();
-                     it != spaceObjects::getObjects().end(); ++it)
-                    if ((*it)->type() != spaceObjects::oBlackHole &&
-                        ((*it)->location() - aimPosition).lengthSquare() <
-                            std::pow((*it)->radius(), 2))
+                for (const auto & it : spaceObjects::getObjects())
+                    if (it->type() != spaceObjects::oBlackHole &&
+                        (it->location() - aimPosition).lengthSquare() <
+                            std::pow(it->radius(), 2))
                     {
                         ballIsCloseToPlanet = true;
                         break;
@@ -165,7 +173,7 @@ void BotController::attackAny()
     if (target_ && !target_->attackable())
     {
         aggroTable_[target_] = 0.f;
-        target_ = NULL;
+        target_ = nullptr;
     }
 
     if (target_)
@@ -186,17 +194,17 @@ void BotController::attackAny()
     {
         auto const & ships = ships::getShips();
         float maxDistance(FLT_MAX);
-        for (auto it = ships.begin(); it != ships.end(); ++it)
+        for (const auto & ship_ : ships)
         {
-            if ((*it)->owner_->team() != slave_->team() && (*it)->attackable())
+            if (ship_->owner_->team() != slave_->team() && ship_->attackable())
             {
                 float distance =
-                    ((*it)->location() - ship()->location_).lengthSquare() *
-                    (*it)->getLife();
+                    (ship_->location() - ship()->location_).lengthSquare() *
+                    ship_->getLife();
                 if (distance < maxDistance)
                 {
                     maxDistance = distance;
-                    target_ = it->get();
+                    target_ = ship_.get();
                 }
             }
         }
@@ -249,7 +257,7 @@ void BotController::unfreeze()
 {
     if (currentJob_.object_)
     {
-        target_ = NULL;
+        target_ = nullptr;
         moveTo(static_cast<Ship *>(currentJob_.object_)->location(), 0.f);
         shootEnemy(static_cast<Ship *>(currentJob_.object_));
     }

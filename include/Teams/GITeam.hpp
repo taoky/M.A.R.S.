@@ -18,6 +18,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef GITEAM_HPP_INCLUDED
 #define GITEAM_HPP_INCLUDED
 
+#include "System/Color3f.hpp"
 #include "Teams/Team.hpp"
 
 class GITeam : public Team

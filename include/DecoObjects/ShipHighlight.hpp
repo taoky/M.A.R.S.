@@ -21,6 +21,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "DecoObjects/DecoObject.hpp"
 
 class Ship;
+struct Vector2f;
 
 /// A rotating ring which can be attached to a Ship.
 /// Human controlled Ships are highlighed to make it

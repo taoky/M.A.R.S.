@@ -17,10 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/Number.hpp"
 
+#include <SFML/System/String.hpp>
+#include <sstream>
+#include <string>
+
 #include "Media/text.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 
-#include <sstream>
+class Player;
 
 std::list<std::shared_ptr<Number>> Number::activeParticles_;
 

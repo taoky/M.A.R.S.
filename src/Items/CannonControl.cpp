@@ -17,12 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Items/CannonControl.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+#include <memory>
+#include <vector>
+
 #include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "System/Color3f.hpp"
+#include "System/timer.hpp"
 
 CannonControl::CannonControl(Vector2f const & location)
-    : respawnLocation_(location), location_(location), ship_(NULL),
+    : respawnLocation_(location), location_(location), ship_(nullptr),
       collected_(false)
 {
 }
@@ -32,13 +39,13 @@ void CannonControl::update()
     if (!collected_)
     {
         auto const & shipList = ships::getShips();
-        for (auto it = shipList.begin(); it != shipList.end(); ++it)
-            if ((*it)->getLife() > 0.f &&
-                ((*it)->location() - location_).lengthSquare() <
-                    std::pow(20.f + (*it)->radius(), 2))
+        for (const auto & it : shipList)
+            if (it->getLife() > 0.f &&
+                (it->location() - location_).lengthSquare() <
+                    std::pow(20.f + it->radius(), 2))
             {
                 collected_ = true;
-                ship_ = it->get();
+                ship_ = it.get();
             }
     }
     else
@@ -47,13 +54,13 @@ void CannonControl::update()
         {
             collected_ = false;
             location_ = respawnLocation_;
-            ship_ = NULL;
+            ship_ = nullptr;
         }
         else if (ship_->getLife() == 0.f)
         {
             collected_ = false;
             location_ = ship_->location();
-            ship_ = NULL;
+            ship_ = nullptr;
         }
     }
 }
@@ -177,12 +184,12 @@ void CannonControl::draw() const
     }
 }
 
-Player * CannonControl::getCarrier() const
+auto CannonControl::getCarrier() const -> Player *
 {
     if (ship_)
         return ship_->owner_;
     else
-        return NULL;
+        return nullptr;
 }
 
-Vector2f const & CannonControl::location() const { return location_; }
+auto CannonControl::location() const -> Vector2f const & { return location_; }

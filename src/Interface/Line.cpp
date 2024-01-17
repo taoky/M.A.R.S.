@@ -17,9 +17,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/Line.hpp"
 
-#include "Locales/locales.hpp"
+#include <GL/gl.h>
+#include <algorithm>
+#include <bits/std_abs.h>
+#include <stdlib.h>
 
-#include <SFML/OpenGL.hpp>
+#include "Locales/Locale.hpp"
+#include "Locales/locales.hpp"
 
 Line::Line(Vector2f const & begin, Vector2f const & end)
     : UiElement(

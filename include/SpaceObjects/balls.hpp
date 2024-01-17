@@ -18,10 +18,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef BALLS_HPP_INCLUDED
 #define BALLS_HPP_INCLUDED
 
+#include <memory>
+#include <vector>
+
 #include "SpaceObjects/Ball.hpp"
 #include "System/Vector2f.hpp"
-
-#include <vector>
 
 namespace balls
 {

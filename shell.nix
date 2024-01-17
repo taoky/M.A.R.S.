@@ -8,5 +8,6 @@ with pkgs; mkShell {
         taglib
         mesa
         libGLU
+        include-what-you-use
     ];
 }

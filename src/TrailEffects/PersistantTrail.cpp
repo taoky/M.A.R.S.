@@ -18,11 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "TrailEffects/PersistantTrail.hpp"
 
+#include <GL/gl.h>
+#include <algorithm>
+
 #include "Media/texture.hpp"
 #include "SpaceObjects/SpaceObject.hpp"
 #include "System/timer.hpp"
-
-#include <SFML/OpenGL.hpp>
 
 PersistantTrail::PersistantTrail(SpaceObject * target, float timeStep,
                                  float duration, float width,
@@ -102,4 +103,4 @@ void PersistantTrail::draw() const
     }
 }
 
-bool PersistantTrail::isDead() const { return alpha_ <= 0; }
+auto PersistantTrail::isDead() const -> bool { return alpha_ <= 0; }

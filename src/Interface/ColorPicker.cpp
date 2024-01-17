@@ -17,23 +17,28 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/ColorPicker.hpp"
 
-#include "Interface/Button.hpp"
+#include <GL/gl.h>
+
 #include "Interface/ColorPickerWindow.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/UiWindow.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
-#include "Media/texture.hpp"
 #include "Menu/menus.hpp"
-#include "System/settings.hpp"
-#include "System/window.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-#include <SFML/OpenGL.hpp>
-#include <iostream>
+namespace sf
+{
+class String;
+} // namespace sf
 
 ColorPicker::ColorPicker(sf::String * text, Color3f * value,
                          Vector2f const & topLeft, int width, int labelWidth)
-    : UiElement(topLeft, width, 16), colorWindow_(NULL), currentValue_(value),
-      labelWidth_(labelWidth), opened_(false)
+    : UiElement(topLeft, width, 16), colorWindow_(nullptr),
+      currentValue_(value), labelWidth_(labelWidth), opened_(false)
 {
 
     label_ = new Label(text, TEXT_ALIGN_LEFT, Vector2f(0, 0));

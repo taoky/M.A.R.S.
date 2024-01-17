@@ -17,8 +17,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "SpaceObjects/Sun.hpp"
 
-#include "Media/sound.hpp"
+#include <GL/gl.h>
+
+#include "Media/texture.hpp"
 #include "Particles/particles.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
 

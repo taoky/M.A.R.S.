@@ -17,20 +17,27 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Hud/RightLife.hpp"
 
+#include <GL/gl.h>
+#include <SFML/System/String.hpp>
+#include <sstream>
+#include <string>
+
 #include "Media/text.hpp"
+#include "Media/texture.hpp"
 #include "Players/Player.hpp"
 #include "Players/players.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 #include "System/window.hpp"
 #include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
 
-#include <sstream>
-
 void RightLife::draw() const
 {
 
-    Player const * player(NULL);
+    Player const * player(nullptr);
 
     if ((settings::C_playerIteamL && settings::C_playerIIteamL) |
         (settings::C_playerIteamR && settings::C_playerIIteamR))

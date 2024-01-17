@@ -17,11 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/BurningFragment.hpp"
 
+#include <GL/gl.h>
+
 #include "Particles/particles.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "TrailEffects/trailEffects.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<BurningFragment>> BurningFragment::activeParticles_;
 

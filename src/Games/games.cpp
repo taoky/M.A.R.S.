@@ -17,6 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/games.hpp"
 
+#include <GL/gl.h>
+#include <iostream>
+#include <memory>
+
 #include "Games/CannonKeep.hpp"
 #include "Games/DeathMatch.hpp"
 #include "Games/Game.hpp"
@@ -29,13 +33,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Hud/hud.hpp"
 #include "Media/music.hpp"
 #include "Menu/menus.hpp"
-#include "System/settings.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 #include "System/window.hpp"
-
-#include <SFML/OpenGL.hpp>
-
-#include <memory>
 
 namespace games
 {
@@ -178,11 +178,11 @@ void restart()
     }
 }
 
-bool active() { return (!fadeIn_ && !fadeOut_); }
+auto active() -> bool { return (!fadeIn_ && !fadeOut_); }
 
-bool ended() { return currentGame_->ended(); }
+auto ended() -> bool { return currentGame_->ended(); }
 
-GameType type()
+auto type() -> GameType
 {
     if (currentGame_)
         return currentGame_->type();
@@ -190,7 +190,7 @@ GameType type()
         return gNoGame;
 }
 
-float elapsedTime()
+auto elapsedTime() -> float
 {
     if (currentGame_)
         return currentGame_->elapsedTime();

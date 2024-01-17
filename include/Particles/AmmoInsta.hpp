@@ -18,10 +18,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef AMMOINSTA_HPP_INCLUDED
 #define AMMOINSTA_HPP_INCLUDED
 
+#include <list>
+#include <memory>
+
 #include "Particles/Particle.hpp"
+#include "System/Color3f.hpp"
 
 class Trail;
 class Team;
+class Player;
+class SpaceObject;
+struct Vector2f;
 
 class AmmoInsta : public Particle<AmmoInsta>
 {

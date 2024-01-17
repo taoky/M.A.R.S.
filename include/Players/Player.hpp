@@ -19,10 +19,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define PLAYER_HPP_INCLUDED
 
 #include "Controllers/Controller.hpp"
+#include "Controllers/controllers.hpp"
 #include "Players/players.hpp"
 #include "SpaceObjects/Ship.hpp"
 
 class Team;
+class Ship;
+namespace sf
+{
+class String;
+} // namespace sf
+struct Color3f;
 
 class Player
 {

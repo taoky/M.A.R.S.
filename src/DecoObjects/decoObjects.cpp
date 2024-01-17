@@ -17,8 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "DecoObjects/decoObjects.hpp"
 
+#include <GL/gl.h>
+#include <algorithm>
+#include <atomic>
+#include <list>
+#include <memory>
+#include <vector>
+
 #include "DecoObjects/Bolt.hpp"
 #include "DecoObjects/Cannon.hpp"
+#include "DecoObjects/DecoObject.hpp"
 #include "DecoObjects/Evil.hpp"
 #include "DecoObjects/Ice.hpp"
 #include "DecoObjects/PlanetSign.hpp"
@@ -26,11 +34,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "DecoObjects/ShipName.hpp"
 #include "DecoObjects/SunHeat.hpp"
 #include "Particles/AmmoRocket.hpp"
-
-#include <SFML/System.hpp>
-#include <list>
-#include <memory>
-#include <vector>
+#include "SpaceObjects/Ball.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
 extern std::atomic_bool exiting;
 
@@ -39,7 +46,7 @@ namespace decoObjects
 
 namespace
 {
-Cannon * cannon_(NULL);
+Cannon * cannon_(nullptr);
 std::vector<std::unique_ptr<DecoObject>> decos_;
 std::vector<std::unique_ptr<DecoObject>> heats_;
 std::vector<std::unique_ptr<DecoObject>> names_;
@@ -57,12 +64,12 @@ void draw()
 {
     if (cannon_)
         cannon_->draw();
-    for (auto it = decos_.begin(); it != decos_.end(); ++it)
-        (*it)->draw();
+    for (auto & deco : decos_)
+        deco->draw();
 
     for (auto it = ices_.begin(); it != ices_.end(); ++it)
     {
-        if ((*it) != NULL)
+        if ((*it) != nullptr)
             (*it)->draw();
         else
         {
@@ -72,7 +79,7 @@ void draw()
 
     for (auto it = bolts_.begin(); it != bolts_.end(); ++it)
     {
-        if ((*it) != NULL)
+        if ((*it) != nullptr)
             (*it)->draw();
         else
         {
@@ -83,15 +90,15 @@ void draw()
 
 void drawHeat()
 {
-    for (auto it = heats_.begin(); it != heats_.end(); ++it)
-        (*it)->draw();
+    for (auto & heat : heats_)
+        heat->draw();
 }
 
 void drawNames()
 {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    for (auto it = names_.begin(); it != names_.end(); ++it)
-        (*it)->draw();
+    for (auto & name : names_)
+        name->draw();
 }
 
 void drawArrow(Vector2f const & from, Vector2f const & to,
@@ -148,10 +155,10 @@ void addIce(std::shared_ptr<AmmoRocket> rocket)
 
 void removeIce(DecoObject const * toBeRemoved)
 {
-    for (auto it = ices_.begin(); it != ices_.end(); ++it)
-        if (it->get() == toBeRemoved)
+    for (auto & ice : ices_)
+        if (ice.get() == toBeRemoved)
         {
-            it->reset();
+            ice.reset();
             break;
         }
 }
@@ -163,10 +170,10 @@ void addBolt(SpaceObject * from, SpaceObject * to, float intensity)
 
 void removeBolt(DecoObject const * toBeRemoved)
 {
-    for (auto it = bolts_.begin(); it != bolts_.end(); ++it)
-        if (it->get() == toBeRemoved)
+    for (auto & bolt : bolts_)
+        if (bolt.get() == toBeRemoved)
         {
-            it->reset();
+            bolt.reset();
             break;
         }
 }
@@ -186,7 +193,7 @@ void clear()
     if (cannon_)
     {
         delete cannon_;
-        cannon_ = NULL;
+        cannon_ = nullptr;
     }
     if (!exiting)
     {

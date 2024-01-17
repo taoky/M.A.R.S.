@@ -17,10 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/AmmoShotgun.hpp"
 
+#include <GL/gl.h>
+
 #include "Media/sound.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
 #include "TrailEffects/trailEffects.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<AmmoShotgun>> AmmoShotgun::activeParticles_;
 

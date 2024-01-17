@@ -17,20 +17,26 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Teams/Team.hpp"
 
+#include <algorithm>
+#include <iterator>
+#include <set>
+#include <utility>
+
 #include "Controllers/BotController.hpp"
 #include "Controllers/KeyController.hpp"
+#include "Controllers/controllers.hpp"
 #include "Games/games.hpp"
 #include "Players/BotPlayer.hpp"
 #include "Players/LocalPlayer.hpp"
 #include "Players/Player.hpp"
 #include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/Ship.hpp"
+#include "System/timer.hpp"
 #include "Zones/zones.hpp"
 
-#include <set>
-
 Team::Team(Color3f const & color)
-    : evaluationTimer_(0.f), home_(NULL), color_(color), homeZone_(NULL),
-      teamZone_(NULL), victories_(0), points_(0)
+    : evaluationTimer_(0.f), home_(nullptr), color_(color), homeZone_(nullptr),
+      teamZone_(nullptr), victories_(0), points_(0)
 {
 }
 
@@ -51,13 +57,13 @@ void Team::addMember(Player * player)
 
     if (player->type() == controllers::cBot)
     {
-        BotPlayer * bot = dynamic_cast<BotPlayer *>(player);
+        auto * bot = dynamic_cast<BotPlayer *>(player);
         if (bot)
             botControllers_.push_back(bot->controller_);
     }
     else
     {
-        LocalPlayer * localPlayer = dynamic_cast<LocalPlayer *>(player);
+        auto * localPlayer = dynamic_cast<LocalPlayer *>(player);
         if (localPlayer)
             keyControllers_.push_back(localPlayer->controller_);
     }
@@ -86,9 +92,8 @@ void Team::addVictory() const { ++victories_; }
 
 void Team::addStars() const
 {
-    for (std::vector<Player *>::const_iterator it = members_.begin();
-         it != members_.end(); ++it)
-        ++(*it)->ship()->fragStars_;
+    for (auto member : members_)
+        ++member->ship()->fragStars_;
 }
 
 void Team::evaluate()
@@ -99,20 +104,14 @@ void Team::evaluate()
     {
         createJobs();
 
-        for (std::vector<BotController *>::iterator it =
-                 botControllers_.begin();
-             it != botControllers_.end(); ++it)
-            (*it)->evaluate();
+        for (auto & botController : botControllers_)
+            botController->evaluate();
 
-        for (std::vector<KeyController *>::iterator it =
-                 keyControllers_.begin();
-             it != keyControllers_.end(); ++it)
-            (*it)->evaluate();
+        for (auto & keyController : keyControllers_)
+            keyController->evaluate();
 
-        for (std::vector<BotController *>::iterator it =
-                 botControllers_.begin();
-             it != botControllers_.end(); ++it)
-            (*it)->applyForJob(jobMap_);
+        for (auto & botController : botControllers_)
+            botController->applyForJob(jobMap_);
 
         std::set<BotController *> unemployedBots(botControllers_.begin(),
                                                  botControllers_.end());
@@ -122,16 +121,12 @@ void Team::evaluate()
         {
             std::multimap<Job, std::multimap<short, BotController *>>::iterator
                 mostWantedJob;
-            BotController * mostWanting = NULL;
+            BotController * mostWanting = nullptr;
             short highestDesire(0);
 
-            for (std::multimap<
-                     Job, std::multimap<short, BotController *>>::iterator it =
-                     jobMap_.begin();
-                 it != jobMap_.end(); ++it)
+            for (auto it = jobMap_.begin(); it != jobMap_.end(); ++it)
             {
-                std::multimap<short, BotController *>::reverse_iterator bot =
-                    it->second.rbegin();
+                auto bot = it->second.rbegin();
                 while (bot != it->second.rend() &&
                        unemployedBots.find(bot->second) == unemployedBots.end())
                     ++bot;
@@ -155,8 +150,7 @@ void Team::evaluate()
             }
         }
 
-        for (std::set<BotController *>::iterator it = unemployedBots.begin();
-             it != unemployedBots.end(); ++it)
-            (*it)->assignJob(Job(Job::jLand, 10));
+        for (auto unemployedBot : unemployedBots)
+            unemployedBot->assignJob(Job(Job::jLand, 10));
     }
 }

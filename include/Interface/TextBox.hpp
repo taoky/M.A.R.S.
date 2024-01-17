@@ -18,11 +18,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TEXTBOX_HPP_INCLUDED
 #define TEXTBOX_HPP_INCLUDED
 
+#include <vector>
+
 #include "Interface/Label.hpp"
 #include "Interface/UiElement.hpp"
 #include "Interface/VerticalSlider.hpp"
+#include "System/Color3f.hpp"
 
-#include <vector>
+class VerticalSlider;
+namespace sf
+{
+class String;
+} // namespace sf
+struct Vector2f;
 
 class TextBox : public UiElement
 {

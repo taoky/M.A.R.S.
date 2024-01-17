@@ -17,13 +17,20 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/Button.hpp"
 
+#include <GL/gl.h>
+
+#include "Interface/Label.hpp"
 #include "Interface/toolTip.hpp"
 #include "Media/sound.hpp"
 #include "Media/text.hpp"
-#include "Menu/menus.hpp"
-#include "System/settings.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 
-#include <SFML/OpenGL.hpp>
+namespace sf
+{
+class Font;
+class String;
+} // namespace sf
 
 Button::Button(sf::String * text, sf::String * toolTip, bool * key,
                Vector2f const & topLeft, int width, int height, int align,
@@ -66,7 +73,7 @@ void Button::mouseLeft(bool down)
     {
         *key_ = true;
         hovered_ = false;
-        toolTip::show(NULL);
+        toolTip::show(nullptr);
         sound::playSound(sound::Click);
     }
 }
@@ -80,7 +87,7 @@ void Button::keyEvent(bool down, Key const & key)
         {
             *key_ = true;
             hovered_ = false;
-            toolTip::show(NULL);
+            toolTip::show(nullptr);
             sound::playSound(sound::Click);
         }
     }

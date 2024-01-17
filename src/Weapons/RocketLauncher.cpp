@@ -17,12 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/RocketLauncher.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
-#include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
-
-#include <SFML/Graphics.hpp>
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 void RocketLauncher::draw(float alpha) const
 {
@@ -63,8 +66,8 @@ void RocketLauncher::fire() const
     }
 }
 
-float RocketLauncher::maxDistance() const { return 500.f; }
+auto RocketLauncher::maxDistance() const -> float { return 500.f; }
 
-float RocketLauncher::minDistance() const { return 50.f; }
+auto RocketLauncher::minDistance() const -> float { return 50.f; }
 
-float RocketLauncher::maxAngle() const { return 30.f; }
+auto RocketLauncher::maxAngle() const -> float { return 30.f; }

@@ -18,11 +18,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef UIELEMENT_HPP_INCLUDED
 #define UIELEMENT_HPP_INCLUDED
 
-#include "System/Vector2f.hpp"
+#include <SFML/Config.hpp>
+#include <SFML/Window.hpp>
 
 #include "System/Key.hpp"
-
-#include <SFML/Window.hpp>
+#include "System/Vector2f.hpp"
 
 class UiElement
 {

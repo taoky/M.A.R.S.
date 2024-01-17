@@ -18,6 +18,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SPECIAL_HPP_INCLUDED
 #define SPECIAL_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "Specials/specials.hpp"
 #include "System/timer.hpp"
 

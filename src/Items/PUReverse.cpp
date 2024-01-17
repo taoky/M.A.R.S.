@@ -17,9 +17,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Items/PUReverse.hpp"
 
+#include <GL/gl.h>
+#include <list>
+#include <math.h>
+
 #include "Particles/particles.hpp"
-#include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 void PUReverse::draw() const
 {
@@ -30,13 +35,12 @@ void PUReverse::draw() const
     }
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    for (std::list<Ship *>::const_iterator it = ships_.begin();
-         it != ships_.end(); ++it)
+    for (auto ship : ships_)
     {
 
         glPushMatrix();
         glLoadIdentity();
-        glTranslatef((*it)->location().x_, (*it)->location().y_ - 40.f, 0.f);
+        glTranslatef(ship->location().x_, ship->location().y_ - 40.f, 0.f);
         glScalef(0.7f, 0.7f, 0.f);
         glRotatef(fmod(timer::totalTime() * (-180.f), 360.f), 0.f, 0.f, 1.f);
 

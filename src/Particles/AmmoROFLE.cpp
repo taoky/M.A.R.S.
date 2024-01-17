@@ -17,10 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/AmmoROFLE.hpp"
 
+#include <GL/gl.h>
+
 #include "Media/sound.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 #include "TrailEffects/trailEffects.hpp"
 #include "defines.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<AmmoROFLE>> AmmoROFLE::activeParticles_;
 

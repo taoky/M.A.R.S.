@@ -18,10 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef TABLIST_HPP_INCLUDED
 #define TABLIST_HPP_INCLUDED
 
+#include <SFML/Config.hpp>
+#include <vector>
+
 #include "Interface/Tab.hpp"
 #include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
 
-#include <vector>
+class Tab;
+struct Vector2f;
 
 class TabList : public UiElement
 {

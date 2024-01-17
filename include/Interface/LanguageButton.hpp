@@ -20,8 +20,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Interface/Label.hpp"
 #include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
 
 class UiWindow;
+class Label;
+namespace sf
+{
+class String;
+} // namespace sf
+struct Vector2f;
 
 class LanguageButton : public UiElement
 {

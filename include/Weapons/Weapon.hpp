@@ -18,6 +18,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef WEAPON_HPP_INCLUDED
 #define WEAPON_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+
 #include "System/timer.hpp"
 #include "Weapons/weapons.hpp"
 

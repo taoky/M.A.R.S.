@@ -22,6 +22,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include <string>
 #include <vector>
 
+namespace sf
+{
+class String;
+} // namespace sf
+
 /// A namespace for UTF-8 encoded text file handling.
 /// It contains function which work with
 /// UTF-8 encoded text files.

@@ -19,18 +19,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "CoreFoundation/CoreFoundation.h"
 #endif
 
+#include <atomic>
+#include <iostream>
+#include <string>
+
 #include "Games/games.hpp"
 #include "System/settings.hpp"
 #include "System/window.hpp"
 #include "defines.hpp"
 
-#include <atomic>
-#include <sstream>
-
 // A hack for this project's destructor on static objects
 std::atomic_bool exiting(false);
 
-int main(int argc, char * argv[])
+auto main(int argc, char * argv[]) -> int
 {
 
 #if defined __APPLE__

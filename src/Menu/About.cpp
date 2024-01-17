@@ -17,27 +17,33 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Menu/About.hpp"
 
+#include <SFML/System/String.hpp>
+
 #include "Interface/Button.hpp"
+#include "Interface/Label.hpp"
+#include "Interface/Tab.hpp"
 #include "Interface/TabList.hpp"
 #include "Interface/TextBox.hpp"
 #include "Interface/UiWindow.hpp"
 #include "Locales/locales.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/generateName.hpp"
 
-UiWindow * About::instance_(NULL);
+UiWindow * About::instance_(nullptr);
 bool About::kClose_(false);
 sf::String About::marsName_("");
 
-UiWindow * About::get()
+auto About::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         instance_ = new About(420, 310);
         instance_->addWidget(new Button(locales::getLocale(locales::Close),
-                                        NULL, &kClose_, Vector2f(320, 280), 90,
-                                        20));
+                                        nullptr, &kClose_, Vector2f(320, 280),
+                                        90, 20));
         instance_->addWidget(new Label(new sf::String("M.A.R.S."),
                                        TEXT_ALIGN_LEFT, Vector2f(10, 10), 20.f,
                                        Color3f(1.f, 0.5f, 0.9f), false));
@@ -45,7 +51,7 @@ UiWindow * About::get()
                                        Vector2f(410, 18), 12.f,
                                        Color3f(1.f, 0.5f, 0.9f), false));
 
-        TabList * tabs = new TabList(Vector2f(10, 50), 400, 250);
+        auto * tabs = new TabList(Vector2f(10, 50), 400, 250);
 
         Tab * about = new Tab(locales::getLocale(locales::About), 90);
         Tab * license = new Tab(locales::getLocale(locales::License), 90);
@@ -85,5 +91,5 @@ void About::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 }

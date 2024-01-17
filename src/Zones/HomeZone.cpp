@@ -17,14 +17,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Zones/HomeZone.hpp"
 
-#include "Players/Player.hpp"
-#include "Players/players.hpp"
-#include "SpaceObjects/Ship.hpp"
-#include "SpaceObjects/SpaceObject.hpp"
-#include "Teams/Team.hpp"
-#include "defines.hpp"
-
+#include <GL/gl.h>
 #include <cmath>
+
+#include "SpaceObjects/SpaceObject.hpp"
+#include "defines.hpp"
 
 HomeZone::HomeZone(Vector2f const & location)
     : radius_(450.f), location_(location)
@@ -35,7 +32,7 @@ HomeZone::HomeZone(Vector2f const & location)
         homeSide_ = 1;
 }
 
-bool HomeZone::isInside(SpaceObject const & toBeChecked) const
+auto HomeZone::isInside(SpaceObject const & toBeChecked) const -> bool
 {
     return ((toBeChecked.location() - location_).lengthSquare() <=
             radius_ * radius_);

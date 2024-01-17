@@ -17,23 +17,31 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Menu/ChooseLanguage.hpp"
 
+#include <SFML/System/String.hpp>
+#include <utility>
+#include <vector>
+
 #include "Interface/Button.hpp"
+#include "Interface/Label.hpp"
 #include "Interface/Line.hpp"
-#include "Interface/TextBox.hpp"
 #include "Interface/UiWindow.hpp"
+#include "Locales/Locale.hpp"
 #include "Locales/locales.hpp"
+#include "Media/font.hpp"
 #include "Media/text.hpp"
 #include "Menu/menus.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
 
-UiWindow * ChooseLanguage::instance_(NULL);
+UiWindow * ChooseLanguage::instance_(nullptr);
 bool ChooseLanguage::kCancel_(false);
 std::map<int, bool *> ChooseLanguage::languageKeyMap_;
 std::map<sf::String, int> ChooseLanguage::sortedLocales_;
 
-UiWindow * ChooseLanguage::get()
+auto ChooseLanguage::get() -> UiWindow *
 {
-    if (instance_ == NULL)
+    if (instance_ == nullptr)
     {
         std::vector<Locale> const & localeList = locales::getLocales();
 
@@ -43,18 +51,17 @@ UiWindow * ChooseLanguage::get()
             sortedLocales_.insert(std::make_pair(localeList[i].name_, i));
 
         int top(50);
-        for (std::map<sf::String, int>::iterator it = sortedLocales_.begin();
-             it != sortedLocales_.end(); ++it)
+        for (auto & sortedLocale : sortedLocales_)
         {
             bool * key = new bool(false);
-            languageKeyMap_.insert(std::make_pair(it->second, key));
-            Button * newButton(
-                new Button(new sf::String(it->first),
-                           new sf::String(localeList[it->second].author_), key,
-                           Vector2f(10, top), 200, 20, TEXT_ALIGN_CENTER,
-                           font::getFont(it->second)));
+            languageKeyMap_.insert(std::make_pair(sortedLocale.second, key));
+            auto * newButton(new Button(
+                new sf::String(sortedLocale.first),
+                new sf::String(localeList[sortedLocale.second].author_), key,
+                Vector2f(10, top), 200, 20, TEXT_ALIGN_CENTER,
+                font::getFont(sortedLocale.second)));
             instance_->addWidget(newButton);
-            if (it->first == locales::getCurrentLocale().name_)
+            if (sortedLocale.first == locales::getCurrentLocale().name_)
             {
                 instance_->clearFocus();
                 newButton->setFocus(newButton, false);
@@ -63,7 +70,7 @@ UiWindow * ChooseLanguage::get()
         }
 
         instance_->addWidget(new Button(locales::getLocale(locales::Cancel),
-                                        NULL, &kCancel_,
+                                        nullptr, &kCancel_,
                                         Vector2f(120, top + 30), 90, 20));
         instance_->addWidget(new Label(new sf::String("Select Language"),
                                        TEXT_ALIGN_LEFT, Vector2f(10, 10), 20.f,
@@ -83,12 +90,11 @@ void ChooseLanguage::checkWidgets()
         kCancel_ = false;
         menus::hideWindow();
     }
-    for (std::map<int, bool *>::iterator it = languageKeyMap_.begin();
-         it != languageKeyMap_.end(); ++it)
-        if (*(it->second))
+    for (auto & it : languageKeyMap_)
+        if (*(it.second))
         {
-            *(it->second) = false;
-            settings::C_languageID = it->first;
+            *(it.second) = false;
+            settings::C_languageID = it.first;
             locales::load();
             menus::reload();
             settings::save();
@@ -101,20 +107,18 @@ void ChooseLanguage::reset()
 {
     if (instance_)
         delete instance_;
-    instance_ = NULL;
+    instance_ = nullptr;
 
     languageKeyMap_.clear();
-    for (std::map<int, bool *>::iterator it = languageKeyMap_.begin();
-         it != languageKeyMap_.end(); ++it)
-        delete it->second;
+    for (auto & it : languageKeyMap_)
+        delete it.second;
     sortedLocales_.clear();
 }
 
 void ChooseLanguage::next()
 {
     get();
-    for (std::map<sf::String, int>::iterator it = sortedLocales_.begin();
-         it != sortedLocales_.end(); ++it)
+    for (auto it = sortedLocales_.begin(); it != sortedLocales_.end(); ++it)
     {
         if (it->second == settings::C_languageID)
         {
@@ -133,8 +137,7 @@ void ChooseLanguage::next()
 void ChooseLanguage::previous()
 {
     get();
-    for (std::map<sf::String, int>::iterator it = sortedLocales_.begin();
-         it != sortedLocales_.end(); ++it)
+    for (auto it = sortedLocales_.begin(); it != sortedLocales_.end(); ++it)
     {
         if (it->second == settings::C_languageID)
         {

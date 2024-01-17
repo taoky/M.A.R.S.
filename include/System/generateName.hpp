@@ -18,11 +18,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef GENERATENAME_HPP_INCLUDED
 #define GENERATENAME_HPP_INCLUDED
 
-#include "System/Key.hpp"
-
 #include <SFML/System.hpp>
+#include <SFML/System/String.hpp>
 #include <SFML/Window.hpp>
+#include <utility>
 #include <vector>
+
+#include "System/Key.hpp"
 
 /// A namespace for genearing names.
 /// It generates names for bots, the game itself and

@@ -17,13 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Weapons/ROFLE.hpp"
 
+#include <GL/gl.h>
+#include <cfloat>
+#include <cmath>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
-#include "Players/Player.hpp"
 #include "SpaceObjects/Ship.hpp"
-
-#include <SFML/Graphics.hpp>
-#include <cfloat>
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
+#include "System/timer.hpp"
 
 void ROFLE::draw(float alpha) const
 {
@@ -58,8 +61,8 @@ void ROFLE::fire() const
     sound::playSound(sound::Sniper, parent_->location());
 }
 
-float ROFLE::maxDistance() const { return FLT_MAX; }
+auto ROFLE::maxDistance() const -> float { return FLT_MAX; }
 
-float ROFLE::minDistance() const { return 0.f; }
+auto ROFLE::minDistance() const -> float { return 0.f; }
 
-float ROFLE::maxAngle() const { return 5.f; }
+auto ROFLE::maxAngle() const -> float { return 5.f; }

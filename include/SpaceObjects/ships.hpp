@@ -18,12 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef SHIPS_HPP_INCLUDED
 #define SHIPS_HPP_INCLUDED
 
-#include "System/Vector2f.hpp"
 #include <memory>
 #include <vector>
 
+#include "System/Vector2f.hpp"
+
 class Player;
 class Ship;
+struct Vector2f;
 
 namespace ships
 {

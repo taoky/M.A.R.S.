@@ -18,7 +18,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef HOMEZONE_HPP_INCLUDED
 #define HOMEZONE_HPP_INCLUDED
 
+#include "System/Vector2f.hpp"
 #include "Zones/Zone.hpp"
+
+class SpaceObject;
 
 /// Zone: HomeZone.
 /// A large round Zone around the HomePlanet.

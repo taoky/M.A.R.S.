@@ -100,7 +100,7 @@ void spawn(ParticleType const & type, Vector2f const & location,
            Vector2f const & direction = Vector2f(),
            Vector2f const & velocity = Vector2f(),
            Color3f const & color = Color3f(1.0f, 1.0f, 1.0f),
-           Player * damageSource = NULL);
+           Player * damageSource = nullptr);
 
 /// Spawns multiple Particles.
 /// All the following parameters can be set, but some will be ignored, depending
@@ -118,7 +118,7 @@ void spawnMultiple(float amount, ParticleType const & type,
                    Vector2f const & direction = Vector2f(),
                    Vector2f const & velocity = Vector2f(),
                    Color3f const & color = Color3f(1.0f, 1.0f, 1.0f),
-                   Player * damageSource = NULL);
+                   Player * damageSource = nullptr);
 
 /// Spawns multiple Particles, based on frame time (if a frame took longer, more
 /// particles will be spawned). All the following parameters can be set, but
@@ -136,7 +136,7 @@ void spawnTimed(float amount, ParticleType const & type,
                 Vector2f const & direction = Vector2f(),
                 Vector2f const & velocity = Vector2f(),
                 Color3f const & color = Color3f(1.0f, 1.0f, 1.0f),
-                Player * damageSource = NULL);
+                Player * damageSource = nullptr);
 
 /// Collides all particles with the target.
 void collideWith(MobileSpaceObject * target);

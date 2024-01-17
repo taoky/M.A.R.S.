@@ -17,13 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Media/texture.hpp"
 
-#include "System/randomizer.hpp"
-#include "System/settings.hpp"
-
-#include <SFML/System.hpp>
+#include <SFML/Config.hpp>
+#include <SFML/Graphics/Image.hpp>
 #include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
+
+#include "System/randomizer.hpp"
+#include "System/settings.hpp"
 
 namespace texture
 {
@@ -59,7 +61,7 @@ void loadTexture_(TextureType type, std::string fileName)
 }
 } // namespace
 
-GLuint const & getTexture(TextureType type)
+auto getTexture(TextureType type) -> GLuint const &
 {
     // check if texture is already loaded
     if (textures_[type] != nullptr)
@@ -251,7 +253,7 @@ GLuint const & getTexture(TextureType type)
     }
 }
 
-TextureType const randomPlanet()
+auto randomPlanet() -> TextureType const
 {
     int randomInt = randomizer::random(1, 15);
     switch (randomInt)
@@ -289,7 +291,7 @@ TextureType const randomPlanet()
     }
 }
 
-Color3f const getMudColor(TextureType type)
+auto getMudColor(TextureType type) -> Color3f const
 {
     switch (type)
     {

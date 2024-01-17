@@ -17,8 +17,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Hud/Logo.hpp"
 
+#include <GL/gl.h>
+
 #include "Games/games.hpp"
 #include "Media/texture.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
 #include "System/timer.hpp"
 #include "System/window.hpp"

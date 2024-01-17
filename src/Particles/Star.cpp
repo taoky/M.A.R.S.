@@ -17,10 +17,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/Star.hpp"
 
+#include <GL/gl.h>
+
+#include "SpaceObjects/spaceObjects.hpp"
 #include "System/randomizer.hpp"
 #include "System/settings.hpp"
 #include "System/timer.hpp"
 #include "defines.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<Star>> Star::activeParticles_;
 
@@ -49,7 +54,7 @@ void Star::update(float time)
         location_.y_ < -radius_ || location_.y_ > SPACE_Y_RESOLUTION + radius_)
     {
         spawn(Vector2f(SPACE_X_RESOLUTION * 0.5f, SPACE_Y_RESOLUTION * 0.5f),
-              Vector2f(), Vector2f(), Color3f(), NULL);
+              Vector2f(), Vector2f(), Color3f(), nullptr);
         killMe();
     }
     else
@@ -81,14 +86,14 @@ void Star::draw() const
 
 void Star::init()
 {
-    for (auto it = activeParticles_.begin(); it != activeParticles_.end(); ++it)
-        it->reset();
+    for (auto & activeParticle : activeParticles_)
+        activeParticle.reset();
     activeParticles_.clear();
 
     for (int i = 0; i < settings::C_StarField; ++i)
         spawn(Vector2f(SPACE_X_RESOLUTION * 0.5f, SPACE_Y_RESOLUTION * 0.5f),
-              Vector2f(), Vector2f(), Color3f(), NULL);
+              Vector2f(), Vector2f(), Color3f(), nullptr);
 
-    for (auto it = activeParticles_.begin(); it != activeParticles_.end(); ++it)
-        (*it)->update(randomizer::random(0.f, 100.f));
+    for (auto & activeParticle : activeParticles_)
+        activeParticle->update(randomizer::random(0.f, 100.f));
 }

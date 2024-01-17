@@ -19,6 +19,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define KEY_HPP_INCLUDED
 
 #include <SFML/Window.hpp>
+#include <SFML/Window/Joystick.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <iosfwd>
+#include <utility>
 
 struct Key
 {

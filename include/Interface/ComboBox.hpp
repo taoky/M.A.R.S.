@@ -18,10 +18,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef COMBOBOX_HPP_INCLUDED
 #define COMBOBOX_HPP_INCLUDED
 
+#include <SFML/System/String.hpp>
+#include <vector>
+
 #include "Interface/Label.hpp"
 #include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
 
 class UiWindow;
+class Label;
+struct Vector2f;
 
 class ComboBox : public UiElement
 {

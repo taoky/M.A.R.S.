@@ -17,6 +17,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "DecoObjects/Cannon.hpp"
 
+#include <GL/gl.h>
+#include <bits/std_abs.h>
+#include <cmath>
+#include <memory>
+#include <vector>
+
 #include "Items/CannonControl.hpp"
 #include "Items/items.hpp"
 #include "Media/texture.hpp"
@@ -24,6 +30,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Players/Player.hpp"
 #include "SpaceObjects/Home.hpp"
 #include "SpaceObjects/ships.hpp"
+#include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 #include "Teams/Team.hpp"
 #include "Teams/teams.hpp"

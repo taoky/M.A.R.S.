@@ -18,12 +18,14 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #ifndef RADIOGROUP_HPP_INCLUDED
 #define RADIOGROUP_HPP_INCLUDED
 
-#include "Interface/RadioButton.hpp"
-#include "Interface/UiElement.hpp"
-
 #include <vector>
 
+#include "Interface/RadioButton.hpp"
+#include "Interface/UiElement.hpp"
+#include "System/Key.hpp"
+
 class RadioButton;
+struct Vector2f;
 
 class RadioGroup : public UiElement
 {

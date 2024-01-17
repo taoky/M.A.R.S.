@@ -17,11 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Particles/AmmoH2OMG.hpp"
 
+#include <GL/gl.h>
+#include <math.h>
+
 #include "Media/sound.hpp"
 #include "Particles/particles.hpp"
+#include "SpaceObjects/SpaceObject.hpp"
+#include "SpaceObjects/physics.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "System/Vector2f.hpp"
 #include "System/randomizer.hpp"
-#include "System/settings.hpp"
 #include "System/timer.hpp"
+
+class Player;
 
 std::list<std::shared_ptr<AmmoH2OMG>> AmmoH2OMG::activeParticles_;
 

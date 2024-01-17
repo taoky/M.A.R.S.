@@ -17,15 +17,25 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/MenuGame.hpp"
 
-#include "Hud/hud.hpp"
+#include <string>
+
+#include "Controllers/controllers.hpp"
+#include "Games/games.hpp"
 #include "Media/music.hpp"
 #include "Menu/ChooseLanguage.hpp"
 #include "Menu/menus.hpp"
 #include "Players/players.hpp"
-#include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/spaceObjects.hpp"
+#include "Specials/specials.hpp"
+#include "System/Color3f.hpp"
 #include "System/settings.hpp"
 #include "Teams/GITeam.hpp"
+#include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
+#include "Weapons/weapons.hpp"
+#include "Zones/zones.hpp"
+
+class Home;
 
 MenuGame::MenuGame() : Game(games::gMenu)
 {

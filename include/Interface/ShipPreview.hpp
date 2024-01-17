@@ -21,6 +21,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Interface/UiElement.hpp"
 #include "System/Color3f.hpp"
 
+struct Color3f;
+struct Vector2f;
+
 class ShipPreview : public UiElement
 {
   public:

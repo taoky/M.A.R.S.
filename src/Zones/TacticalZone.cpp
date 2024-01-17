@@ -17,17 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Zones/TacticalZone.hpp"
 
+#include <GL/gl.h>
+#include <cmath>
+#include <memory>
+#include <vector>
+
 #include "Players/Player.hpp"
-#include "Players/players.hpp"
 #include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/SpaceObject.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
 #include "Teams/Team.hpp"
 #include "Teams/teams.hpp"
+#include "Zones/zones.hpp"
 #include "defines.hpp"
-
-#include <SFML/System.hpp>
-#include <cmath>
 
 TacticalZone::TacticalZone(Vector2f const & location, float radius)
     : radius_(radius), location_(location), covered_(false), shipCount_(0)
@@ -38,7 +40,7 @@ TacticalZone::TacticalZone(Vector2f const & location, float radius)
         homeSide_ = 1;
 }
 
-bool TacticalZone::isInside(SpaceObject const & toBeChecked) const
+auto TacticalZone::isInside(SpaceObject const & toBeChecked) const -> bool
 {
     return ((toBeChecked.location() - location_).lengthSquare() <=
             radius_ * radius_);
@@ -50,18 +52,16 @@ void TacticalZone::update()
     if (homeSide_ == 0)
     {
         std::vector<Player *> const & players = teams::getTeamL()->members();
-        for (std::vector<Player *>::const_iterator it = players.begin();
-             it != players.end(); ++it)
-            if (isInside(*(*it)->ship()))
+        for (auto player : players)
+            if (isInside(*player->ship()))
                 ++shipCount_;
         shipCount_ /= players.size();
     }
     else
     {
         std::vector<Player *> const & players = teams::getTeamR()->members();
-        for (std::vector<Player *>::const_iterator it = players.begin();
-             it != players.end(); ++it)
-            if (isInside(*(*it)->ship()))
+        for (auto player : players)
+            if (isInside(*player->ship()))
                 ++shipCount_;
         shipCount_ /= players.size();
     }
@@ -90,7 +90,7 @@ void TacticalZone::draw() const
     glEnd();
 }
 
-Vector2f TacticalZone::getRandomPoint() const
+auto TacticalZone::getRandomPoint() const -> Vector2f
 {
     Vector2f randomPoint;
     for (int i = 0; i < 100; ++i)
@@ -101,11 +101,10 @@ Vector2f TacticalZone::getRandomPoint() const
             randomPoint.y_ > 0.f && randomPoint.y_ < SPACE_Y_RESOLUTION)
         {
             bool fits = true;
-            for (auto it = spaceObjects::getObjects().begin();
-                 it != spaceObjects::getObjects().end(); ++it)
+            for (const auto & it : spaceObjects::getObjects())
             {
-                if ((randomPoint - (*it)->location()).lengthSquare() <
-                    std::pow((*it)->radius() + 50, 2))
+                if ((randomPoint - it->location()).lengthSquare() <
+                    std::pow(it->radius() + 50, 2))
                     fits = false;
             }
             if (fits)
@@ -115,6 +114,6 @@ Vector2f TacticalZone::getRandomPoint() const
     return randomPoint;
 }
 
-Vector2f const & TacticalZone::location() const { return location_; }
+auto TacticalZone::location() const -> Vector2f const & { return location_; }
 
-bool TacticalZone::covered() const { return covered_; }
+auto TacticalZone::covered() const -> bool { return covered_; }

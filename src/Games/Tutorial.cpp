@@ -17,9 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Games/Tutorial.hpp"
 
-#include "DecoObjects/decoObjects.hpp"
+#include <SFML/System/String.hpp>
+#include <algorithm>
+#include <float.h>
+#include <memory>
+#include <string>
+#include <vector>
+
+#include "Controllers/controllers.hpp"
+#include "Games/games.hpp"
 #include "Hud/hud.hpp"
-#include "Items/items.hpp"
 #include "Locales/locales.hpp"
 #include "Media/music.hpp"
 #include "Menu/EnterName.hpp"
@@ -29,17 +36,27 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "Players/Player.hpp"
 #include "Players/players.hpp"
 #include "SpaceObjects/Home.hpp"
+#include "SpaceObjects/Ship.hpp"
 #include "SpaceObjects/spaceObjects.hpp"
+#include "Specials/Special.hpp"
+#include "Specials/specials.hpp"
+#include "System/Color3f.hpp"
+#include "System/Vector2f.hpp"
 #include "System/settings.hpp"
+#include "System/timer.hpp"
 #include "Teams/DMTeam.hpp"
+#include "Teams/Team.hpp"
 #include "Teams/TutTeam.hpp"
 #include "Teams/teams.hpp"
+#include "Weapons/weapons.hpp"
+#include "Zones/zones.hpp"
 #include "defines.hpp"
 
 Tutorial::Tutorial()
-    : Game(games::gTutorial), state_(-1), savedState_(0), evilHome_(NULL),
-      evilPlayer1_(NULL), evilPlayer2_(NULL), friendPlayer_(NULL), timer_(0.f),
-      deadTimer_(0.f), dead_(false), life_(false), fuel_(false), name_(false)
+    : Game(games::gTutorial), state_(-1), savedState_(0), evilHome_(nullptr),
+      evilPlayer1_(nullptr), evilPlayer2_(nullptr), friendPlayer_(nullptr),
+      timer_(0.f), deadTimer_(0.f), dead_(false), life_(false), fuel_(false),
+      name_(false)
 {
 
     settings::C_EnabledWeapons =
@@ -561,8 +578,8 @@ void Tutorial::restart()
     players::clear();
     teams::clear();
     controllers::clear();
-    evilPlayer1_ = NULL;
-    evilPlayer2_ = NULL;
+    evilPlayer1_ = nullptr;
+    evilPlayer2_ = nullptr;
 
     players::addPlayer(teams::addTeam(new DMTeam(settings::C_playerITeamColor)),
                        controllers::cPlayer1);

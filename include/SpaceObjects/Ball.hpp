@@ -20,6 +20,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Players/Player.hpp"
 #include "SpaceObjects/MobileSpaceObject.hpp"
+#include "System/Vector2f.hpp"
+
+class Player;
+class SpaceObject;
 
 class Ball : public MobileSpaceObject
 {
@@ -39,7 +43,7 @@ class Ball : public MobileSpaceObject
     float heatAmount() const { return heatTimer_ * 5.f; }
 
     Player * lastShooter() const { return lastShooter_; }
-    void resetShooter() { lastShooter_ = NULL; }
+    void resetShooter() { lastShooter_ = nullptr; }
 
     friend class BotController;
     friend class Freezer;
