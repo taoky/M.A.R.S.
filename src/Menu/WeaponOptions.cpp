@@ -71,35 +71,46 @@ auto WeaponOptions::get() -> UiWindow *
                            Vector2f(160, 50), 100, 210));
 
         // weapons
-        instance_->addWidget(new Checkbox(new sf::String("AFK-47"), nullptr,
-                                          &kAFK_, Vector2f(20, 80), 100));
-        instance_->addWidget(new Checkbox(new sf::String("WT-FLAMER"), nullptr,
-                                          &kBurner_, Vector2f(20, 100), 100));
-        instance_->addWidget(new Checkbox(new sf::String("FIST OF ALI"),
-                                          nullptr, &kFist_, Vector2f(20, 120),
+        instance_->addWidget(new Checkbox(locales::getStaticString("AFK-47"),
+                                          nullptr, &kAFK_, Vector2f(20, 80),
                                           100));
-        instance_->addWidget(new Checkbox(new sf::String("FLUBBA"), nullptr,
-                                          &kFlubba, Vector2f(20, 140), 100));
-        instance_->addWidget(new Checkbox(new sf::String("SHOTGUN"), nullptr,
-                                          &kShotgun_, Vector2f(20, 160), 100));
-        instance_->addWidget(new Checkbox(new sf::String("ROCK'n'LOL"), nullptr,
-                                          &kRocket_, Vector2f(20, 180), 100));
-        instance_->addWidget(new Checkbox(new sf::String("ROFLE"), nullptr,
-                                          &kRofle_, Vector2f(20, 200), 100));
-        instance_->addWidget(new Checkbox(new sf::String("H2-OMG"), nullptr,
-                                          &kH2OMG_, Vector2f(20, 220), 100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("WT-FLAMER"),
+                                          nullptr, &kBurner_, Vector2f(20, 100),
+                                          100));
+        instance_->addWidget(
+            new Checkbox(locales::getStaticString("FIST OF ALI"), nullptr,
+                         &kFist_, Vector2f(20, 120), 100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("FLUBBA"),
+                                          nullptr, &kFlubba, Vector2f(20, 140),
+                                          100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("SHOTGUN"),
+                                          nullptr, &kShotgun_,
+                                          Vector2f(20, 160), 100));
+        instance_->addWidget(
+            new Checkbox(locales::getStaticString("ROCK'n'LOL"), nullptr,
+                         &kRocket_, Vector2f(20, 180), 100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("ROFLE"),
+                                          nullptr, &kRofle_, Vector2f(20, 200),
+                                          100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("H2-OMG"),
+                                          nullptr, &kH2OMG_, Vector2f(20, 220),
+                                          100));
 
-        instance_->addWidget(new Checkbox(new sf::String("FREEZER"), nullptr,
-                                          &kFreeze_, Vector2f(170, 80), 100));
-        instance_->addWidget(new Checkbox(new sf::String("HEAL"), nullptr,
-                                          &kHeal_, Vector2f(170, 100), 100));
-        instance_->addWidget(new Checkbox(new sf::String("BLAST"), nullptr,
-                                          &kBlast_, Vector2f(170, 120), 100));
-        instance_->addWidget(new Checkbox(new sf::String("FIRE WALL"), nullptr,
-                                          &kFireWall_, Vector2f(170, 140),
+        instance_->addWidget(new Checkbox(locales::getStaticString("FREEZER"),
+                                          nullptr, &kFreeze_, Vector2f(170, 80),
                                           100));
-        instance_->addWidget(new Checkbox(new sf::String("SHOCKER"), nullptr,
-                                          &kShocker_, Vector2f(170, 160), 100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("HEAL"),
+                                          nullptr, &kHeal_, Vector2f(170, 100),
+                                          100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("BLAST"),
+                                          nullptr, &kBlast_, Vector2f(170, 120),
+                                          100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("FIRE WALL"),
+                                          nullptr, &kFireWall_,
+                                          Vector2f(170, 140), 100));
+        instance_->addWidget(new Checkbox(locales::getStaticString("SHOCKER"),
+                                          nullptr, &kShocker_,
+                                          Vector2f(170, 160), 100));
     }
     return instance_;
 }

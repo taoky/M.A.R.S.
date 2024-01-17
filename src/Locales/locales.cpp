@@ -20,6 +20,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include <SFML/System/String.hpp>
 #include <algorithm>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
 
@@ -241,5 +242,16 @@ void setCurrentLocale()
 {
     load(settings::C_dataPath + "locales/" +
          locales_[settings::C_languageID].fileName_);
+}
+
+const sf::String * getStaticString(const char * str)
+{
+    static std::map<const char *, sf::String> strings;
+    auto & string = strings[str];
+    if (string.isEmpty())
+    {
+        string = sf::String(str);
+    }
+    return &string;
 }
 } // namespace locales

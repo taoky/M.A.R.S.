@@ -320,6 +320,8 @@ sf::String * getLocale(LocaleType);
 
 Locale const & getCurrentLocale();
 void setCurrentLocale();
+
+const sf::String * getStaticString(const char * str);
 } // namespace locales
 
 #endif // LOCALES_HPP_INCLUDED

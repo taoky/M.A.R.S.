@@ -31,7 +31,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/Vector2f.hpp"
 #include "System/window.hpp"
 
-Slider::Slider(sf::String * text, sf::String * toolTip, int * value,
+Slider::Slider(const sf::String * text, sf::String * toolTip, int * value,
                int minValue, int maxValue, int step, Vector2f const & topLeft,
                int width, int labelWidth, bool showValue,
                std::vector<sf::String> const & sliderNames)

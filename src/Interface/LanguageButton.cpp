@@ -36,8 +36,9 @@ namespace sf
 class String;
 } // namespace sf
 
-LanguageButton::LanguageButton(sf::String * text, Vector2f const & topLeft,
-                               int width, int labelWidth)
+LanguageButton::LanguageButton(const sf::String * text,
+                               Vector2f const & topLeft, int width,
+                               int labelWidth)
     : UiElement(topLeft, width, 16), labelWidth_(labelWidth)
 {
 

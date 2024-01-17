@@ -34,7 +34,7 @@ struct Vector2f;
 class Button : public UiElement
 {
   public:
-    Button(sf::String * text, sf::String * toolTip, bool * key,
+    Button(const sf::String * text, sf::String * toolTip, bool * key,
            Vector2f const & topLeft, int width, int height,
            int align = TEXT_ALIGN_CENTER, sf::Font * font = nullptr);
     ~Button();

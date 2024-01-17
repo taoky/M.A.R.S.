@@ -35,7 +35,7 @@ class String;
 class Tab : public UiElement
 {
   public:
-    Tab(sf::String * text, int width, bool * activated = nullptr);
+    Tab(const sf::String * text, int width, bool * activated = nullptr);
     ~Tab();
 
     void mouseMoved(Vector2f const & position);
@@ -63,7 +63,7 @@ class Tab : public UiElement
   private:
     std::vector<UiElement *> widgets_;
     UiElement * focusedWidget_;
-    sf::String * name_;
+    const sf::String * name_;
     Label * label_;
     bool * activated_;
     bool active_;

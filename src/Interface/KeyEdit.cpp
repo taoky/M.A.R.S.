@@ -36,7 +36,7 @@ namespace sf
 class String;
 } // namespace sf
 
-KeyEdit::KeyEdit(sf::String * text, sf::String * toolTip, Key * value,
+KeyEdit::KeyEdit(const sf::String * text, sf::String * toolTip, Key * value,
                  Vector2f const & topLeft, int width, int labelWidth)
     : UiElement(topLeft, width, 20), value_(value), toolTip_(toolTip),
       labelWidth_(labelWidth)

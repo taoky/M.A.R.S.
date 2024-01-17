@@ -35,7 +35,7 @@ namespace sf
 class String;
 } // namespace sf
 
-ColorPicker::ColorPicker(sf::String * text, Color3f * value,
+ColorPicker::ColorPicker(const sf::String * text, Color3f * value,
                          Vector2f const & topLeft, int width, int labelWidth)
     : UiElement(topLeft, width, 16), colorWindow_(nullptr),
       currentValue_(value), labelWidth_(labelWidth), opened_(false)

@@ -19,7 +19,6 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define RADIOBUTTON_HPP_INCLUDED
 
 #include "Interface/Label.hpp"
-#include "Interface/RadioGroup.hpp"
 #include "Interface/UiElement.hpp"
 #include "System/Key.hpp"
 
@@ -34,7 +33,7 @@ struct Vector2f;
 class RadioButton : public UiElement
 {
   public:
-    RadioButton(sf::String * text, sf::String * toolTip, bool * value,
+    RadioButton(const sf::String * text, sf::String * toolTip, bool * value,
                 Vector2f const & topLeft, int width,
                 bool offSwitchable = false);
     ~RadioButton();

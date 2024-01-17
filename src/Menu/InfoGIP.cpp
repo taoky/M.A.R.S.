@@ -43,9 +43,9 @@ auto InfoGIP::get() -> UiWindow *
         instance_->addWidget(new Button(locales::getLocale(locales::Close),
                                         nullptr, &kClose_, Vector2f(220, 270),
                                         90, 20));
-        instance_->addWidget(new Label(new sf::String("Grave-Itation Pit"),
-                                       TEXT_ALIGN_LEFT, Vector2f(10, 10), 20.f,
-                                       Color3f(1.f, 0.5f, 0.9f), false));
+        instance_->addWidget(new Label(
+            locales::getStaticString("Grave-Itation Pit"), TEXT_ALIGN_LEFT,
+            Vector2f(10, 10), 20.f, Color3f(1.f, 0.5f, 0.9f), false));
         instance_->addWidget(new Label(locales::getLocale(locales::Info),
                                        TEXT_ALIGN_RIGHT, Vector2f(310, 18),
                                        12.f, Color3f(1.f, 0.5f, 0.9f), false));

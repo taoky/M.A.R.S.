@@ -32,7 +32,7 @@ namespace sf
 class String;
 } // namespace sf
 
-Tab::Tab(sf::String * name, int width, bool * activated)
+Tab::Tab(const sf::String * name, int width, bool * activated)
     : UiElement(Vector2f(), width, 20), focusedWidget_(nullptr), name_(name),
       activated_(activated), active_(false)
 {

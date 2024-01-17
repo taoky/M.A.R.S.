@@ -32,7 +32,7 @@ class Font;
 class String;
 } // namespace sf
 
-Button::Button(sf::String * text, sf::String * toolTip, bool * key,
+Button::Button(const sf::String * text, sf::String * toolTip, bool * key,
                Vector2f const & topLeft, int width, int height, int align,
                sf::Font * font)
     : UiElement(topLeft, width, height), key_(key), toolTip_(toolTip)

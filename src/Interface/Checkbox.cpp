@@ -33,7 +33,7 @@ namespace sf
 class String;
 } // namespace sf
 
-Checkbox::Checkbox(sf::String * text, sf::String * toolTip, bool * value,
+Checkbox::Checkbox(const sf::String * text, sf::String * toolTip, bool * value,
                    Vector2f const & topLeft, int width)
     : UiElement(topLeft, width, 20), value_(value), toolTip_(toolTip)
 {

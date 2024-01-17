@@ -32,7 +32,7 @@ struct Vector2f;
 class Checkbox : public UiElement
 {
   public:
-    Checkbox(sf::String * text, sf::String * toolTip, bool * value,
+    Checkbox(const sf::String * text, sf::String * toolTip, bool * value,
              Vector2f const & topLeft, int width);
     ~Checkbox();
 

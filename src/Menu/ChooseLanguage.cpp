@@ -72,10 +72,10 @@ auto ChooseLanguage::get() -> UiWindow *
         instance_->addWidget(new Button(locales::getLocale(locales::Cancel),
                                         nullptr, &kCancel_,
                                         Vector2f(120, top + 30), 90, 20));
-        instance_->addWidget(new Label(new sf::String("Select Language"),
-                                       TEXT_ALIGN_LEFT, Vector2f(10, 10), 20.f,
-                                       Color3f(1.f, 0.5f, 0.9f), false));
-        instance_->addWidget(new Label(new sf::String("* Incomplete"),
+        instance_->addWidget(new Label(
+            locales::getStaticString("Select Language"), TEXT_ALIGN_LEFT,
+            Vector2f(10, 10), 20.f, Color3f(1.f, 0.5f, 0.9f), false));
+        instance_->addWidget(new Label(locales::getStaticString("* Incomplete"),
                                        TEXT_ALIGN_LEFT, Vector2f(10, top + 10),
                                        12.f, Color3f(1.f, 0.5f, 0.9f), false));
         instance_->addWidget(new Line(Vector2f(10, 35), Vector2f(210, 35)));

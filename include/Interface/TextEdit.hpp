@@ -35,7 +35,7 @@ struct Vector2f;
 class TextEdit : public UiElement
 {
   public:
-    TextEdit(sf::String * text, sf::String * value, sf::String fallBack,
+    TextEdit(const sf::String * text, sf::String * value, sf::String fallBack,
              Vector2f const & topLeft, int width, int labelWidth, int type,
              int maxLength = 0);
     ~TextEdit();

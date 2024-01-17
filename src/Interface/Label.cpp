@@ -29,7 +29,7 @@ namespace sf
 class Font;
 } // namespace sf
 
-Label::Label(sf::String * text, int textAlign, Vector2f const & topLeft,
+Label::Label(const sf::String * text, int textAlign, Vector2f const & topLeft,
              float fontSize, Color3f color, bool interactive, sf::Font * font)
     : UiElement(topLeft, 10, 10), text_(text), font_(font),
       textAlign_(textAlign), fontSize_(fontSize), color_(color),

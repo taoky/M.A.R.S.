@@ -31,7 +31,7 @@ struct Vector2f;
 class Slider : public UiElement
 {
   public:
-    Slider(sf::String * text, sf::String * toolTip, int * value, int min,
+    Slider(const sf::String * text, sf::String * toolTip, int * value, int min,
            int max, int step, Vector2f const & topLeft, int width,
            int labelWidth = 185, bool showValue = false,
            std::vector<sf::String> const & sliderNames =

@@ -25,7 +25,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/Vector2f.hpp"
 #include "System/timer.hpp"
 
-TextBox::TextBox(sf::String * text, Vector2f const & topLeft, int width,
+TextBox::TextBox(const sf::String * text, Vector2f const & topLeft, int width,
                  int height, Color3f const & color)
     : UiElement(topLeft, width, height), color_(color), slider_(nullptr),
       position_(0), scrollSpeed_(0.f)

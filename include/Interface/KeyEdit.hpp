@@ -32,7 +32,7 @@ struct Vector2f;
 class KeyEdit : public UiElement
 {
   public:
-    KeyEdit(sf::String * text, sf::String * toolTip, Key * value,
+    KeyEdit(const sf::String * text, sf::String * toolTip, Key * value,
             Vector2f const & topLeft, int width, int labelWidth);
     ~KeyEdit();
 

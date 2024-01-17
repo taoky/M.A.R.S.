@@ -34,8 +34,8 @@ namespace sf
 class String;
 } // namespace sf
 
-RadioButton::RadioButton(sf::String * text, sf::String * toolTip, bool * value,
-                         Vector2f const & topLeft, int width,
+RadioButton::RadioButton(const sf::String * text, sf::String * toolTip,
+                         bool * value, Vector2f const & topLeft, int width,
                          bool offSwitchable)
     : UiElement(topLeft, width, 20), value_(value),
       offSwitchable_(offSwitchable), toolTip_(toolTip)

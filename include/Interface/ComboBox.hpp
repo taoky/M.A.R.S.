@@ -32,7 +32,7 @@ struct Vector2f;
 class ComboBox : public UiElement
 {
   public:
-    ComboBox(sf::String * text, sf::String * toolTip, sf::String * value,
+    ComboBox(const sf::String * text, sf::String * toolTip, sf::String * value,
              std::vector<sf::String> const & values, Vector2f const & topLeft,
              int width, int labelWidth = 185);
     ~ComboBox();

@@ -29,8 +29,8 @@ namespace sf
 class String;
 } // namespace sf
 
-LabeledBox::LabeledBox(sf::String * text, Vector2f const & topLeft, int width,
-                       int height)
+LabeledBox::LabeledBox(const sf::String * text, Vector2f const & topLeft,
+                       int width, int height)
     : UiElement(topLeft, width, height), label_(nullptr)
 {
 

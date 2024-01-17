@@ -78,14 +78,17 @@ auto NewGameMenu::get() -> UiWindow *
             Vector2f(10, 10), 20.f, Color3f(1.f, 0.5f, 0.9f), false));
 
         auto * tabList = new TabList(Vector2f(10, 55), 560, 220);
-        tabSpaceBall_ = new Tab(new sf::String("SpaceBall"), 90, &tSB_);
-        tabDeathMatch_ = new Tab(new sf::String("DeathMatch"), 100, &tDM_);
+        tabSpaceBall_ =
+            new Tab(locales::getStaticString("SpaceBall"), 90, &tSB_);
+        tabDeathMatch_ =
+            new Tab(locales::getStaticString("DeathMatch"), 100, &tDM_);
         tabTeamDeathMatch_ =
-            new Tab(new sf::String("Team-DeathMatch"), 120, &tTDM_);
-        tabCannonKeep_ = new Tab(new sf::String("CannonKeep"), 100, &tCK_);
+            new Tab(locales::getStaticString("Team-DeathMatch"), 120, &tTDM_);
+        tabCannonKeep_ =
+            new Tab(locales::getStaticString("CannonKeep"), 100, &tCK_);
         tabGraveItation_ =
-            new Tab(new sf::String("Grave-Itation Pit"), 125, &tGI_);
-        tabRally_ = new Tab(new sf::String("Rally"), 80, &tRLY_);
+            new Tab(locales::getStaticString("Grave-Itation Pit"), 125, &tGI_);
+        tabRally_ = new Tab(locales::getStaticString("Rally"), 80, &tRLY_);
 
         tabSpaceBall_->addWidget(new LabeledBox(
             locales::getLocale(locales::LeftTeam), Vector2f(10, 30), 250, 80));

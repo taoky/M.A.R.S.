@@ -33,7 +33,7 @@ struct Vector2f;
 class LanguageButton : public UiElement
 {
   public:
-    LanguageButton(sf::String * text, Vector2f const & topLeft, int width,
+    LanguageButton(const sf::String * text, Vector2f const & topLeft, int width,
                    int labelWidth = 185);
     ~LanguageButton();
 

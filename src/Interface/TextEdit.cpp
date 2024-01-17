@@ -32,9 +32,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>. */
 #include "System/Vector2f.hpp"
 #include "System/window.hpp"
 
-TextEdit::TextEdit(sf::String * text, sf::String * value, sf::String fallBack,
-                   Vector2f const & topLeft, int width, int labelWidth,
-                   int type, int maxLength)
+TextEdit::TextEdit(const sf::String * text, sf::String * value,
+                   sf::String fallBack, Vector2f const & topLeft, int width,
+                   int labelWidth, int type, int maxLength)
     : UiElement(topLeft, width, 20), value_(value), fallBack_(fallBack),
       label_(nullptr), maxLength_(maxLength), cursorPos_(value->getSize()),
       cursorTimer_(0), type_(type), labelWidth_(labelWidth)
