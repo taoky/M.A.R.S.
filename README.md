@@ -10,6 +10,7 @@ The code in this repository is a modified fork:
 - Modified some raw pointers to smart pointers, to avoid memory leaks
 - Provided files to run with docker-compose on Linux desktop (X11)
 - Also, a shell.nix file. You may need to run compiled binary inside nix-shell with [nixGL](https://github.com/nix-community/nixGL)
+- A [flatpak build](./flatpak/) modified from <https://github.com/flathub/net.sourceforge.mars-game/>.
 
 Bugs might still exist -- build with ASAN and play to find them.
 
