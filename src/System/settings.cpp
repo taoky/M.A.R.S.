@@ -379,6 +379,11 @@ auto load() -> bool
 #ifdef __linux__
         if (std::ifstream((C_dataPath + "locales/English.txt").c_str()))
             success = true;
+        else if (std::ifstream(MARS_DATADIR "locales/English.txt"))
+        {
+            C_dataPath = MARS_DATADIR;
+            success = true;
+        }
         else if (std::ifstream("/usr/share/marsshooter/locales/English.txt"))
         {
             C_dataPath = "/usr/share/marsshooter/";
